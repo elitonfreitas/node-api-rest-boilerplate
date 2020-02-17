@@ -19,6 +19,13 @@ class Base {
       warn: (...logs) => Logger.error(`${getPrefix()} ${logs.join(' ')}`)
     };
   }
+
+  logRequest(req) {
+    const body = `Request => Path: ${req.path} | Method: ${req.method} | Body: ${JSON.stringify(req.body)}`;
+    const query = `| Query: ${JSON.stringify(req.query)}`;
+    const params = `| Params: ${JSON.stringify(req.params)}`;
+    this.log.debug(body, params, query);
+  }
 }
 
 module.exports = Base;
