@@ -1,0 +1,13 @@
+{
+	"Field \"{{param}}\" is required": "O campo \"{{param}}\" é obrigatório",
+	"Invalid value": "Valor iválido",
+	"Field \"{{param}}\" must be an array of objects": "O campo \"{{param}}\" deve ser um array de objetos",
+	"Field \"{{param}}\" must be a boolean value": "O campo \"{{param}}\" deve ter um valor boolean",
+	"No results found": "Nenhum resultado encontrado",
+	"Invalid params": "Parâmetros inválidos",
+  "Error on try to save data": "Erro ao tentar salvar dados",
+  "Error on try to delete data": "Erro ao tentar excluir dados",
+  "Error on try to update data": "Erro ao tentar atualizar dados",
+  "Operation successfully performe": "Operação realizada com sucesso",
+  "Data not found": "Dados não encontrados"
+}

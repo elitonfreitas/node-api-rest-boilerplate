@@ -9,8 +9,6 @@ module.exports = [
   },
   {
     path: '/template',
-    controller,
-    method: 'getAll',
-    verb: 'get'
+    controller
   }
 ];

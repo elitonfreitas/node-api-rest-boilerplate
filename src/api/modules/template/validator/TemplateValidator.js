@@ -1,114 +1,49 @@
 'use strict';
 
+const Messages = require('../../../../commons/constants/Messages');
+
 module.exports = {
   post: {
     name: {
-      custom: {
-        options: () => {
-          return {
-            type: 'string'
-          };
-        }
-      },
       notEmpty: true,
-      errorMessage: 'Field "name" is required'
+      errorMessage: Messages.FIELD_REQUIRED
     },
     description: {
-      custom: {
-        options: () => {
-          return {
-            type: 'string'
-          };
-        }
-      },
       notEmpty: true,
-      errorMessage: 'Field "description" is required'
+      errorMessage: Messages.FIELD_REQUIRED
     },
     images: {
-      custom: {
-        options: () => {
-          return {};
-        }
-      },
       notEmpty: true,
-      isArrayOfObject: {
-        errorMessage: 'Field "images" must be an array of objects'
+      isArray: {
+        errorMessage: Messages.FIELD_ARRAY_OBJECT
       }
     },
     templatePath: {
-      custom: {
-        options: () => {
-          return {
-            type: 'string'
-          };
-        }
-      },
       notEmpty: true,
-      errorMessage: 'Field "templatePath" is required'
+      errorMessage: Messages.FIELD_REQUIRED
     },
     active: {
-      custom: {
-        options: () => {
-          return {
-            type: 'boolean'
-          };
-        }
-      },
       notEmpty: true,
+      errorMessage: Messages.FIELD_REQUIRED,
       isBoolean: {
-        errorMessage: 'Field "active" must be a boolean value'
-      },
-      errorMessage: 'Field "active" is required'
+        errorMessage: Messages.FIELD_BOOLEAN
+      }
     }
   },
   put: {
-    name: {
-      custom: {
-        options: () => {
-          return {
-            type: 'string'
-          };
-        }
-      }
-    },
-    description: {
-      custom: {
-        options: () => {
-          return {
-            type: 'string'
-          };
-        }
-      }
-    },
+    name: {},
+    description: {},
     images: {
-      custom: {
-        options: () => {
-          return {};
-        }
-      },
-      isArrayOfObject: {
-        errorMessage: 'Field "images" must be an array of objects'
+      optional: true,
+      isArray: {
+        errorMessage: Messages.FIELD_ARRAY_OBJECT
       }
     },
-    templatePath: {
-      custom: {
-        options: () => {
-          return {
-            type: 'string'
-          };
-        }
-      }
-    },
+    templatePath: {},
     active: {
-      custom: {
-        options: () => {
-          return {
-            type: 'boolean'
-          };
-        }
-      },
+      optional: true,
       isBoolean: {
-        errorMessage: 'Field "active" must be a boolean value'
+        errorMessage: Messages.FIELD_BOOLEAN
       }
     }
   }

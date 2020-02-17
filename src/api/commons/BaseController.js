@@ -14,64 +14,55 @@ class BaseController extends HttpController {
     let result = await this.Model.find(search).lean();
 
     if (result.length) {
-      if (req.params.code) {
+      if (req.params.id) {
         result = result[0];
       }
-      this.response(res, next, result);
+      this.response(res, next, result, this.Messages.SUCCESS);
     } else {
       this.responseError(res, next, this.Messages.NO_RESULT);
     }
   }
 
   async post(req, res, next) {
-    req.checkBody(this.Validator.post);
-    const errors = req.validationErrors();
+    const model = new this.Model(this.DataUtils.normalize(req.body, this.Validator.post));
+    const savedModel = await model.save();
 
-    if (errors && errors.length) {
-      this.responseError(res, next, this.getValidatorErrors(errors));
+    if (savedModel) {
+      this.response(res, next, savedModel, this.Messages.SUCCESS);
     } else {
-      const model = new this.Model(this.DataUtils.normalize(req.body, this.Validator.post));
-      const savedModel = await model.save();
-
-      if (savedModel) {
-        this.response(res, next, savedModel);
-      } else {
-        this.responseError(res, next, this.Messages.ERROR_ON_SAVE);
-      }
+      this.responseError(res, next, this.Messages.ERROR_ON_SAVE);
     }
   }
 
   async put(req, res, next) {
-    req.checkBody(this.Validator.put);
-    const errors = req.validationErrors();
+    if (req.params.id) {
+      const setUpdate = this.DataUtils.normalize(req.body, this.Validator.put);
+      setUpdate.LastUpdate = this.moment().toISOString(true);
+      const savedModel = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
 
-    if (errors && errors.length) {
-      this.responseError(res, next, this.getValidatorErrors(errors));
-    } else {
-      if (req.params.id) {
-        const setUpdate = this.DataUtils.normalize(req.body, this.Validator.put);
-        setUpdate.LastUpdate = this.moment().toISOString(true);
-        const savedModel = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
-
-        if (savedModel) {
-          this.response(res, next, savedModel);
-        } else {
-          this.responseError(res, next, this.Messages.ERROR_ON_UPDATE);
-        }
+      if (savedModel) {
+        this.response(res, next, savedModel, this.Messages.SUCCESS);
       } else {
-        this.responseError(res, next, this.Messages.INVALID_PARAMS);
+        this.responseError(res, next, this.Messages.ERROR_ON_UPDATE);
       }
+    } else {
+      this.responseError(res, next, this.Messages.INVALID_PARAMS);
     }
   }
 
   async delete(req, res, next) {
     if (req.params.id) {
-      const result = await this.Model.findOneAndRemove({ _id: req.params.id });
+      let result;
+      try {
+        result = await this.Model.findOneAndRemove({ _id: req.params.id });
+      } catch (error) {
+        result = {};
+      }
 
-      if (result.id) {
-        this.response(res, next, {}, this.Messages.SUCCESS_ON_DELETE);
+      if (result && result.id) {
+        this.response(res, next, {}, this.Messages.SUCCESS);
       } else {
-        this.responseError(res, next, this.Messages.DELETE_ITEM_NOT_FOUND);
+        this.responseError(res, next, this.Messages.DATA_NOT_FOUND);
       }
     } else {
       this.responseError(res, next, this.Messages.INVALID_PARAMS);

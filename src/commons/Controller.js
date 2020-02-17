@@ -15,19 +15,6 @@ class Controller extends Base {
     this.request = request;
   }
 
-  getValidatorErrors(errors) {
-    errors = Array.isArray(errors) ? errors : undefined;
-    const messages = [];
-
-    if (errors) {
-      errors.forEach(err => {
-        messages.push(err.msg);
-      });
-    }
-
-    return messages.join('. ');
-  }
-
   throwError(message) {
     throw new Error(message);
   }

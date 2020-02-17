@@ -1,9 +1,18 @@
 'use strict';
 
+const i18n = require('i18n');
 const Logger = require('./Logger');
 
 class Base {
   constructor() {
+    i18n.configure({
+      locales: ['pt-br'],
+      directory: process.cwd() + '/locales',
+      defaultLocale: 'en',
+      updateFiles: false
+    });
+    this.t = i18n;
+
     const getPrefix = () => {
       let logPrefix = '';
       if (this.constructor && this.constructor.name) {

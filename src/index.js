@@ -10,6 +10,12 @@ const app = express();
 const logger = require('./commons/Logger');
 const routes = require('./commons/Routes');
 const HttpController = require('./commons/HttpController');
+const MongoController = require('./commons/MongoController');
+
+const mongoController = new MongoController();
+(async () => {
+  await mongoController.connect();
+})();
 
 const httpController = new HttpController();
 const rootPath = process.env.ROOT_API_PATH || '/api';
