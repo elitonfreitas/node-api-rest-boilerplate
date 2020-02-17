@@ -12,6 +12,7 @@ const ImageSchema = new Schema({
 
 const TemplateSchema = new Schema({
   name: { type: String, required: true, unique: true },
+  active: { type: Boolean, default: true },
   description: { type: String },
   images: [ImageSchema],
   templatePath: { type: String },

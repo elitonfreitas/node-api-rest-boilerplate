@@ -11,9 +11,9 @@ module.exports = {
         }
       },
       notEmpty: true,
-      errorMessage: 'O atributo "name" é obrigatório'
+      errorMessage: 'Field "name" is required'
     },
-    Name: {
+    description: {
       custom: {
         options: () => {
           return {
@@ -22,61 +22,31 @@ module.exports = {
         }
       },
       notEmpty: true,
-      errorMessage: 'O atributo "Name" é obrigatório'
+      errorMessage: 'Field "description" is required'
     },
-    ViewCode: {
+    images: {
       custom: {
         options: () => {
-          return {
-            type: 'string'
-          };
+          return {};
         }
       },
       notEmpty: true,
-      errorMessage: 'O atributo "ViewCode" é obrigatório'
-    },
-    Tolerance: {
-      custom: {
-        options: () => {
-          return {
-            type: 'number'
-          };
-        }
-      },
-      notEmpty: true,
-      isInt: {
-        errorMessage: 'O atributo "Tolerance" deve ser um inteiro em segundos'
-      },
-      errorMessage: 'O atributo "Tolerance" é obrigatório'
-    },
-    MaxNotification: {
-      custom: {
-        options: () => {
-          return {
-            type: 'number'
-          };
-        }
-      },
-      notEmpty: true,
-      isInt: {
-        errorMessage: 'O atributo "MaxNotification" deve ser um inteiro'
-      },
-      errorMessage: 'O atributo "MaxNotification" é obrigatório'
-    },
-    UraNotify: {
-      custom: {
-        options: () => {
-          return {
-            type: 'boolean'
-          };
-        }
-      },
-      optional: true,
-      isBoolean: {
-        errorMessage: 'O atributo "UraNotify" deve ser um valor boolean'
+      isArrayOfObject: {
+        errorMessage: 'Field "images" must be an array of objects'
       }
     },
-    Active: {
+    templatePath: {
+      custom: {
+        options: () => {
+          return {
+            type: 'string'
+          };
+        }
+      },
+      notEmpty: true,
+      errorMessage: 'Field "templatePath" is required'
+    },
+    active: {
       custom: {
         options: () => {
           return {
@@ -86,74 +56,59 @@ module.exports = {
       },
       notEmpty: true,
       isBoolean: {
-        errorMessage: 'O atributo "Active" deve ser um valor boolean'
+        errorMessage: 'Field "active" must be a boolean value'
       },
-      errorMessage: 'O atributo "Active" é obrigatório'
-    },
-    Filters: {
+      errorMessage: 'Field "active" is required'
+    }
+  },
+  put: {
+    name: {
       custom: {
         options: () => {
           return {
-            type: 'object'
+            type: 'string'
           };
         }
+      }
+    },
+    description: {
+      custom: {
+        options: () => {
+          return {
+            type: 'string'
+          };
+        }
+      }
+    },
+    images: {
+      custom: {
+        options: () => {
+          return {};
+        }
       },
-      optional: true,
       isArrayOfObject: {
-        errorMessage: 'O atributo "Filters" deve ser um array de objects'
+        errorMessage: 'Field "images" must be an array of objects'
       }
     },
-    'RollOut.Uf': {
+    templatePath: {
       custom: {
         options: () => {
           return {
-            type: 'array'
+            type: 'string'
           };
         }
-      },
-      optional: true,
-      isArrayOfString: {
-        errorMessage: 'O atributo "rollOut.Uf" deve ser um array'
       }
     },
-    'RollOut.Gra': {
+    active: {
       custom: {
         options: () => {
           return {
-            type: 'array'
+            type: 'boolean'
           };
         }
       },
-      optional: true,
-      isArrayOfObject: {
-        errorMessage: 'O atributo "rollOut.Gra" deve ser um array de objects'
-      }
-    },
-    UsedRules: {
-      custom: {
-        options: () => {
-          return {
-            type: 'array'
-          };
-        }
-      },
-      optional: true,
-      isArray: {
-        errorMessage: 'O atributo "usedRules" deve ser um array'
-      }
-    },
-    ExecutionPeriods: {
-      custom: {
-        options: () => {
-          return {
-            type: 'array'
-          };
-        }
-      },
-      notEmpty: true,
-      errorMessage: 'O atributo "executionPeriods" é obrigatório',
-      isArrayOfObject: {
-        errorMessage: 'O atributo "executionPeriods" deve ser um array de objects'
+      isBoolean: {
+        errorMessage: 'Field "active" must be a boolean value'
       }
     }
   }
