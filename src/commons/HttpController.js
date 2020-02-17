@@ -12,10 +12,15 @@ class HttpController extends Controller {
     this.moment = moment;
   }
 
+  translateError(msg, locale = 'en') {
+    return this.t.__({ phrase: msg, locale });
+  }
+
   response(res, next, response = {}, message = '', status = 200) {
     const data = typeof response === 'object' ? response : { value: response };
     message = message instanceof Error || message.message ? message.message : message;
-    const result = { message, data };
+    const locale = res.req.headers.locale || 'en';
+    const result = { message: this.translateError(message, locale), data };
 
     status = isNaN(status) ? 400 : status;
     res.status(status).json(result);
