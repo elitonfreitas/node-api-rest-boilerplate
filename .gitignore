@@ -1,0 +1,9 @@
+# System junks
+.DS_Store
+Thumbs.db
+
+# visual studio code
+logs
+node_modules
+package-lock.json
+.vscode

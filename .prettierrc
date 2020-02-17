@@ -1,0 +1,13 @@
+{
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 150,
+  "endOfLine": "lf",
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "eslintIntegration": true,
+  "stackElements": [
+    "destruct"
+  ]
+}
