@@ -20,11 +20,24 @@ class HttpController extends Controller {
     status = isNaN(status) ? 400 : status;
     res.status(status).json(result);
 
-    this.log.debug(`Status: ${status} | Response: ${JSON.stringify(result)}`);
+    this.log.debug(`Response => Status: ${status} | Data: ${JSON.stringify(result)}`);
   }
 
   responseError(res, next, message, data, status = 400) {
     this.response(res, next, data, message, status);
+  }
+
+  options(req, res, next) {
+    const date = new Date();
+    const header = {
+      Allow: '',
+      'Cache-Control': 'max-age=604800',
+      Date: date.toString(),
+      Expires: date.toString(),
+      'x-powered-by': 'Spring Server'
+    };
+    res.set(header);
+    this.response(res, next, {});
   }
 }
 
