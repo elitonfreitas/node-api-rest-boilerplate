@@ -12,6 +12,7 @@ const routes = require('./commons/Routes');
 const HttpController = require('./commons/HttpController');
 
 const httpController = new HttpController();
+const rootPath = process.env.ROOT_API_PATH || '/api';
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '15mb' }));
@@ -23,6 +24,11 @@ fs.readdirSync(dirModules).forEach(file => {
   });
 });
 
+app.use(rootPath, (req, res, next) => {
+  routes.logRequest(req);
+  next();
+});
+
 app.use((req, res, next) => {
   httpController.responseError(res, next, new Error('Route not found'), {}, 404);
 });
@@ -31,5 +37,5 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
-  logger.info(`Server ready on port: ${port}`);
+  logger.info(`Server ready on path: ${port}:${rootPath}`);
 });
