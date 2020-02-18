@@ -31,15 +31,12 @@ module.exports = {
     }
   },
   put: {
-    name: {},
-    description: {},
     images: {
       optional: true,
       isArray: {
         errorMessage: Messages.FIELD_ARRAY_OBJECT
       }
     },
-    templatePath: {},
     active: {
       optional: true,
       isBoolean: {

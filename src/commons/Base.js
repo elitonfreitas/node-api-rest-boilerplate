@@ -2,9 +2,13 @@
 
 const i18n = require('i18n');
 const Logger = require('./Logger');
+const ValidatorUtils = require('./utils/ValidatorUtils');
+const Messages = require('./constants/Messages');
 
 class Base {
   constructor() {
+    this.ValidatorUtils = ValidatorUtils;
+    this.Messages = Messages;
     i18n.configure({
       locales: ['pt-br'],
       directory: process.cwd() + '/locales',

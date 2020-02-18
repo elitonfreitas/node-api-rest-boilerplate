@@ -37,13 +37,13 @@ class BaseController extends HttpController {
   async put(req, res, next) {
     if (req.params.id) {
       const setUpdate = this.DataUtils.normalize(req.body, this.Validator.put);
-      setUpdate.LastUpdate = this.moment().toISOString(true);
+      setUpdate.updatedAt = this.moment().toISOString(true);
       const savedModel = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
 
       if (savedModel) {
         this.response(res, next, savedModel, this.Messages.SUCCESS);
       } else {
-        this.responseError(res, next, this.Messages.ERROR_ON_UPDATE);
+        this.responseError(res, next, this.Messages.UPDATE_NOT_OCURRED);
       }
     } else {
       this.responseError(res, next, this.Messages.INVALID_PARAMS);

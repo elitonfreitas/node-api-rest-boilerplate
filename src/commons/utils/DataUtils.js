@@ -31,17 +31,16 @@ class DataUtils {
     let format = 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ';
 
     switch (type) {
-      case 'datetime':
-      case 'date':
+      case 'Date':
         format = this.DateTimeUtils.getDateFormat(data);
         if (moment(data, format, true).isValid()) {
           data = moment(data, format).toISOString(true);
         }
         break;
-      case 'number':
+      case 'Number':
         data = isNaN(Number(data)) ? data : Number(data);
         break;
-      case 'boolean':
+      case 'Boolean':
         data = Boolean(JSON.parse(data));
         break;
     }
@@ -70,12 +69,29 @@ class DataUtils {
     if (fieldNames.length) {
       fieldNames.forEach(item => {
         const opt = fields[item].custom ? fields[item].custom.options() : {};
-        const value = this.getPropertyValue(params, item);
+        let value;
+        if (item.includes('*')) {
+          const key = item.split('*')[0].replace(/^\.+|\.+$/g, '');
+          const subKey = item.split('*')[1];
+          if (params[key] && params[key].length) {
+            for (let i = 0; i < params[key].length; i++) {
+              value = this.getPropertyValue(params, `${key}.${i}${subKey}`);
+              if (!finalParams[key]) {
+                finalParams[key] = [{}];
+              }
+              if (value) {
+                this.setPropertyValue(finalParams, `${key}.${i}${subKey}`, value);
+              }
+            }
+          } else if (params[key]) {
+            finalParams[key] = [];
+          }
+        } else {
+          value = this.getPropertyValue(params, item);
+        }
 
-        if (!opt.remove && value) {
-          if (opt.rename && opt.type && value) {
-            finalParams[opt.rename] = this.format(value, opt.type);
-          } else if (opt.type && value) {
+        if (!opt.remove && value && !item.includes('*')) {
+          if (opt.type && value) {
             finalParams[item] = this.format(value, opt.type);
           } else {
             finalParams[item] = value;

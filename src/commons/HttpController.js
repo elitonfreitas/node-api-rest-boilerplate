@@ -3,7 +3,6 @@
 const timezone = process.env.TZ || 'America/Sao_Paulo';
 const moment = require('moment-timezone');
 moment.tz.setDefault(timezone);
-
 const Controller = require('./Controller');
 
 class HttpController extends Controller {
