@@ -81,6 +81,7 @@ class MongoController extends Controller {
 
     try {
       await mongoose.connect(connectionUrl, {
+        useFindAndModify: false,
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,

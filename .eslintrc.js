@@ -27,6 +27,7 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
+    'no-prototype-builtins': 'off',
     'prettier/prettier': 'error',
     'spaced-comment': 'error',
     'prefer-const': 'error'
