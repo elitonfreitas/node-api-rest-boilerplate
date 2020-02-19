@@ -79,7 +79,7 @@ class DataUtils {
               if (!finalParams[key]) {
                 finalParams[key] = [{}];
               }
-              if (value) {
+              if (value !== undefined) {
                 this.setPropertyValue(finalParams, `${key}.${i}${subKey}`, value);
               }
             }
@@ -90,7 +90,7 @@ class DataUtils {
           value = this.getPropertyValue(params, item);
         }
 
-        if (!opt.remove && value && !item.includes('*')) {
+        if (!opt.remove && value !== undefined && !item.includes('*')) {
           if (opt.type && value) {
             finalParams[item] = this.format(value, opt.type);
           } else {
