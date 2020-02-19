@@ -11,7 +11,7 @@ class BaseController extends HttpController {
 
   async get(req, res, next) {
     const search = req.params.id ? { _id: req.params.id } : {};
-    let result = await this.Model.find(search).lean();
+    let result = await this.Model.find(search, { __v: 0 }).lean();
 
     if (result.length) {
       if (req.params.id) {
