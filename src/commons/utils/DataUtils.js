@@ -62,39 +62,47 @@ class DataUtils {
     return result;
   }
 
+  _getArrayValues(item, params, finalParams) {
+    const key = item.split('*')[0].replace(/^\.+|\.+$/g, '');
+    const subKey = item.split('*')[1];
+    let value;
+
+    if (params[key] && params[key].length) {
+      for (let i = 0; i < params[key].length; i++) {
+        value = this.getPropertyValue(params, `${key}.${i}${subKey}`);
+        if (!finalParams[key]) {
+          finalParams[key] = [{}];
+        }
+        if (value !== undefined) {
+          this.setPropertyValue(finalParams, `${key}.${i}${subKey}`, value);
+        }
+      }
+    } else if (params[key]) {
+      finalParams[key] = [];
+    }
+
+    return finalParams;
+  }
+
   normalize(params, fields) {
     const fieldNames = Object.keys(fields);
-    const finalParams = {};
+    let finalParams = {};
 
     if (fieldNames.length) {
       fieldNames.forEach(item => {
         const opt = fields[item].custom ? fields[item].custom.options() : {};
         let value;
+
         if (item.includes('*')) {
-          const key = item.split('*')[0].replace(/^\.+|\.+$/g, '');
-          const subKey = item.split('*')[1];
-          if (params[key] && params[key].length) {
-            for (let i = 0; i < params[key].length; i++) {
-              value = this.getPropertyValue(params, `${key}.${i}${subKey}`);
-              if (!finalParams[key]) {
-                finalParams[key] = [{}];
-              }
-              if (value !== undefined) {
-                this.setPropertyValue(finalParams, `${key}.${i}${subKey}`, value);
-              }
-            }
-          } else if (params[key]) {
-            finalParams[key] = [];
-          }
+          finalParams = this._getArrayValues(item, params, finalParams);
         } else {
           value = this.getPropertyValue(params, item);
-        }
-
-        if (!opt.remove && value !== undefined && !item.includes('*')) {
-          if (opt.type && value) {
-            finalParams[item] = this.format(value, opt.type);
-          } else {
-            finalParams[item] = value;
+          if (!opt.remove && value !== undefined && !item.includes('*')) {
+            if (opt.type && value) {
+              finalParams[item] = this.format(value, opt.type);
+            } else {
+              finalParams[item] = value;
+            }
           }
         }
       });
