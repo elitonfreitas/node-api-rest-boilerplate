@@ -9,17 +9,33 @@ class BaseController extends HttpController {
     this.Validator = Validator;
   }
 
-  async get(req, res, next) {
-    const search = req.params.id ? { _id: req.params.id } : {};
-    let result = await this.Model.find(search, { __v: 0 }).lean();
+  _normalizePager(req, mongoQuery) {
+    const pageIndex = req.query.pageIndex || req.body.pageIndex || 1;
+    const limit = req.query.limit || req.body.limit || 10;
+    const pageNumber = pageIndex > 0 ? (pageIndex - 1) * limit : 0;
+    const queryPager = mongoQuery.skip(pageNumber * limit).limit(limit);
+    return { queryPager, pageIndex, limit };
+  }
 
-    if (result.length) {
-      if (req.params.id) {
-        result = result[0];
+  async get(req, res, next) {
+    if (req.params.id) {
+      const result = await this.Model.findOne({ _id: req.params.id }, { __v: 0 }).lean();
+      if (result) {
+        this.response(res, next, { result }, this.Messages.SUCCESS);
+      } else {
+        this.responseError(res, next, this.Messages.NO_RESULT);
       }
-      this.response(res, next, result, this.Messages.SUCCESS);
     } else {
-      this.responseError(res, next, this.Messages.NO_RESULT);
+      const baseQuery = this.Model.find({}, { __v: 0 });
+      const { queryPager, pageIndex, limit } = this._normalizePager(req, baseQuery);
+      const result = await queryPager.lean();
+      const total = await this.Model.countDocuments();
+
+      if (result.length) {
+        this.response(res, next, { result, pageIndex, limit, total }, this.Messages.SUCCESS);
+      } else {
+        this.responseError(res, next, this.Messages.NO_RESULT);
+      }
     }
   }
 
@@ -38,10 +54,10 @@ class BaseController extends HttpController {
     if (req.params.id) {
       const setUpdate = this.DataUtils.normalize(req.body, this.Validator.put);
       setUpdate.updatedAt = this.moment().toISOString(true);
-      const savedModel = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
+      const result = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
 
-      if (savedModel) {
-        this.response(res, next, savedModel, this.Messages.SUCCESS);
+      if (result) {
+        this.response(res, next, { result }, this.Messages.SUCCESS);
       } else {
         this.responseError(res, next, this.Messages.UPDATE_NOT_OCURRED);
       }
