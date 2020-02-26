@@ -32,7 +32,7 @@ class DataUtils {
 
     switch (type) {
       case 'Date':
-        format = this.DateTimeUtils.getDateFormat(data);
+        format = this.getDateFormat(data);
         if (moment(data, format, true).isValid()) {
           data = moment(data, format).toISOString(true);
         }
@@ -56,7 +56,7 @@ class DataUtils {
     for (const key of fields) {
       result.push({
         key: key,
-        type: object[key].type.name.toLowerCase()
+        type: object[key].type ? object[key].type.name.toLowerCase() : undefined
       });
     }
     return result;

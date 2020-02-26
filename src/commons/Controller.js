@@ -10,10 +10,6 @@ class Controller extends Base {
     this.DataUtils = DataUtils;
     this.request = request;
   }
-
-  throwError(message) {
-    throw new Error(message);
-  }
 }
 
 module.exports = Controller;

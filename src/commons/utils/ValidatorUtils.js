@@ -2,7 +2,7 @@
 
 const Messages = require('../constants/Messages');
 
-class Validator {
+class ValidatorUtils {
   constructor() {
     this.AttributeMap = {
       post: {
@@ -92,11 +92,11 @@ class Validator {
 
   isNumber(item) {
     if (item) {
-      item = Number(item);
-      return typeof item === 'number';
+      const value = Number(item);
+      return !isNaN(value) && typeof value === 'number';
     }
     return false;
   }
 }
 
-module.exports = new Validator();
+module.exports = new ValidatorUtils();
