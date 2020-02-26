@@ -14,7 +14,11 @@ const MongoController = require('./commons/MongoController');
 
 const mongoController = new MongoController();
 (async () => {
-  await mongoController.connect();
+  try {
+    await mongoController.connect();
+  } catch (error) {
+    logger.error('Error to mongodb:', error.message);
+  }
 })();
 
 const httpController = new HttpController();
