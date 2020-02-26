@@ -1,7 +1,7 @@
 {
-  "name": "linkedin-curriculum",
+  "name": "node-api-rest-boilerplate",
   "version": "1.0.0",
-  "description": "Generate curriculum from Linkedin info",
+  "description": "Initial settings for creating a NodeJs application with Rest API",
   "main": "index.js",
   "scripts": {
     "test": "jest"
