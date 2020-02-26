@@ -1,40 +1,37 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const { performance } = require('perf_hooks');
-
 const Controller = require('./Controller');
-mongoose.Promise = Promise;
-
-const dbHost = process.env.DB_HOST || 'localhost';
-const dbPort = process.env.DB_PORT || '27017';
-const dbName = process.env.DB_NAME || 'memcl';
-const dbAuth = process.env.DB_AUTH || 0;
-const dbAuthSrc = process.env.DB_AUTH_SRC || 'admin';
-const dbReplicaOption = process.env.DB_REPLICA ? `replicaSet=${process.env.DB_REPLICA}&` : '';
 
 class MongoController extends Controller {
   constructor() {
     super();
     this.mongoose = mongoose;
+    this.dbHost = process.env.DB_HOST || 'localhost';
+    this.dbPort = process.env.DB_PORT || '27017';
+    this.dbName = process.env.DB_NAME || 'restapi-local';
+    this.dbAuth = process.env.DB_AUTH || 0;
+    this.dbAuthSrc = process.env.DB_AUTH_SRC || 'admin';
+    this.dbUser = process.env.DB_USER || 'root';
+    this.dbPass = process.env.DB_PASS || '';
+    this.dbReplicaOption = process.env.DB_REPLICA ? `replicaSet=${process.env.DB_REPLICA}&` : '';
   }
 
   _getConnectionUrl() {
     let authentication = '';
 
-    if (dbAuth == '1') {
-      authentication = process.env.DB_USER + ':' + process.env.DB_PASS + '@';
+    if (this.dbAuth == '1') {
+      authentication = this.dbUser + ':' + this.dbPass + '@';
     }
-    if (dbReplicaOption) {
-      return `mongodb://${authentication}${dbHost}/${dbName}?${dbReplicaOption}authSource=${dbAuthSrc}`;
+    if (this.dbReplicaOption) {
+      return `mongodb://${authentication}${this.dbHost}/${this.dbName}?${this.dbReplicaOption}authSource=${this.dbAuthSrc}`;
     } else {
-      return `mongodb://${authentication}${dbHost}:${dbPort}/${dbName}?authSource=${dbAuthSrc}`;
+      return `mongodb://${authentication}${this.dbHost}:${this.dbPort}/${this.dbName}?authSource=${this.dbAuthSrc}`;
     }
   }
 
   _registerConnectionEvents() {
-    mongoose.connection.once('open', () => {
-      this.log.debug('MongoDB event open');
+    this.mongoose.connection.once('open', () => {
       this.log.info('MongoDB connected');
       mongoose.connection.on('disconnected', () => this.log.info('MongoDB disconnected'));
       mongoose.connection.on('reconnected', () => this.log.info('MongoDB event reconnected'));
@@ -53,7 +50,7 @@ class MongoController extends Controller {
   }
 
   _gracefulShutdown(msg, callback) {
-    mongoose.connection.close(() => {
+    this.mongoose.connection.close(() => {
       this.log.info('Mongoose disconnected through ' + msg);
       callback();
     });
@@ -62,9 +59,9 @@ class MongoController extends Controller {
   async connect() {
     const connectionUrl = this._getConnectionUrl();
 
-    this.log.debug(`DB_AUTH :: ${dbAuth}`);
+    this.log.debug(`DB_AUTH :: ${this.dbAuth}`);
     let logSafeUrl = '';
-    if (dbAuth == '1') {
+    if (this.dbAuth == '1') {
       logSafeUrl = this._getLogSafeUrl(connectionUrl);
     } else {
       logSafeUrl = connectionUrl;
@@ -79,41 +76,21 @@ class MongoController extends Controller {
       });
     });
 
-    try {
-      await mongoose.connect(connectionUrl, {
-        useFindAndModify: false,
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        poolSize: 10,
-        bufferMaxEntries: 0,
-        connectTimeoutMS: 10000,
-        socketTimeoutMS: 45000,
-        family: 4
-      });
-      this.log.info('Connected to mongodb');
-    } catch (error) {
-      this.log.info('Error to mongodb:', error.message);
-    }
-  }
-
-  async ping() {
-    performance.mark('prestats');
-    const stats = await mongoose.connection.db.stats();
-    performance.mark('poststats');
-    performance.measure('stats', 'prestats', 'poststats');
-    const measure = performance.getEntriesByName('stats')[0];
-
-    return { ok: stats.ok, time: measure.duration };
+    return mongoose.connect(connectionUrl, {
+      useFindAndModify: false,
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      poolSize: 10,
+      bufferMaxEntries: 0,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+      family: 4
+    });
   }
 
   disconnect() {
-    try {
-      this.log.info('Disconnected from mongodb');
-      return mongoose.disconnect();
-    } catch (error) {
-      this.log.err('Error on disconnected from mongodb:', error.message);
-    }
+    return mongoose.disconnect();
   }
 }
 
