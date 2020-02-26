@@ -1,7 +1,6 @@
 'use strict';
 
 const { checkSchema, validationResult } = require('express-validator');
-
 const Base = require('./Base');
 
 class Routes extends Base {
