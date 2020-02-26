@@ -4,7 +4,7 @@ Initial settings for creating a NodeJs application with Rest API
 
 ### Tests Coverage
 
-<img src="./.badges/badge-branches.svg">
-<img src="./.badges/badge-functions.svg">
-<img src="./.badges/badge-lines.svg">
-<img src="./.badges/badge-statements.svg">
+<span><img src="./.badges/badge-branches.svg"></span>
+<span><img src="./.badges/badge-functions.svg"></span>
+<span><img src="./.badges/badge-lines.svg"></span>
+<span><img src="./.badges/badge-statements.svg"></span>
