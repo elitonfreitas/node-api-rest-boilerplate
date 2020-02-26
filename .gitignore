@@ -6,5 +6,4 @@ Thumbs.db
 logs
 node_modules
 package-lock.json
-.vscode
 coverage
