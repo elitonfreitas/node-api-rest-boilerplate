@@ -14,7 +14,6 @@ class Routes extends Base {
   generate(app, route) {
     const path = this.rootPath + route.path;
     const controller = route.controller;
-    // const allowedMethods = Object.getOwnPropertyNames(controller.__proto__).filter(i => i !== 'constructor' && i.slice(0, 1) !== '_');
 
     this.httpVerbs.forEach(httpVerb => {
       const verb = route.verb || httpVerb;
