@@ -4,17 +4,12 @@
   "description": "Generate curriculum from Linkedin info",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "NODE_ENV=test1 jest"
   },
   "author": "Eliton Freitas <elitonfreitas@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "i18n": "^0.8.5",
@@ -27,8 +22,14 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "sinon": "^9.0.0"
   }
 }

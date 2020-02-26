@@ -11,19 +11,18 @@ module.exports = {
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
-    'Promise': true,
-    'describe': true,
-    'it': true,
-    'xit': true,
-    'beforeEach': true,
-    'afterEach': true,
-    'should': true,
-    'expect': true,
-    'assert': true,
-    'after': true
+    jest: true,
+    describe: true,
+    it: true,
+    xit: true,
+    beforeEach: true,
+    afterEach: true,
+    beforeAll: true,
+    afterAll: true,
+    expect: true
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2018
   },
   plugins: ['prettier'],
   rules: {
