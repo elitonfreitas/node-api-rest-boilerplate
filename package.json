@@ -2,7 +2,7 @@
   "name": "node-api-rest-boilerplate",
   "version": "1.0.0",
   "description": "Initial settings for creating a NodeJs application with Rest API",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest"
   },
