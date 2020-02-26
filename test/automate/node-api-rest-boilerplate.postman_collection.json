@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "ea76c00b-e093-40dc-907c-f7c61f353182",
+		"name": "node-api-rest-boilerplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{URL}}/template",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48fdb6ed-690a-4ac4-ac9b-05ff3dc66eab",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"",
+							"pm.globals.set(\"template01\", jsonData.data._id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "locale",
+						"value": "pt-br",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Teste {{randomNumber}}\",\n\t\"description\": \"teste\",\n\t\"active\": true,\n\t\"images\": [{\n\t\t\"name\": \"Imagem 2\",\n\t\t\"filePath\": \"Imagem2.jpg\"\n\t}],\n\t\"templatePath\": \"teste.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/template",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"template"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/template/id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9373db3-8d9d-4fef-a7c3-699703eae2a7",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Template exists\"] = jsonData.data.result._id === pm.variables.get(\"template01\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "locale",
+						"value": "pt-br",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/template/{{template01}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"template",
+						"{{template01}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/template/all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9373db3-8d9d-4fef-a7c3-699703eae2a7",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Result is array\"] = Array.isArray(jsonData.data.result);",
+							"tests[\"Has pageIndex\"] = jsonData.data.pageIndex === 1;",
+							"tests[\"Has limit\"] = jsonData.data.limit === 10;",
+							"tests[\"Has total\"] = jsonData.data.total >= 1;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "locale",
+						"type": "text",
+						"value": "pt-br"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/template/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"template",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/template",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72f60001-57be-4857-b06d-3849f74695c3",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Has result\"] = jsonData.data.result._id === pm.variables.get(\"template01\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "locale",
+						"value": "pt-br",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Teste editado\",\n\t\"description\": \"teste\",\n\t\"active\": true,\n\t\"images\": [{\n\t\t\"name\": \"Imagem 3\",\n\t\t\"filePath\": \"teste3.jpg\"\n\t}],\n\t\"templatePath\": \"teste.jpg\"\n}\n\n"
+				},
+				"url": {
+					"raw": "{{URL}}/template/{{template01}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"template",
+						"{{template01}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/template",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "289aea2d-519f-45c4-8e1f-7be26c9bcda1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message deleted with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "locale",
+						"value": "pt-br",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/template/{{template01}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"template",
+						"{{template01}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3cf1e785-ca6f-4a46-9d75-4ade474d335e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4c80b01b-b2dd-4710-ada7-5d5d8dc775fc",
+				"type": "text/javascript",
+				"exec": [
+					"pm.globals.set('randomNumber', Math.floor(Math.random() * 50000));"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "7824cc64-60c9-45d1-8811-b2201602f585",
+			"key": "success_message",
+			"value": "Operação realizada com sucesso",
+			"type": "string"
+		}
+	]
+}
