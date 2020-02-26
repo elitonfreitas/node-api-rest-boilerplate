@@ -4,7 +4,18 @@
   "description": "Generate curriculum from Linkedin info",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test1 jest"
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "npm test --findRelatedTests"
+    ]
   },
   "author": "Eliton Freitas <elitonfreitas@gmail.com>",
   "license": "ISC",
@@ -20,6 +31,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-config-standard": "^14.1.0",
@@ -28,8 +40,10 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.3",
     "jest": "^25.1.0",
     "jest-express": "^1.11.0",
+    "lint-staged": "^10.0.8",
     "prettier": "^1.19.1",
     "sinon": "^9.0.0"
   }
