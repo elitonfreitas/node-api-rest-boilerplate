@@ -22,9 +22,12 @@ class HttpController extends Controller {
     const result = { message: this.translateError(message, locale), data };
 
     status = isNaN(status) ? 400 : status;
-    res.status(status).json(result);
+    res.status(status);
+    res.json(result);
 
-    this.log.debug(`Response => Status: ${status} | Data: ${JSON.stringify(result)}`);
+    if (process.env.NODE_ENV !== 'test') {
+      this.log.debug(`Response => Status: ${status} | Data: ${JSON.stringify(result)}`);
+    }
   }
 
   responseError(res, next, message, data, status = 400) {
