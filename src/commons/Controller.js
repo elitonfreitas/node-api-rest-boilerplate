@@ -1,11 +1,11 @@
 'use strict';
 
-const RequestPromise = require('request-promise');
+const Request = require('axios');
 const DataUtils = require('./utils/DataUtils');
 const Base = require('./Base');
 
 class Controller extends Base {
-  constructor(request = RequestPromise) {
+  constructor(request = Request) {
     super();
     this.DataUtils = DataUtils;
     this.request = request;
