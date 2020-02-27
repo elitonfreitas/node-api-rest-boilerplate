@@ -1,0 +1,15 @@
+.DS_Store
+yarn.lock
+package-lock.json
+node_modules
+logs
+files
+config
+.vscode
+.dockerignore
+.editorconfig
+.eslintrc.js
+.gitignore
+Dockerfile
+README.md
+jest.config.js

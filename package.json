@@ -4,7 +4,9 @@
   "description": "Initial settings for creating a NodeJs application with Rest API",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:badge": "npx jest-badge-generator",
+    "start": "node src/index"
   },
   "husky": {
     "hooks": {
