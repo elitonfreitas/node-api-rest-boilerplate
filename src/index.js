@@ -47,5 +47,5 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
-  logger.info(`Server ready on path: ${port}:${rootPath}`);
+  logger.info(`Server ready on path: ${port}${rootPath}`);
 });

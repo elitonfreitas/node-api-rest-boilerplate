@@ -28,6 +28,23 @@ For manager MongoDB connection e operations, use Mongoose and integrate Mongoose
 
 Translate API response massages using i18n lib. You just need to set the locale in the request headers.
 
+## Docker
+
+Run the application using Docker. Below are the commands needed to run the app on Docker:
+
+On root path of project:
+
+```docker
+# Create docker image
+docker build -f ./dockers/Dockerfile -t node-rest-api:latest .
+
+# Run docker image in localhost network
+docker run -d --env-file ./path/to/config/local.env --network=host --name node-rest-api node-rest-api:latest
+
+# Check image is run
+docker ps
+```
+
 ## Winston (log manager)
 
 To manager logs we use winston. Is possible integration with LogStash and others applications.
