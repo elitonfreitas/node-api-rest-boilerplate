@@ -1,7 +1,6 @@
 # node-api-rest-boilerplate
 
-This project has the initial configurations necessary for the creation of a Rest API in NodeJs, with several pre-configured features.
-In addition, it has an architecture that reduces the writing of code for the creation of new routes and validations. See the features below.
+This project has initials configurations necessary to create a Rest API in NodeJs with several pre-configured features. In addition, it has an architecture that reduces the writed code in the creation of new routes and validations. See the features below.
 
 ## Tests coverage
 
@@ -12,13 +11,13 @@ In addition, it has an architecture that reduces the writing of code for the cre
 
 # Features
 
-## Ease to create new modules
+## Create new modules easily
 
-To create a new module you just need to specify a Mongoose model and inherit the crud functions from the BaseController. If you need, is possible override the pre-defined functions. See the **TemplateController** to better understand.
+For create a new module you just need to specify a Mongoose model and inherit the crud functions from the BaseController. If you need, is possible override the pre-defined functions. See the **TemplateController** to better understand.
 
-## Express with express-validator
+## Express + express-validator
 
-Validate you requests on API with express-validator. Is possible to create Validator Schemas or use Mongoose schema to create express-validator schema.
+Validate your requests on API with express-validator. It's possible create Validator Schemas or use Mongoose schemas to generate express-validator schemas.
 
 ## Mongoose
 
@@ -47,7 +46,7 @@ docker ps
 
 ## Winston (log manager)
 
-To manager logs we use winston. Is possible integration with LogStash and others applications.
+For manager logs we use winston. Is possible integration with LogStash and others applications.
 
 ## Eslint and Prettier
 
@@ -59,4 +58,4 @@ Improve unit tests using jest pre setup and structure.
 
 ## Postman (automate test)
 
-To automate testing, we use Postman to make requests to our APIs.
+For automate testing, we use Postman to make requests to our APIs.
