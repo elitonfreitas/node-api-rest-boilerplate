@@ -112,29 +112,21 @@ class DataUtils {
   }
 
   getDateFormat(date) {
-    if (moment(date, 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ', true).isValid()) {
-      return 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ';
-    }
-    if (moment(date, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]', true).isValid()) {
-      return 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]';
-    }
-    if (moment(date, 'YYYY-MM-DD', true).isValid()) {
-      return 'YYYY-MM-DD';
-    }
-    if (moment(date, 'YYYY-MM-DD[T]HH:mm:ss', true).isValid()) {
-      return 'YYYY-MM-DD[T]HH:mm:ss';
-    }
-    if (moment(date, 'DD/MM/YYYY HH:mm:ss', true).isValid()) {
-      return 'DD/MM/YYYY HH:mm:ss';
-    }
-    if (moment(date, 'DD/MM/YYYY HH:mm', true).isValid()) {
-      return 'DD/MM/YYYY HH:mm';
-    }
-    if (moment(date, 'YYYY-MM-DD[T]HH:mm', true).isValid()) {
-      return 'YYYY-MM-DD[T]HH:mm';
-    }
-    if (moment(date, 'DD/MM/YYYY', true).isValid()) {
-      return 'DD/MM/YYYY';
+    const patterns = [
+      'YYYY-MM-DD[T]HH:mm:ss.SSSZZ',
+      'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]',
+      'YYYY-MM-DD',
+      'YYYY-MM-DD[T]HH:mm:ss',
+      'DD/MM/YYYY HH:mm:ss',
+      'DD/MM/YYYY HH:mm',
+      'YYYY-MM-DD[T]HH:mm',
+      'DD/MM/YYYY'
+    ];
+
+    for (const pattern of patterns) {
+      if (moment(date, pattern, true).isValid()) {
+        return pattern;
+      }
     }
 
     return 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ';
