@@ -3,11 +3,10 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.js', '!**/index.js', '!**/*Validator.js', '!jest.config.js'],
   coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/', 'test', 'jest.config.js'],
+  coveragePathIgnorePatterns: ['/node_modules/', 'test'],
   coverageReporters: ['json', 'text', 'text-summary', 'lcov', 'json-summary'],
-  modulePathIgnorePatterns: ['jest.config.js'],
   testEnvironment: 'node',
   testMatch: ['**/test/unit/**/*spec.[jt]s?(x)'],
-  testPathIgnorePatterns: ['/node_modules/', 'jest.config.js'],
+  testPathIgnorePatterns: ['/node_modules/'],
   verbose: true
 };
