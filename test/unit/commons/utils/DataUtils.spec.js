@@ -33,33 +33,42 @@ class DataUtilsTest extends TestBase {
       expect(this.controller.getFieldsOfSchema(TemplateModel)).toContainEqual({ key: 'name', type: 'string' });
     });
 
-    it('should get date format YYYY-MM-DD[T]HH:mm:ss.SSS[Z]', () => {
-      expect(this.controller.getDateFormat('2020-02-26T12:58:25.085Z')).toEqual('YYYY-MM-DD[T]HH:mm:ss.SSSZZ');
-    });
+    const formats = [
+      {
+        format: 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ',
+        date: '2020-02-26T12:58:25.085Z'
+      },
+      {
+        format: 'YYYY-MM-DD',
+        date: '2020-02-26'
+      },
+      {
+        format: 'YYYY-MM-DD[T]HH:mm:ss',
+        date: '2020-02-26T12:58:25'
+      },
+      {
+        format: 'DD/MM/YYYY HH:mm:ss',
+        date: '26/12/2020 12:58:25'
+      },
+      {
+        format: 'DD/MM/YYYY HH:mm',
+        date: '26/12/2020 12:58'
+      },
+      {
+        format: 'YYYY-MM-DD[T]HH:mm',
+        date: '2020-02-26T12:58'
+      },
+      {
+        format: 'DD/MM/YYYY',
+        date: '26/12/2020'
+      }
+    ];
 
-    it('should get date format YYYY-MM-DD', () => {
-      expect(this.controller.getDateFormat('2020-02-26')).toEqual('YYYY-MM-DD');
-    });
-
-    it('should get date format YYYY-MM-DD[T]HH:mm:ss', () => {
-      expect(this.controller.getDateFormat('2020-02-26T12:58:25')).toEqual('YYYY-MM-DD[T]HH:mm:ss');
-    });
-
-    it('should get date format DD/MM/YYYY HH:mm:ss', () => {
-      expect(this.controller.getDateFormat('26/12/2020 12:58:25')).toEqual('DD/MM/YYYY HH:mm:ss');
-    });
-
-    it('should get date format DD/MM/YYYY HH:mm', () => {
-      expect(this.controller.getDateFormat('26/12/2020 12:58')).toEqual('DD/MM/YYYY HH:mm');
-    });
-
-    it('should get date format YYYY-MM-DD[T]HH:mm', () => {
-      expect(this.controller.getDateFormat('2020-02-26T12:58')).toEqual('YYYY-MM-DD[T]HH:mm');
-    });
-
-    it('should get date format DD/MM/YYYY', () => {
-      expect(this.controller.getDateFormat('26/12/2020')).toEqual('DD/MM/YYYY');
-    });
+    for (const format of formats) {
+      it(`should get date format ${format.format}`, () => {
+        expect(this.controller.getDateFormat(format.date)).toEqual(format.format);
+      });
+    }
   }
 }
 
