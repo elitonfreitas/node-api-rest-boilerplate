@@ -117,9 +117,9 @@ class TestBase {
     if (method) {
       this.restoreMethods.push(method);
     } else {
-      this.restoreMethods.forEach(method => {
-        if (method.restore) {
-          method.restore();
+      this.restoreMethods.forEach(_method => {
+        if (_method.restore) {
+          _method.restore();
         }
       });
     }

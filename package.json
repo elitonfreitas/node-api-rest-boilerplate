@@ -4,7 +4,7 @@
   "description": "Initial settings for creating a NodeJs application with Rest API",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:badge": "npx jest-badge-generator",
     "start": "node src/index"
   },
@@ -16,7 +16,7 @@
   "lint-staged": {
     "src/**/*.js": [
       "eslint",
-      "npm test --bail --findRelatedTests"
+      "cross-env CI=true npm test --bail --findRelatedTests"
     ]
   },
   "author": "Eliton Freitas <elitonfreitas@gmail.com>",
