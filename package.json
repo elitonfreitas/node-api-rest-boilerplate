@@ -14,9 +14,9 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "src/**/*.js": [
       "eslint",
-      "npm test --findRelatedTests"
+      "npm test --bail --findRelatedTests"
     ]
   },
   "author": "Eliton Freitas <elitonfreitas@gmail.com>",
