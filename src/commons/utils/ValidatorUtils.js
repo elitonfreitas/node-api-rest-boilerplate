@@ -49,9 +49,7 @@ class ValidatorUtils {
             if (!resultItem['custom']) {
               resultItem['custom'] = {};
             }
-            resultItem['custom']['options'] = () => {
-              return { type: attr[key].name };
-            };
+            resultItem['custom']['options'] = () => ({ type: attr[key].name });
           } else {
             resultItem[this.AttributeMap[verb][key]] = attr[key];
           }
