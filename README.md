@@ -8,7 +8,7 @@ This project has initials configurations necessary to create a Rest API in NodeJ
 <span><img src="./.badges/badge-lines.svg"></span>
 <span><img src="./.badges/badge-statements.svg"></span>
 
-### Quality Gate Status
+### Sonar Quality Info
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=elitonfreitas_node-api-rest-boilerplate&metric=bugs)](https://sonarcloud.io/dashboard?id=elitonfreitas_node-api-rest-boilerplate)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=elitonfreitas_node-api-rest-boilerplate&metric=alert_status)](https://sonarcloud.io/dashboard?id=elitonfreitas_node-api-rest-boilerplate)
