@@ -18,7 +18,7 @@ class Logger {
     this.logLevel = 'debug';
     this.logEnable = 'true';
     this.logFileEnable = 'true';
-    this.logFileName = `linkedin-curriculum-${moment().format('YYYY-MM-DD')}.log`;
+    this.logFileName = `node-api-rest-${moment().format('YYYY-MM-DD')}.log`;
     this.transportsList = [];
     this.logPath = process.cwd() + '/logs/';
   }
@@ -28,12 +28,12 @@ class Logger {
     if (process.env.LOG_ENABLE) this.logEnable = process.env.LOG_ENABLE;
     if (process.env.LOG_FILE_ENABLE) this.logFileEnable = process.env.LOG_FILE_ENABLE;
     if (process.env.LOG_FILE_NAME) this.logFileName = `${process.env.LOG_FILE_NAME}${moment().format('YYYY-MM-DD')}.log`;
-    if (process.env.LOG_PATH) this.logPath = process.env.LOG_PATH;
+    if (process.env.LOG_PATH) this.logPath = process.cwd() + process.env.LOG_PATH;
   }
 
   formatCombined() {
     return format.combine(
-      format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+      format.timestamp({ format: 'YYYY-MM-DDTHH:mm:ss.SSSZZ' }),
       format.align(),
       format.colorize(),
       format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
