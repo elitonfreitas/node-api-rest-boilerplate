@@ -17,27 +17,47 @@ class Base {
     });
     this.t = i18n;
 
-    const getPrefix = () => {
-      let logPrefix = '';
-      if (this.constructor && this.constructor.name) {
-        logPrefix += `[${this.constructor.name}]`;
-      }
-      return logPrefix;
-    };
-
     this.log = {
-      info: (...logs) => Logger.info(`${getPrefix()} ${logs.join(' ')}`),
-      debug: (...logs) => Logger.debug(`${getPrefix()} ${logs.join(' ')}`),
-      error: (...logs) => Logger.error(`${getPrefix()} ${logs.join(' ')}`),
-      warn: (...logs) => Logger.error(`${getPrefix()} ${logs.join(' ')}`)
+      info: (...logs) => this.logByType('info', logs),
+      debug: (...logs) => this.logByType('debug', logs),
+      error: (...logs) => this.logByType('error', logs),
+      warn: (...logs) => this.logByType('warn', logs)
     };
   }
 
+  getClass() {
+    let logClass;
+    if (this.constructor && this.constructor.name) {
+      logClass = `${this.constructor.name}`;
+    }
+    return logClass;
+  }
+
+  logByType(type, logs) {
+    let message = '';
+    let metadata = {};
+    logs.map(log => {
+      if (typeof log === 'object') {
+        if (log.message) {
+          message = log.message;
+        }
+        metadata = { ...metadata, ...log };
+        delete metadata.message;
+      } else {
+        message += log;
+      }
+    });
+    Logger[type]({ className: this.getClass(), message, metadata });
+  }
+
   logRequest(req) {
-    const body = `Request => Path: ${req.path} | Method: ${req.method} | Body: ${JSON.stringify(req.body)}`;
-    const query = `| Query: ${JSON.stringify(req.query)}`;
-    const params = `| Params: ${JSON.stringify(req.params)}`;
-    this.log.debug(body, params, query);
+    const logData = {
+      message: 'API Request',
+      body: `${JSON.stringify(req.body)}`,
+      query: `${JSON.stringify(req.query)}`,
+      params: req.params
+    };
+    this.log.debug(logData);
   }
 }
 
