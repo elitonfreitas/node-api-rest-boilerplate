@@ -66,22 +66,24 @@ class TemplateController extends TestBase {
 
     it('should post one template with success', async () => {
       this.req.body = {
-        name: 'Teste 3',
-        description: 'teste',
-        active: true,
-        images: [
-          {
-            name: 'Imagem 2',
-            filePath: 'Imagem2.jpg'
-          }
-        ],
-        templatePath: 'teste.jpg'
+        result: {
+          name: 'Teste 3',
+          description: 'teste',
+          active: true,
+          images: [
+            {
+              name: 'Imagem 2',
+              filePath: 'Imagem2.jpg'
+            }
+          ],
+          templatePath: 'teste.jpg'
+        }
       };
 
       this.stub(this.controller.Model.prototype, 'save').returns(Promise.resolve(this.req.body));
       this.restore(this.controller.Model.prototype.save);
 
-      this.expectedResponse.data = this.req.body;
+      this.expectedResponse.data.result = this.req.body;
 
       await this.controller.post(this.req, this.res);
       expect(this.status.calledWith(200)).toBe(true);
@@ -101,16 +103,18 @@ class TemplateController extends TestBase {
     it('should put one template with success', async () => {
       this.req.params = { id: 1 };
       this.req.body = {
-        name: 'Teste 3',
-        description: 'teste',
-        active: true,
-        images: [
-          {
-            name: 'Imagem 2',
-            filePath: 'Imagem2.jpg'
-          }
-        ],
-        templatePath: 'teste.jpg'
+        result: {
+          name: 'Teste 3',
+          description: 'teste',
+          active: true,
+          images: [
+            {
+              name: 'Imagem 2',
+              filePath: 'Imagem2.jpg'
+            }
+          ],
+          templatePath: 'teste.jpg'
+        }
       };
 
       this.stub(this.controller.Model, 'findOneAndUpdate').returns(Promise.resolve(this.req.body));

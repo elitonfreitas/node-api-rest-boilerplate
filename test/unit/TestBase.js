@@ -33,7 +33,7 @@ class TestBase {
     };
     this.expectedResponsePager = {
       message: 'Operation successfully performed',
-      data: { result: [{ _id: 1 }], pageIndex: 1, limit: 10, total: 1 }
+      data: { result: [{ _id: 1 }], pager: {current: 1, limit: 10, total: 1} }
     };
     this.expectedErrorResponse = {
       message: 'No results found',

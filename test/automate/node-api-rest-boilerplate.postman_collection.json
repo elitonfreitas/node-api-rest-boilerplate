@@ -20,7 +20,7 @@
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
 							"",
-							"pm.globals.set(\"template01\", jsonData.data._id);",
+							"pm.globals.set(\"template01\", jsonData.data.result._id);",
 							""
 						],
 						"type": "text/javascript"
@@ -129,9 +129,9 @@
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
 							"tests[\"Result is array\"] = Array.isArray(jsonData.data.result);",
-							"tests[\"Has pageIndex\"] = jsonData.data.pageIndex === 1;",
-							"tests[\"Has limit\"] = jsonData.data.limit === 10;",
-							"tests[\"Has total\"] = jsonData.data.total >= 1;",
+							"tests[\"Has pageIndex\"] = jsonData.data.pager.current === 1;",
+							"tests[\"Has limit\"] = jsonData.data.pager.limit === 10;",
+							"tests[\"Has total\"] = jsonData.data.pager.total >= 1;",
 							""
 						],
 						"type": "text/javascript"
@@ -302,7 +302,7 @@
 	],
 	"variable": [
 		{
-			"id": "7824cc64-60c9-45d1-8811-b2201602f585",
+			"id": "056d73f2-9480-421e-a097-eac6f9bca6ea",
 			"key": "success_message",
 			"value": "Operação realizada com sucesso",
 			"type": "string"

@@ -10,11 +10,12 @@ class BaseController extends HttpController {
   }
 
   _normalizePager(req, mongoQuery) {
-    const pageIndex = req.query.pageIndex || req.body.pageIndex || 1;
+    const current = req.query.current || req.body.current || 1;
     const limit = req.query.limit || req.body.limit || 10;
-    const pageNumber = pageIndex > 0 ? (pageIndex - 1) * limit : 0;
+    const pageNumber = current > 0 ? (current - 1) * limit : 0;
     const queryPager = mongoQuery.skip(pageNumber * limit).limit(limit);
-    return { queryPager, pageIndex, limit };
+    const pager = { current, limit };
+    return { queryPager, pager };
   }
 
   async get(req, res, next) {
@@ -27,12 +28,13 @@ class BaseController extends HttpController {
       }
     } else {
       const baseQuery = this.Model.find({}, { __v: 0 });
-      const { queryPager, pageIndex, limit } = this._normalizePager(req, baseQuery);
-      const result = await queryPager.lean();
-      const total = await this.Model.countDocuments();
+      const { queryPager, pager } = this._normalizePager(req, baseQuery);
+      const promises = [queryPager.lean(), this.Model.countDocuments()];
+      const [result, total] = await Promise.all(promises);
+      pager.total = total || 0;
 
       if (result.length) {
-        this.response(res, next, { result, pageIndex, limit, total }, this.Messages.SUCCESS);
+        this.response(res, next, { result, pager }, this.Messages.SUCCESS);
       } else {
         this.responseError(res, next, this.Messages.NO_RESULT);
       }
@@ -44,7 +46,7 @@ class BaseController extends HttpController {
     const savedModel = await model.save();
 
     if (savedModel) {
-      this.response(res, next, savedModel, this.Messages.SUCCESS);
+      this.response(res, next, { result: savedModel }, this.Messages.SUCCESS);
     } else {
       this.responseError(res, next, this.Messages.ERROR_ON_SAVE);
     }
