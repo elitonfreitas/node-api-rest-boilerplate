@@ -38,6 +38,11 @@ const TemplateSchema = new Schema({
     required: true,
     errorMessage: Messages.FIELD_REQUIRED
   },
+  numeric: {
+    type: Number,
+    required: true,
+    errorMessage: Messages.FIELD_REQUIRED
+  },
   description: {
     type: String,
     required: true,

@@ -18,8 +18,8 @@ class ValidatorUtils {
     };
     this.ValidatorTypes = {
       Number: {
-        isArray: {
-          errorMessage: Messages.FIELD_ARRAY_OBJECT
+        isNumeric: {
+          errorMessage: Messages.FIELD_NUMERIC
         }
       },
       Array: {
