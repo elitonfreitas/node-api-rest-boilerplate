@@ -26,7 +26,7 @@ class HttpController extends Controller {
     res.json(result);
 
     if (process.env.NODE_ENV !== 'test') {
-      this.log.debug(`Response => Status: ${status} | Data: ${JSON.stringify(result)}`);
+      this.log.debug('API Response', { statusCode: status, body: result });
     }
   }
 

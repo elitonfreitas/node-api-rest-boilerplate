@@ -51,7 +51,7 @@ class MongoController extends Controller {
 
   _gracefulShutdown(msg, callback) {
     this.mongoose.connection.close(() => {
-      this.log.info('Mongoose disconnected through ' + msg);
+      this.log.info('Mongoose disconnected through ', msg);
       callback();
     });
   }
