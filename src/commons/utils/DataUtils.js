@@ -29,20 +29,17 @@ class DataUtils {
 
   format(data, type) {
     switch (type) {
-      case 'Date':
-        {
-          const format = this.getDateFormat(data);
-          if (moment(data, format, true).isValid()) {
-            data = moment(data, format).toISOString(true);
-          }
+      case 'Date': {
+        const format = this.getDateFormat(data);
+        if (moment(data, format, true).isValid()) {
+          return moment(data, format).toISOString(true);
         }
-        break;
+        return data;
+      }
       case 'Number':
-        data = isNaN(Number(data)) ? data : Number(data);
-        break;
+        return isNaN(Number(data)) ? data : Number(data);
       case 'Boolean':
-        data = Boolean(JSON.parse(data));
-        break;
+        return Boolean(JSON.parse(data));
     }
 
     return data;
