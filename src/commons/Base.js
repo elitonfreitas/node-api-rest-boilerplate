@@ -53,6 +53,7 @@ class Base {
   logRequest(req) {
     const logData = {
       message: 'API Request',
+      headers: `${JSON.stringify(req.headers)}`,
       body: `${JSON.stringify(req.body)}`,
       query: `${JSON.stringify(req.query)}`,
       params: req.params
