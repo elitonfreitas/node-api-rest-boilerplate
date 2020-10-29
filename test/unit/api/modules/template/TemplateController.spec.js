@@ -66,18 +66,16 @@ class TemplateController extends TestBase {
 
     it('should post one template with success', async () => {
       this.req.body = {
-        result: {
-          name: 'Teste 3',
-          description: 'teste',
-          active: true,
-          images: [
-            {
-              name: 'Imagem 2',
-              filePath: 'Imagem2.jpg'
-            }
-          ],
-          templatePath: 'teste.jpg'
-        }
+        name: 'Teste 3',
+        description: 'teste',
+        active: true,
+        images: [
+          {
+            name: 'Imagem 2',
+            filePath: 'Imagem2.jpg'
+          }
+        ],
+        templatePath: 'teste.jpg'
       };
 
       this.stub(this.controller.Model.prototype, 'save').returns(Promise.resolve(this.req.body));
@@ -103,18 +101,16 @@ class TemplateController extends TestBase {
     it('should put one template with success', async () => {
       this.req.params = { id: 1 };
       this.req.body = {
-        result: {
-          name: 'Teste 3',
-          description: 'teste',
-          active: true,
-          images: [
-            {
-              name: 'Imagem 2',
-              filePath: 'Imagem2.jpg'
-            }
-          ],
-          templatePath: 'teste.jpg'
-        }
+        name: 'Teste 3',
+        description: 'teste',
+        active: true,
+        images: [
+          {
+            name: 'Imagem 2',
+            filePath: 'Imagem2.jpg'
+          }
+        ],
+        templatePath: 'teste.jpg'
       };
 
       this.stub(this.controller.Model, 'findOneAndUpdate').returns(Promise.resolve(this.req.body));

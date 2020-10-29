@@ -1,40 +1,40 @@
 'use strict';
 
+const _ = require('lodash');
 const timezone = process.env.TZ || 'America/Sao_Paulo';
 const moment = require('moment-timezone');
 moment.tz.setDefault(timezone);
 
 class DataUtils {
-  getPropertyValue(obj, path) {
-    return path
-      .replace(/\[(\w+)\]/g, '.$1')
-      .replace(/^\./, '')
-      .split('.')
-      .reduce((a, part) => a && a[part], obj);
-  }
+  getDateFormat(date) {
+    const patterns = [
+      'YYYY-MM-DD[T]HH:mm:ss.SSSZZ',
+      'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]',
+      'YYYY-MM-DD',
+      'YYYY-MM-DD[T]HH:mm:ss',
+      'DD/MM/YYYY HH:mm:ss',
+      'DD/MM/YYYY HH:mm',
+      'YYYY-MM-DD[T]HH:mm',
+      'DD/MM/YYYY'
+    ];
 
-  setPropertyValue(obj, path, value) {
-    let i;
-    const a = path.replace(/^\./, '').split('.');
-    for (i = 0; i < a.length - 1; i++) {
-      if (!obj[a[i]]) {
-        obj[a[i]] = {};
+    for (const pattern of patterns) {
+      if (moment(date, pattern, true).isValid()) {
+        return pattern;
       }
-      obj = obj[a[i]];
     }
 
-    obj[a[i]] = value;
-    return obj;
+    return 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ';
   }
 
   format(data, type) {
-    let format = 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ';
-
     switch (type) {
       case 'Date':
-        format = this.getDateFormat(data);
-        if (moment(data, format, true).isValid()) {
-          data = moment(data, format).toISOString(true);
+        {
+          const format = this.getDateFormat(data);
+          if (moment(data, format, true).isValid()) {
+            data = moment(data, format).toISOString(true);
+          }
         }
         break;
       case 'Number':
@@ -69,12 +69,12 @@ class DataUtils {
 
     if (params[key] && params[key].length) {
       for (let i = 0; i < params[key].length; i++) {
-        value = this.getPropertyValue(params, `${key}.${i}${subKey}`);
+        value = _.get(params, `${key}.${i}${subKey}`);
         if (!finalParams[key]) {
           finalParams[key] = [{}];
         }
         if (value !== undefined) {
-          this.setPropertyValue(finalParams, `${key}.${i}${subKey}`, value);
+          _.set(finalParams, `${key}.${i}${subKey}`, value);
         }
       }
     } else if (params[key]) {
@@ -96,7 +96,7 @@ class DataUtils {
         if (item.includes('*')) {
           finalParams = this._getArrayValues(item, params, finalParams);
         } else {
-          value = this.getPropertyValue(params, item);
+          value = _.get(params, item);
           if (!opt.remove && value !== undefined && !item.includes('*')) {
             if (opt.type && value) {
               finalParams[item] = this.format(value, opt.type);
@@ -109,27 +109,6 @@ class DataUtils {
     }
 
     return finalParams;
-  }
-
-  getDateFormat(date) {
-    const patterns = [
-      'YYYY-MM-DD[T]HH:mm:ss.SSSZZ',
-      'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]',
-      'YYYY-MM-DD',
-      'YYYY-MM-DD[T]HH:mm:ss',
-      'DD/MM/YYYY HH:mm:ss',
-      'DD/MM/YYYY HH:mm',
-      'YYYY-MM-DD[T]HH:mm',
-      'DD/MM/YYYY'
-    ];
-
-    for (const pattern of patterns) {
-      if (moment(date, pattern, true).isValid()) {
-        return pattern;
-      }
-    }
-
-    return 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ';
   }
 }
 
