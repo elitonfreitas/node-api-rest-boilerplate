@@ -2,6 +2,7 @@
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/local.env' });
+const mongoose = require('mongoose');
 const sinon = require('sinon');
 const Messages = require('../../src/commons/constants/Messages');
 
@@ -10,9 +11,12 @@ class TestBase {
     this.restoreMethods = [];
     this.stub = sinon.stub;
     this.Messages = Messages;
+    this.isModel = isModel;
+    this.connection;
+    this.mongoose = mongoose;
 
     if (path) {
-      if (isModel) {
+      if (this.isModel) {
         this.Model = require(path);
       } else {
         if (newInstance) {
@@ -138,6 +142,22 @@ class TestBase {
       if (this.controller) {
         afterEach(() => this.restore());
       }
+
+      if (this.isModel) {
+        beforeAll(async () => {
+          try {
+            this.connection = await mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useCreateIndex: true });
+          } catch (error) {
+            console.error(err);
+            process.exit(1);
+          }
+        });
+
+        afterAll(async () => {
+          await this.connection.close();
+        });
+      }
+
       this.test();
     });
   }

@@ -8,5 +8,6 @@ module.exports = {
   testEnvironment: 'node',
   testMatch: ['<rootDir>/**/*.spec.js'],
   testPathIgnorePatterns: ['/node_modules/'],
-  verbose: true
+  verbose: true,
+  preset: '@shelf/jest-mongodb'
 };
