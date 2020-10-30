@@ -1,7 +1,7 @@
 'use strict';
 const { Express } = require('jest-express/lib/express');
 const TestBase = require('../TestBase');
-const TemplateModel = require('../../../src/models/Template.model');
+const UserModel = require('../../../src/models/User.model');
 
 class RoutesTest extends TestBase {
   constructor() {
@@ -31,7 +31,7 @@ class RoutesTest extends TestBase {
       const route = {
         path: '/test',
         controller: {
-          Model: TemplateModel,
+          Model: UserModel,
           post: (req, res, next) => {}
         }
       };
@@ -67,7 +67,7 @@ class RoutesTest extends TestBase {
 
     it('should get field name from error message', () => {
       const message = new Error('E11000 duplicate test erro message index: name_1 text');
-      expect(this.controller.normalizeMongoErrors(message)).toEqual('O campo "name" deve ter um valor único');
+      expect(this.controller.normalizeMongoErrors(message)).toEqual('O valor do campo "name" já existe');
     });
 
     it('should get validator error messages', () => {

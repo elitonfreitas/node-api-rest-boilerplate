@@ -8,17 +8,11 @@ module.exports = {
       notEmpty: true,
       errorMessage: Messages.FIELD_REQUIRED
     },
-    description: {
+    email: {
       notEmpty: true,
       errorMessage: Messages.FIELD_REQUIRED
     },
-    images: {
-      notEmpty: true,
-      isArray: {
-        errorMessage: Messages.FIELD_ARRAY_OBJECT
-      }
-    },
-    templatePath: {
+    password: {
       notEmpty: true,
       errorMessage: Messages.FIELD_REQUIRED
     },
@@ -28,10 +22,19 @@ module.exports = {
       isBoolean: {
         errorMessage: Messages.FIELD_BOOLEAN
       }
+    },
+    addresses: {
+      notEmpty: true,
+      isArray: {
+        errorMessage: Messages.FIELD_ARRAY_OBJECT
+      }
+    },
+    level: {
+      isNumeric: true
     }
   },
   put: {
-    images: {
+    addresses: {
       optional: true,
       isArray: {
         errorMessage: Messages.FIELD_ARRAY_OBJECT

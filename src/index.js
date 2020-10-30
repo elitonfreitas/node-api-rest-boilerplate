@@ -9,6 +9,7 @@ const Base = require('./commons/Base');
 const routes = require('./commons/Routes');
 const HttpController = require('./commons/HttpController');
 const MongoController = require('./commons/MongoController');
+const JwtMiddleware = require('./api/commons/JwtMiddleware');
 
 class Api extends Base {
   async start() {
@@ -25,6 +26,7 @@ class Api extends Base {
 
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json({ limit: '15mb' }));
+    app.use(JwtMiddleware.initialize());
 
     const dirModules = `${__dirname}/api/modules`;
     fs.readdirSync(dirModules).forEach(file => {

@@ -1,23 +1,23 @@
 'use strict';
 
 const TestBase = require('../../../TestBase');
-const TemplateModel = require('../../../../../src/models/Template.model');
+const UserModel = require('../../../../../src/models/User.model');
 const ValidatorUtils = require('../../../../../src/commons/utils/ValidatorUtils');
 
-class TemplateController extends TestBase {
+class UserController extends TestBase {
   constructor() {
     const validator = {
-      post: ValidatorUtils.getValidationSchema(TemplateModel, 'post'),
-      put: ValidatorUtils.getValidationSchema(TemplateModel, 'put')
+      post: ValidatorUtils.getValidationSchema(UserModel, 'post'),
+      put: ValidatorUtils.getValidationSchema(UserModel, 'put')
     };
-    super('../../src/api/modules/template/controllers/TemplateController', false, false, TemplateModel);
+    super('../../src/api/modules/users/controllers/UserController', false, false, UserModel);
     this.controller.Validator = validator;
   }
 
   test() {
     const mongoQuery = this.methods;
 
-    it('should get one template with success', async () => {
+    it('should get one user with success', async () => {
       mongoQuery.lean = () => Promise.resolve({ _id: 1 });
 
       this.stub(this.controller.Model, 'findOne').returns(mongoQuery);
@@ -28,7 +28,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedResponse)).toBe(true);
     });
 
-    it('should get one template without results', async () => {
+    it('should get one user without results', async () => {
       mongoQuery.lean = () => Promise.resolve(null);
 
       this.stub(this.controller.Model, 'findOne').returns(mongoQuery);
@@ -38,7 +38,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
-    it('should get all template with success', async () => {
+    it('should get all users with success', async () => {
       this.req.params = {};
       mongoQuery.lean = () => Promise.resolve([{ _id: 1 }]);
 
@@ -52,7 +52,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedResponsePager)).toBe(true);
     });
 
-    it('should get all template without results', async () => {
+    it('should get all users without results', async () => {
       this.req.params = {};
       mongoQuery.lean = () => Promise.resolve([]);
 
@@ -64,7 +64,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
-    it('should post one template with success', async () => {
+    it('should post one user with success', async () => {
       this.req.body = {
         name: 'Teste 3',
         description: 'teste',
@@ -75,7 +75,7 @@ class TemplateController extends TestBase {
             filePath: 'Imagem2.jpg'
           }
         ],
-        templatePath: 'teste.jpg'
+        usersPath: 'teste.jpg'
       };
 
       this.stub(this.controller.Model.prototype, 'save').returns(Promise.resolve(this.req.body));
@@ -88,7 +88,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedResponse)).toBe(true);
     });
 
-    it('should post one template with error', async () => {
+    it('should post one user with error', async () => {
       this.stub(this.controller.Model.prototype, 'save').returns(Promise.resolve(null));
 
       this.expectedErrorResponse.message = 'Error on try to save data';
@@ -98,7 +98,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
-    it('should put one template with success', async () => {
+    it('should put one user with success', async () => {
       this.req.params = { id: 1 };
       this.req.body = {
         name: 'Teste 3',
@@ -110,7 +110,7 @@ class TemplateController extends TestBase {
             filePath: 'Imagem2.jpg'
           }
         ],
-        templatePath: 'teste.jpg'
+        usersPath: 'teste.jpg'
       };
 
       this.stub(this.controller.Model, 'findOneAndUpdate').returns(Promise.resolve(this.req.body));
@@ -123,7 +123,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedResponse)).toBe(true);
     });
 
-    it('should put one template but not update', async () => {
+    it('should put one user but not update', async () => {
       this.req.params = { id: 1 };
       this.expectedErrorResponse.message = 'Update not effective';
 
@@ -134,7 +134,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
-    it('should put one template with params error', async () => {
+    it('should put one user with params error', async () => {
       this.req.params = {};
       this.expectedErrorResponse.message = 'Invalid params';
 
@@ -145,7 +145,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
-    it('should delete one template with success', async () => {
+    it('should delete one user with success', async () => {
       this.req.params = { id: 1 };
 
       this.stub(this.controller.Model, 'findOneAndRemove').returns(Promise.resolve({ id: 1 }));
@@ -158,7 +158,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedResponse)).toBe(true);
     });
 
-    it('should delete one template but not found', async () => {
+    it('should delete one user but not found', async () => {
       this.req.params = { id: 1 };
       this.expectedErrorResponse.message = 'Data not found';
 
@@ -169,7 +169,7 @@ class TemplateController extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
-    it('should delete one template with params error', async () => {
+    it('should delete one user with params error', async () => {
       this.req.params = {};
       this.expectedErrorResponse.message = 'Invalid params';
 
@@ -182,4 +182,4 @@ class TemplateController extends TestBase {
   }
 }
 
-new TemplateController().run();
+new UserController().run();
