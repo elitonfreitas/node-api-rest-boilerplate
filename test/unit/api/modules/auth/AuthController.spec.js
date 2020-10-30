@@ -24,20 +24,19 @@ class AuthControllerTest extends TestBase {
       this.stub(this.controller.User, 'findOne').returns(mongoQuery);
       this.restore(this.controller.User.findOne);
 
-      await this.controller.post(this.req, this.res);
-      expect(this.status.calledWith(200)).toBe(true);
+      const response = await this.controller.post(this.req);
+      expect(response).toHaveProperty('token');
     });
 
     it('should not auth user with empty login', async () => {
       mongoQuery.lean = () => Promise.resolve(null);
-
       this.stub(this.controller.User, 'findOne').returns(mongoQuery);
 
-      this.expectedErrorResponse.message = this.Messages.INVALID_LOGIN;
-
-      await this.controller.post(this.req, this.res);
-      expect(this.status.calledWith(400)).toBe(true);
-      expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
+      try {
+        await this.controller.post(this.req);
+      } catch (error) {
+        expect(error.message).toBe(this.Messages.INVALID_LOGIN);
+      }
     });
 
     it('should not auth user with invalid password', async () => {
@@ -50,23 +49,11 @@ class AuthControllerTest extends TestBase {
 
       this.stub(this.controller.User, 'findOne').returns(mongoQuery);
 
-      this.expectedErrorResponse.message = this.Messages.INVALID_LOGIN;
-
-      await this.controller.post(this.req, this.res);
-      expect(this.status.calledWith(400)).toBe(true);
-      expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
-    });
-
-    it('should not auth user with error', async () => {
-      mongoQuery.lean = () => Promise.reject();
-
-      this.stub(this.controller.User, 'findOne').returns(mongoQuery);
-
-      this.expectedErrorResponse.message = this.Messages.INVALID_PARAMS;
-
-      await this.controller.post(this.req, this.res);
-      expect(this.status.calledWith(400)).toBe(true);
-      expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
+      try {
+        await this.controller.post(this.req);
+      } catch (error) {
+        expect(error.message).toBe(this.Messages.INVALID_LOGIN);
+      }
     });
   }
 }

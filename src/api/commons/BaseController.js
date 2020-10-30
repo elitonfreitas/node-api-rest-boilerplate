@@ -18,57 +18,57 @@ class BaseController extends HttpController {
     return { queryPager, pager };
   }
 
-  async get(req, res, next) {
+  async get(req) {
     if (req.params.id) {
       const result = await this.Model.findOne({ _id: req.params.id }, { __v: 0 }).lean();
       if (result) {
-        this.response(res, next, { result }, this.Messages.SUCCESS);
+        return result;
       } else {
-        this.responseError(res, next, this.Messages.NO_RESULT);
+        throw new Error(this.Messages.NO_RESULT);
       }
     } else {
       const baseQuery = this.Model.find({}, { __v: 0 });
       const { queryPager, pager } = this._normalizePager(req, baseQuery);
       const promises = [queryPager.lean(), this.Model.countDocuments()];
-      const [result, total] = await Promise.all(promises);
+      const [list, total] = await Promise.all(promises);
       pager.total = total || 0;
 
-      if (result.length) {
-        this.response(res, next, { result, pager }, this.Messages.SUCCESS);
+      if (list.length) {
+        return { list, pager };
       } else {
-        this.responseError(res, next, this.Messages.NO_RESULT);
+        throw new Error(this.Messages.NO_RESULT);
       }
     }
   }
 
-  async post(req, res, next) {
+  async post(req) {
     const model = new this.Model(this.DataUtils.normalize(req.body, this.Validator.post));
     const savedModel = await model.save();
 
     if (savedModel) {
-      this.response(res, next, { result: savedModel }, this.Messages.SUCCESS);
+      return savedModel;
     } else {
-      this.responseError(res, next, this.Messages.ERROR_ON_SAVE);
+      throw new Error(this.Messages.ERROR_ON_SAVE);
     }
   }
 
-  async put(req, res, next) {
+  async put(req) {
     if (req.params.id) {
       const setUpdate = this.DataUtils.normalize(req.body, this.Validator.put);
       setUpdate.updatedAt = this.moment().toISOString(true);
       const result = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
 
       if (result) {
-        this.response(res, next, { result }, this.Messages.SUCCESS);
+        return result;
       } else {
-        this.responseError(res, next, this.Messages.UPDATE_NOT_OCURRED);
+        throw new Error(this.Messages.UPDATE_NOT_OCURRED);
       }
     } else {
-      this.responseError(res, next, this.Messages.INVALID_PARAMS);
+      throw new Error(this.Messages.INVALID_PARAMS);
     }
   }
 
-  async delete(req, res, next) {
+  async delete(req) {
     if (req.params.id) {
       let result;
       try {
@@ -78,12 +78,12 @@ class BaseController extends HttpController {
       }
 
       if (result && result.id) {
-        this.response(res, next, {}, this.Messages.SUCCESS);
+        return {};
       } else {
-        this.responseError(res, next, this.Messages.DATA_NOT_FOUND);
+        throw new Error(this.Messages.DATA_NOT_FOUND);
       }
     } else {
-      this.responseError(res, next, this.Messages.INVALID_PARAMS);
+      throw new Error(this.Messages.INVALID_PARAMS);
     }
   }
 }

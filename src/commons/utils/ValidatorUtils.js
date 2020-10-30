@@ -43,7 +43,7 @@ class ValidatorUtils {
     const resultItem = {};
     for (const key in attr) {
       if (attr.hasOwnProperty(key)) {
-        if (this.AttributeMap[verb][key]) {
+        if (this.AttributeMap[verb][key] || key.indexOf('is') === 0) {
           if (key === 'type') {
             Object.assign(resultItem, this.setValidatorType(attr[key].name));
             if (!resultItem['custom']) {
@@ -51,7 +51,11 @@ class ValidatorUtils {
             }
             resultItem['custom']['options'] = () => ({ type: attr[key].name });
           } else {
-            resultItem[this.AttributeMap[verb][key]] = attr[key];
+            if (key.indexOf('is') === 0) {
+              resultItem[key] = attr[key];
+            } else {
+              resultItem[this.AttributeMap[verb][key]] = attr[key];
+            }
           }
         }
       }
