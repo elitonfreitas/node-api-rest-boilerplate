@@ -26,13 +26,16 @@ const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
-    indexe: true,
+    index: true,
     errorMessage: Messages.FIELD_REQUIRED
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    isEmail: {
+      errorMessage: Messages.FIELD_EMAIL
+    },
     errorMessage: Messages.FIELD_REQUIRED
   },
   password: {

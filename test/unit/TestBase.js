@@ -12,7 +12,7 @@ class TestBase {
     this.stub = sinon.stub;
     this.Messages = Messages;
     this.isModel = isModel;
-    this.connection;
+    this.connection = null;
     this.mongoose = mongoose;
 
     if (path) {
@@ -37,11 +37,11 @@ class TestBase {
 
     this.expectedResponse = {
       message: 'Operation successfully performed',
-      data: { result: { _id: 1 } }
+      data: { _id: 1 }
     };
     this.expectedResponsePager = {
       message: 'Operation successfully performed',
-      data: { result: [{ _id: 1 }], pager: { current: 1, limit: 10, total: 1 } }
+      data: { list: [{ _id: 1 }], pager: { current: 1, limit: 10, total: 1 } }
     };
     this.expectedErrorResponse = {
       message: 'No results found',

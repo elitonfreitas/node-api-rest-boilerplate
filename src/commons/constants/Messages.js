@@ -3,6 +3,7 @@
 module.exports = {
   FIELD_REQUIRED: 'Field "{{param}}" is required',
   FIELD_ARRAY: 'Field "{{param}}" must be an array',
+  FIELD_EMAIL: 'Field "{{param}}" must be an email',
   FIELD_NUMERIC: 'Field "{{param}}" must be a numeric value',
   FIELD_ARRAY_OBJECT: 'Field "{{param}}" must be an array of objects',
   FIELD_OBJECT: 'Field "{{param}}" must be an object',

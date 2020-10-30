@@ -14,13 +14,13 @@ class Routes extends Base {
   generate(app, route) {
     const path = this.rootPath + route.path;
     const controller = route.controller;
+    controller.Validator = controller.Validator || {};
 
-    this.httpVerbs.forEach(httpVerb => {
+    for (const httpVerb of this.httpVerbs) {
       const verb = route.verb || httpVerb;
       const method = route.method || httpVerb;
 
       if (controller[method]) {
-        controller.Validator = controller.Validator || {};
         if (this.httpValidateVerbs.includes(verb) && controller.Model) {
           if (!controller.Validator[verb]) {
             controller.Validator[verb] = this.ValidatorUtils.getValidationSchema(controller.Model, verb);
@@ -37,7 +37,8 @@ class Routes extends Base {
             const validations = validationResult(req);
 
             if (!validations.errors.length) {
-              await controller[method](req, res, next);
+              const response = await controller[method](req, res, next);
+              controller.response(res, next, response, this.Messages.SUCCESS);
             } else {
               controller.responseError(res, next, this.getValidatorErrors(validations.errors, locale));
             }
@@ -46,7 +47,8 @@ class Routes extends Base {
           }
         });
       }
-    });
+    }
+
     return app;
   }
 
