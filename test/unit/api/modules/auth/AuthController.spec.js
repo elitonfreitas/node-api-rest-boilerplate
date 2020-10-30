@@ -3,7 +3,7 @@
 const TestBase = require('../../../TestBase');
 const UserModel = require('../../../../../src/models/User.model');
 
-class UserController extends TestBase {
+class AuthControllerTest extends TestBase {
   constructor() {
     super('../../src/api/modules/auth/controllers/AuthController', false, false);
     this.controller.User = UserModel;
@@ -71,4 +71,4 @@ class UserController extends TestBase {
   }
 }
 
-new UserController().run();
+new AuthControllerTest().run();
