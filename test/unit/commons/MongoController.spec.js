@@ -12,21 +12,21 @@ class MongoControllerTest extends TestBase {
       this.controller.dbAuth = '0';
       this.controller.dbReplicaOption = null;
 
-      expect(this.controller._getConnectionUrl()).toEqual('mongodb://localhost:27017/restapi-local?authSource=admin');
+      expect(this.controller._getConnectionUrl()).toEqual('mongodb://127.0.0.1:27017/noderestapi?authSource=admin');
     });
 
     it('should get connection url with auth without replica set', () => {
       this.controller.dbAuth = '1';
       this.controller.dbReplicaOption = null;
 
-      expect(this.controller._getConnectionUrl()).toEqual('mongodb://root:@localhost:27017/restapi-local?authSource=admin');
+      expect(this.controller._getConnectionUrl()).toEqual('mongodb://root:test@127.0.0.1:27017/noderestapi?authSource=admin');
     });
 
     it('should get connection url with replica set', () => {
       this.controller.dbAuth = '1';
       this.controller.dbReplicaOption = `replicaSet=rs&`;
 
-      expect(this.controller._getConnectionUrl()).toEqual('mongodb://root:@localhost/restapi-local?replicaSet=rs&authSource=admin');
+      expect(this.controller._getConnectionUrl()).toEqual('mongodb://root:test@127.0.0.1/noderestapi?replicaSet=rs&authSource=admin');
     });
 
     it('should connect with Mongo', async () => {

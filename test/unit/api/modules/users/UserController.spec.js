@@ -4,7 +4,7 @@ const TestBase = require('../../../TestBase');
 const UserModel = require('../../../../../src/models/User.model');
 const ValidatorUtils = require('../../../../../src/commons/utils/ValidatorUtils');
 
-class UserController extends TestBase {
+class UserControllerTest extends TestBase {
   constructor() {
     const validator = {
       post: ValidatorUtils.getValidationSchema(UserModel, 'post'),
@@ -182,4 +182,4 @@ class UserController extends TestBase {
   }
 }
 
-new UserController().run();
+new UserControllerTest().run();

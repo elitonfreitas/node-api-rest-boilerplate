@@ -9,6 +9,7 @@ class JwtMiddleware extends HttpController {
     this.process = this.process.bind(this);
     this.nextIfHasToken = this.nextIfHasToken.bind(this);
     this.rootApi = process.env.ROOT_API_PATH || '/api';
+    this.noAuthRoutes = process.env.NO_AUTH_ROUTES ? process.env.NO_AUTH_ROUTES.split(';') : [];
     this.noTokenApis = [];
     this._getNoAuthRoutes();
   }
@@ -31,9 +32,7 @@ class JwtMiddleware extends HttpController {
   }
 
   _getNoAuthRoutes() {
-    const noAuthRoutes = process.env.NO_AUTH_ROUTES ? process.env.NO_AUTH_ROUTES.split(';') : [];
-
-    for (const route of noAuthRoutes) {
+    for (const route of this.noAuthRoutes) {
       const [path, methodsStr] = route.split('|');
 
       if (path) {

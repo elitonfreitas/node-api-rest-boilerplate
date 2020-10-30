@@ -1,5 +1,7 @@
 'use strict';
 
+const dotenv = require('dotenv');
+dotenv.config({ path: './config/local.env' });
 const sinon = require('sinon');
 const Messages = require('../../src/commons/constants/Messages');
 
