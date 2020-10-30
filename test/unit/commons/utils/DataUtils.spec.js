@@ -1,7 +1,7 @@
 'use strict';
 
 const TestBase = require('../../TestBase');
-const TemplateModel = require('../../../../src/models/Template.model');
+const UserModel = require('../../../../src/models/User.model');
 
 class DataUtilsTest extends TestBase {
   constructor() {
@@ -30,7 +30,7 @@ class DataUtilsTest extends TestBase {
     });
 
     it('should get fields from Model', () => {
-      expect(this.controller.getFieldsOfSchema(TemplateModel)).toContainEqual({ key: 'name', type: 'string' });
+      expect(this.controller.getFieldsOfSchema(UserModel)).toContainEqual({ key: 'name', type: 'string' });
     });
 
     const formats = [

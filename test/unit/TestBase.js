@@ -1,11 +1,13 @@
 'use strict';
 
 const sinon = require('sinon');
+const Messages = require('../../src/commons/constants/Messages');
 
 class TestBase {
   constructor(path, isModel, newInstance, Model, Validator) {
     this.restoreMethods = [];
     this.stub = sinon.stub;
+    this.Messages = Messages;
 
     if (path) {
       if (isModel) {
@@ -33,7 +35,7 @@ class TestBase {
     };
     this.expectedResponsePager = {
       message: 'Operation successfully performed',
-      data: { result: [{ _id: 1 }], pager: {current: 1, limit: 10, total: 1} }
+      data: { result: [{ _id: 1 }], pager: { current: 1, limit: 10, total: 1 } }
     };
     this.expectedErrorResponse = {
       message: 'No results found',
