@@ -11,6 +11,14 @@
     },
     {
       "type": "node",
+      "request": "attach",
+      "protocol": "inspector",
+      "restart": true,
+      "name": "API Nodemon",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
       "request": "launch",
       "name": "Test",
       "program": "${workspaceFolder}/node_modules/.bin/jest",

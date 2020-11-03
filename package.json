@@ -6,6 +6,7 @@
   "scripts": {
     "test": "NODE_PATH=. jest --passWithNoTests && npm run test:badge",
     "test:badge": "npx jest-badge-generator",
+    "dev": "nodemon src/index.js",
     "start": "node src/index"
   },
   "husky": {
@@ -54,6 +55,7 @@
     "jest-badge-generator": "^1.1.5",
     "jest-express": "^1.11.0",
     "lint-staged": "^10.0.8",
+    "nodemon": "^2.0.6",
     "prettier": "^1.19.1",
     "sinon": "^9.0.0"
   }
