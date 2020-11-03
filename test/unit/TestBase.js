@@ -146,7 +146,12 @@ class TestBase {
       if (this.isModel) {
         beforeAll(async () => {
           try {
-            this.connection = await mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useCreateIndex: true });
+            this.connection = await mongoose.connect(process.env.MONGO_URL, {
+              useNewUrlParser: true,
+              useCreateIndex: true,
+              useUnifiedTopology: true,
+              useFindAndModify: false
+            });
           } catch (error) {
             console.error(err);
             process.exit(1);

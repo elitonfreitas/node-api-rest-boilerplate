@@ -76,6 +76,13 @@ class Logger {
         transports: this.transportsList,
         level: this.logLevel
       });
+    } else {
+      return {
+        info: () => {},
+        debug: () => {},
+        error: () => {},
+        warn: () => {}
+      };
     }
   }
 }

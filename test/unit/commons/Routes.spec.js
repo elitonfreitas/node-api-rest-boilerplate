@@ -21,7 +21,8 @@ class RoutesTest extends TestBase {
       const route = {
         path: '/test',
         controller: {
-          get: (req, res, next) => {}
+          get: (req, res, next) => {},
+          responseError: () => {}
         }
       };
       expect(this.controller.generate(app, route)).toHaveProperty('get');
@@ -32,7 +33,8 @@ class RoutesTest extends TestBase {
         path: '/test',
         controller: {
           Model: UserModel,
-          post: (req, res, next) => {}
+          post: (req, res, next) => {},
+          responseError: () => {}
         }
       };
       expect(this.controller.generate(app, route)).toHaveProperty('post');
@@ -49,7 +51,8 @@ class RoutesTest extends TestBase {
               }
             }
           },
-          post: (req, res, next) => {}
+          post: (req, res, next) => {},
+          responseError: () => {}
         }
       };
       expect(this.controller.generate(app, route)).toHaveProperty('post');
