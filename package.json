@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_PATH=. jest --passWithNoTests && npm run test:badge",
     "test:badge": "npx jest-badge-generator",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --inspect -r dotenv/config src/index.js dotenv_config_path=./config/local.env",
     "start": "node src/index"
   },
   "husky": {
