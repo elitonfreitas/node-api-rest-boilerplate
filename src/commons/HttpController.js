@@ -9,6 +9,7 @@ class HttpController extends Controller {
   constructor() {
     super();
     this.moment = moment;
+    this.disabledMethods = [];
   }
 
   translateError(msg, locale = 'en') {
@@ -34,7 +35,7 @@ class HttpController extends Controller {
     this.response(res, next, data, message, status);
   }
 
-  options(req, res, next) {
+  options(req, res) {
     const date = new Date();
     const header = {
       Allow: '',
@@ -44,7 +45,7 @@ class HttpController extends Controller {
       'x-powered-by': 'Spring Server'
     };
     res.set(header);
-    this.response(res, next, {});
+    return {};
   }
 }
 

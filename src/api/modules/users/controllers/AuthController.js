@@ -2,10 +2,10 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const BaseController = require('../../../../commons/BaseController');
+const HttpController = require('../../../../commons/HttpController');
 const User = require('../models/User.model');
 
-class AuthController extends BaseController {
+class AuthController extends HttpController {
   constructor() {
     super();
     this.secret = process.env.JWT_SECRET || 'teste';

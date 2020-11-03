@@ -8,14 +8,9 @@ class HttpControllerTest extends TestBase {
   }
 
   test() {
-    it('should call options method', () => {
-      this.expectedResponse = {
-        message: '',
-        data: {}
-      };
-      this.controller.options(this.req, this.res);
-      expect(this.status.calledWith(200)).toBe(true);
-      expect(this.json.calledWith(this.expectedResponse)).toBe(true);
+    it('should call options method', async () => {
+      const response = await this.controller.options(this.req, this.res);
+      expect(response).toStrictEqual({});
     });
   }
 }

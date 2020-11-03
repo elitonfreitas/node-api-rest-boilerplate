@@ -7,7 +7,7 @@ class Routes extends Base {
   constructor() {
     super();
     this.rootPath = process.env.ROOT_API_PATH || '/api';
-    this.httpVerbs = ['options', 'get', 'post', 'put', 'patch', 'delete', 'head', 'ws', 'wss'];
+    this.httpVerbs = ['options', 'get', 'post', 'put', 'delete']; // if need, includes: 'patch', 'head', 'ws', 'wss'
     this.httpValidateVerbs = ['post', 'put'];
   }
 
@@ -20,7 +20,7 @@ class Routes extends Base {
       const verb = route.verb || httpVerb;
       const method = route.method || httpVerb;
 
-      if (controller[method]) {
+      if (controller[method] && !controller.disabledMethods.includes(method)) {
         if (this.httpValidateVerbs.includes(verb) && controller.Model) {
           if (!controller.Validator[verb]) {
             controller.Validator[verb] = this.ValidatorUtils.getValidationSchema(controller.Model, verb);
