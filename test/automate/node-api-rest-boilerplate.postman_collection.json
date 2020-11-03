@@ -20,7 +20,7 @@
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
 							"",
-							"pm.globals.set(\"template01\", jsonData.data.result._id);",
+							"pm.globals.set(\"template01\", jsonData.data._id);",
 							""
 						],
 						"type": "text/javascript"
@@ -44,7 +44,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"description\": \"User teste\",\n\t\"level\": \"1\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"1\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/users",
@@ -124,7 +124,7 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
-							"tests[\"Template exists\"] = jsonData.data.result._id === pm.variables.get(\"template01\");",
+							"tests[\"Template exists\"] = jsonData.data._id === pm.variables.get(\"template01\");",
 							""
 						],
 						"type": "text/javascript"
@@ -185,7 +185,7 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
-							"tests[\"Result is array\"] = Array.isArray(jsonData.data.result);",
+							"tests[\"Result is array\"] = Array.isArray(jsonData.data.list);",
 							"tests[\"Has pageIndex\"] = jsonData.data.pager.current === 1;",
 							"tests[\"Has limit\"] = jsonData.data.pager.limit === 10;",
 							"tests[\"Has total\"] = jsonData.data.pager.total >= 1;",
@@ -223,13 +223,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/users/",
+					"raw": "{{URL}}/users",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
-						"users",
-						""
+						"users"
 					]
 				}
 			},
@@ -249,7 +248,7 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
-							"tests[\"Has result\"] = jsonData.data.result._id === pm.variables.get(\"template01\");"
+							"tests[\"Has result\"] = jsonData.data._id === pm.variables.get(\"template01\");"
 						],
 						"type": "text/javascript"
 					}
@@ -277,7 +276,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"description\": \"User teste editado\",\n\t\"level\": \"1\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user5@teste.com\",\n\t\"password\": \"123456\",\n\t\"description\": \"User teste editado\",\n\t\"level\": \"1\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/users/{{template01}}",
@@ -374,7 +373,7 @@
 	],
 	"variable": [
 		{
-			"id": "d0469a8f-b37e-4b1a-8acd-c9bc340669bb",
+			"id": "7828e0e1-47b5-4126-83aa-70e7900c414b",
 			"key": "success_message",
 			"value": "Operação realizada com sucesso",
 			"type": "string"
