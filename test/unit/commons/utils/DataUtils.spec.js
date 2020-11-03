@@ -1,11 +1,11 @@
 'use strict';
 
-const TestBase = require('../../TestBase');
-const UserModel = require('../../../../src/models/User.model');
+const TestBase = require('test/unit/TestBase');
+const UserModel = require('src/api/modules/users/models/User.model');
 
 class DataUtilsTest extends TestBase {
   constructor() {
-    super('../../src/commons/utils/DataUtils');
+    super('src/commons/utils/DataUtils');
   }
 
   test() {

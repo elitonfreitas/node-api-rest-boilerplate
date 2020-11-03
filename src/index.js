@@ -9,7 +9,7 @@ const Base = require('./commons/Base');
 const routes = require('./commons/Routes');
 const HttpController = require('./commons/HttpController');
 const MongoController = require('./commons/MongoController');
-const JwtMiddleware = require('./api/commons/JwtMiddleware');
+const JwtMiddleware = require('./commons/middlewares/JwtMiddleware');
 
 class Api extends Base {
   async start() {

@@ -1,10 +1,10 @@
 'use strict';
 
-const TestBase = require('../TestBase');
+const TestBase = require('test/unit/TestBase');
 
 class MongoControllerTest extends TestBase {
   constructor() {
-    super('../../src/commons/MongoController', false, true);
+    super('src/commons/MongoController', false, true);
   }
 
   test() {

@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/local.env' });
 const mongoose = require('mongoose');
 const sinon = require('sinon');
-const Messages = require('../../src/commons/constants/Messages');
+const Messages = require('src/commons/constants/Messages');
 
 class TestBase {
   constructor(path, isModel, newInstance, Model, Validator) {

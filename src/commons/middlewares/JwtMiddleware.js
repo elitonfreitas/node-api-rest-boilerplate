@@ -1,7 +1,7 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
-const HttpController = require('../../commons/HttpController');
+const HttpController = require('../HttpController');
 
 class JwtMiddleware extends HttpController {
   constructor() {

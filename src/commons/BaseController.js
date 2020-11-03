@@ -1,6 +1,6 @@
 'use strict';
 
-const HttpController = require('../../commons/HttpController');
+const HttpController = require('./HttpController');
 
 class BaseController extends HttpController {
   constructor(Model, Validator) {

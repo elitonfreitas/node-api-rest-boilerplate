@@ -1,8 +1,8 @@
 'use strict';
 
-const TestBase = require('../../../TestBase');
-const UserModel = require('../../../../../src/models/User.model');
-const ValidatorUtils = require('../../../../../src/commons/utils/ValidatorUtils');
+const TestBase = require('test/unit/TestBase');
+const UserModel = require('src/api/modules/users/models/User.model');
+const ValidatorUtils = require('src/commons/utils/ValidatorUtils');
 
 class UserControllerTest extends TestBase {
   constructor() {
@@ -10,7 +10,7 @@ class UserControllerTest extends TestBase {
       post: ValidatorUtils.getValidationSchema(UserModel, 'post'),
       put: ValidatorUtils.getValidationSchema(UserModel, 'put')
     };
-    super('../../src/api/modules/users/controllers/UserController', false, false, UserModel);
+    super('src/api/modules/users/controllers/UserController', false, false, UserModel);
     this.controller.Validator = validator;
   }
 

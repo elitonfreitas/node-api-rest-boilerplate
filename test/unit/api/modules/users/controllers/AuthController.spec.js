@@ -1,11 +1,11 @@
 'use strict';
 
-const TestBase = require('../../../TestBase');
-const UserModel = require('../../../../../src/models/User.model');
+const TestBase = require('test/unit/TestBase');
+const UserModel = require('src/api/modules/users/models/User.model');
 
 class AuthControllerTest extends TestBase {
   constructor() {
-    super('../../src/api/modules/auth/controllers/AuthController', false, false);
+    super('src/api/modules/users/controllers/AuthController', false, false);
     this.controller.User = UserModel;
   }
 

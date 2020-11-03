@@ -1,10 +1,10 @@
 'use strict';
 
-const TestBase = require('../TestBase');
+const TestBase = require('test/unit/TestBase');
 
 class UserModelTest extends TestBase {
   constructor() {
-    super('../../src/models/User.model', true);
+    super('src/api/modules/users/models/User.model', true);
     this.userData = {
       name: 'User test',
       email: 'user@teste.com',

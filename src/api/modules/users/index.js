@@ -1,14 +1,19 @@
 'use strict';
 
-const controller = require('./controllers/UserController');
+const UserController = require('./controllers/UserController');
+const AuthController = require('./controllers/AuthController');
 
 module.exports = [
   {
     path: '/users/:id',
-    controller
+    controller: UserController
   },
   {
     path: '/users',
-    controller
+    controller: UserController
+  },
+  {
+    path: '/auth',
+    controller: AuthController
   }
 ];

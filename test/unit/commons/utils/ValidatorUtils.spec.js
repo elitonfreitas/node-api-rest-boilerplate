@@ -1,10 +1,10 @@
 'use strict';
 
-const TestBase = require('../../TestBase');
+const TestBase = require('test/unit/TestBase');
 
 class ValidatorUtilsTest extends TestBase {
   constructor() {
-    super('../../src/commons/utils/ValidatorUtils');
+    super('src/commons/utils/ValidatorUtils');
   }
 
   test() {

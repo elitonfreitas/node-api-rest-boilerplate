@@ -1,10 +1,10 @@
 'use strict';
 
-const TestBase = require('../TestBase');
+const TestBase = require('test/unit/TestBase');
 
 class HttpControllerTest extends TestBase {
   constructor() {
-    super('../../src/commons/HttpController', false, true);
+    super('src/commons/HttpController', false, true);
   }
 
   test() {

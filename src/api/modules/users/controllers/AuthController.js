@@ -2,8 +2,8 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const BaseController = require('../../../commons/BaseController');
-const User = require('../../../../models/User.model');
+const BaseController = require('../../../../commons/BaseController');
+const User = require('../models/User.model');
 
 class AuthController extends BaseController {
   constructor() {

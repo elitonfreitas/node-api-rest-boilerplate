@@ -1,11 +1,11 @@
 'use strict';
 const { Express } = require('jest-express/lib/express');
-const TestBase = require('../TestBase');
-const UserModel = require('../../../src/models/User.model');
+const TestBase = require('test/unit/TestBase');
+const UserModel = require('src/api/modules/users/models/User.model');
 
 class RoutesTest extends TestBase {
   constructor() {
-    super('../../src/commons/Routes');
+    super('src/commons/Routes');
   }
 
   test() {

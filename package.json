@@ -4,7 +4,7 @@
   "description": "Initial settings for creating a NodeJs application with Rest API",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --passWithNoTests && npm run test:badge",
+    "test": "NODE_PATH=. jest --passWithNoTests && npm run test:badge",
     "test:badge": "npx jest-badge-generator",
     "start": "node src/index"
   },

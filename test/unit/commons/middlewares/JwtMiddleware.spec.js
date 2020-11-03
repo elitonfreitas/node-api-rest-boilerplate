@@ -2,11 +2,11 @@
 
 const jwt = require('jsonwebtoken');
 const { toLength } = require('lodash');
-const TestBase = require('../../TestBase');
+const TestBase = require('test/unit/TestBase');
 
 class JwtMiddlewareTest extends TestBase {
   constructor() {
-    super('../../src/api/commons/JwtMiddleware', false, false);
+    super('src/commons/middlewares/JwtMiddleware', false, false);
   }
 
   test() {
