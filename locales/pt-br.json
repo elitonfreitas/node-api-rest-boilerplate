@@ -15,5 +15,6 @@
   "The \"{{name}}\" field value already exists": "O valor do campo \"{{name}}\" já existe",
   "User or password invalid": "Usuário ou senha inválidos",
   "Invalid token": "Token inválido",
+  "Invalid token origin": "Origem inválida do token",
   "Field \"email\" must be an email": "O campo \"email\" deve ter um e-mail válido"
 }

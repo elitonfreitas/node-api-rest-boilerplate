@@ -1,6 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcryptjs');
+const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const HttpController = require('../../../../commons/HttpController');
 const User = require('../models/User.model');
@@ -22,8 +23,14 @@ class AuthController extends HttpController {
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
+      const iss = `${req.protocol}://${req.hostname}`;
+      const sub = user._id;
+      const jti = md5(req.ip + req.header('user-agent'));
+
       delete user.password;
-      const token = jwt.sign({ data: { user } }, this.secret, { expiresIn: this.tokenDuration });
+      delete user._id;
+
+      const token = jwt.sign({ user, iss, sub, jti }, this.secret, { expiresIn: this.tokenDuration });
       return { token };
     } else {
       throw new Error(this.Messages.INVALID_LOGIN);

@@ -1,6 +1,7 @@
 'use strict';
 
 const dotenv = require('dotenv');
+const { header } = require('express-validator');
 dotenv.config({ path: './config/local.env' });
 const mongoose = require('mongoose');
 const sinon = require('sinon');
@@ -32,7 +33,8 @@ class TestBase {
       query: {},
       body: {},
       params: { id: 1 },
-      headers: { locale: 'en' }
+      headers: { locale: 'en' },
+      header: param => {}
     };
 
     this.expectedResponse = {

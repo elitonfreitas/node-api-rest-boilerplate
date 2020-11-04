@@ -1,6 +1,7 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
+const md5 = require('md5');
 const HttpController = require('../HttpController');
 
 class JwtMiddleware extends HttpController {
@@ -18,6 +19,12 @@ class JwtMiddleware extends HttpController {
     try {
       const token = this._getTokenFromHeader(req);
       const tokenData = jwt.verify(token, process.env.JWT_SECRET);
+      const jti = md5(req.ip + req.header('user-agent'));
+
+      if (tokenData.jti !== jti) {
+        return this.responseError(res, next, this.Messages.INVALID_TOKEN_ORIGIN);
+      }
+
       req.token = tokenData;
       next();
     } catch (error) {
