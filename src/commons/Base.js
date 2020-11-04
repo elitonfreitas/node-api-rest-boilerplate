@@ -44,7 +44,7 @@ class Base {
         metadata = { ...metadata, ...log };
         delete metadata.message;
       } else {
-        message += log;
+        message += ` ${log}`;
       }
     });
     Logger[type]({ className: this.getClass(), message, metadata });
