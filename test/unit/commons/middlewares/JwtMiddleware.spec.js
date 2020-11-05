@@ -1,7 +1,7 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
-const { toLength } = require('lodash');
+const md5 = require('md5');
 const TestBase = require('test/unit/TestBase');
 
 class JwtMiddlewareTest extends TestBase {
@@ -37,15 +37,33 @@ class JwtMiddlewareTest extends TestBase {
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
+    it('should process check route with invalid origin', async () => {
+      this.req.originalUrl = 'http://localhost:3030/api/users';
+      this.req.method = 'PUT';
+      const tokenData = { user: { _id: '123', name: 'Test' } };
+      const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: process.env.JWT_DURATION });
+      this.req.headers.authorization = `Bearer ${token}`;
+      this.req.ip = '1234';
+
+      this.expectedErrorResponse.message = this.Messages.INVALID_TOKEN_ORIGIN;
+
+      this.controller._checkRequestToken(this.req, this.res, () => {});
+      expect(this.status.calledWith(400)).toBe(true);
+      expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
+    });
+
     it('should process check route with valid token', async () => {
       this.req.originalUrl = 'http://localhost:3030/api/users';
       this.req.method = 'PUT';
-      const tokenData = { data: { _id: '123', name: 'Test' } };
+      this.req.headers['user-agent'] = 'Test';
+      this.req.ip = '123';
+      const jti = md5(this.req.ip + this.req.header('user-agent'));
+      const tokenData = { user: { _id: '123', name: 'Test' }, jti };
       const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: process.env.JWT_DURATION });
       this.req.headers.authorization = `Bearer ${token}`;
 
       this.controller._checkRequestToken(this.req, this.res, () => {
-        expect(this.req.token.data).toBe(tokenData).data;
+        expect(this.req.token.user).toBe(tokenData.user);
       });
     });
 

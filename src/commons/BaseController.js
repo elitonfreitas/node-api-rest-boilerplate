@@ -42,12 +42,11 @@ class BaseController extends HttpController {
   }
 
   async post(req) {
-    const model = new this.Model(this.DataUtils.normalize(req.body, this.Validator.post));
-    const savedModel = await model.save();
-
-    if (savedModel) {
+    try {
+      const model = new this.Model(this.DataUtils.normalize(req.body, this.Validator.post));
+      const savedModel = await model.save();
       return savedModel;
-    } else {
+    } catch (error) {
       throw new Error(this.Messages.ERROR_ON_SAVE);
     }
   }
@@ -69,12 +68,7 @@ class BaseController extends HttpController {
 
   async delete(req) {
     if (req.params.id) {
-      let result;
-      try {
-        result = await this.Model.findOneAndRemove({ _id: req.params.id });
-      } catch (error) {
-        result = {};
-      }
+      const result = await this.Model.findOneAndRemove({ _id: req.params.id });
 
       if (result && result.id) {
         return {};

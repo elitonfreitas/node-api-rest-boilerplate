@@ -25,10 +25,7 @@ class HttpController extends Controller {
     status = isNaN(status) ? 400 : status;
     res.status(status);
     res.json(result);
-
-    if (process.env.NODE_ENV !== 'test') {
-      this.log.debug('API Response', { statusCode: status, body: result });
-    }
+    this.log.debug('API Response', { statusCode: status, body: result });
   }
 
   responseError(res, next, message, data, status = 400) {

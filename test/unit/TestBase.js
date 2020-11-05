@@ -34,7 +34,7 @@ class TestBase {
       body: {},
       params: { id: 1 },
       headers: { locale: 'en' },
-      header: param => {}
+      header: param => this.req.headers[param]
     };
 
     this.expectedResponse = {
@@ -145,25 +145,36 @@ class TestBase {
         afterEach(() => this.restore());
       }
 
-      if (this.isModel) {
-        beforeAll(async () => {
-          try {
-            this.connection = await mongoose.connect(process.env.MONGO_URL, {
-              useNewUrlParser: true,
-              useCreateIndex: true,
-              useUnifiedTopology: true,
-              useFindAndModify: false
-            });
-          } catch (error) {
-            console.error(err);
-            process.exit(1);
+      beforeAll(async () => {
+        try {
+          this.connection = await mongoose.connect(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+          });
+          if (this.Model) {
+            await this.Model.deleteMany({});
           }
-        });
+          if (this.controller && this.controller.Model) {
+            await this.controller.Model.deleteMany({});
+          }
+        } catch (error) {
+          console.error(error);
+          process.exit(1);
+        }
+      });
 
-        afterAll(async () => {
-          await this.connection.close();
-        });
-      }
+      afterAll(async () => {
+        this.req = {
+          query: {},
+          body: {},
+          params: { id: 1 },
+          headers: { locale: 'en' },
+          header: param => this.req.headers[param]
+        };
+        await this.connection.close();
+      });
 
       this.test();
     });

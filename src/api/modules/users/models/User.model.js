@@ -72,9 +72,7 @@ UserSchema.path('password').set(function(v) {
 });
 
 UserSchema.post('save', function(doc, next) {
-  if (doc._doc.password) {
-    delete doc._doc.password;
-  }
+  delete doc._doc.password;
   next();
 });
 
