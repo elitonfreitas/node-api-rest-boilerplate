@@ -7,8 +7,8 @@ class Routes extends Base {
   constructor() {
     super();
     this.rootPath = process.env.ROOT_API_PATH || '/api';
-    this.httpVerbs = ['options', 'get', 'post', 'put', 'delete']; // if need, includes: 'patch', 'head', 'ws', 'wss'
-    this.httpValidateVerbs = ['post', 'put'];
+    this.httpVerbs = process.env.USE_HTTP_VERBS ? process.env.USE_HTTP_VERBS.split(',') : ['options', 'get', 'post', 'put', 'delete']; // if need, includes: 'patch', 'head', 'ws', 'wss'
+    this.httpValidateVerbs = process.env.VALIDATE_HTTP_VERBS ? process.env.VALIDATE_HTTP_VERBS.split(',') : ['post', 'put'];
   }
 
   generate(app, route) {
@@ -25,11 +25,9 @@ class Routes extends Base {
           if (!controller.Validator[verb]) {
             controller.Validator[verb] = this.ValidatorUtils.getValidationSchema(controller.Model, verb);
           }
-        } else {
-          controller.Validator[verb] = {};
         }
 
-        app[verb](path, checkSchema(controller.Validator[verb]), async (req, res, next) => {
+        app[verb](path, checkSchema(controller.Validator[verb] || {}), async (req, res, next) => {
           const locale = req.headers.locale || 'en';
 
           try {

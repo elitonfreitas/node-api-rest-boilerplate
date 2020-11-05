@@ -26,7 +26,10 @@ class Api extends Base {
 
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json({ limit: '15mb' }));
-    app.use(JwtMiddleware.initialize());
+
+    if (process.env.USE_JWT_AUTH === 'true') {
+      app.use(JwtMiddleware.initialize());
+    }
 
     const dirModules = `${__dirname}/api/modules`;
     fs.readdirSync(dirModules).forEach(file => {

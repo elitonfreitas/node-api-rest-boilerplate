@@ -19,6 +19,7 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"User was created with success\"] = !['', undefined].includes(jsonData.data._id);",
 							"",
 							"pm.globals.set(\"template01\", jsonData.data._id);",
 							""
@@ -72,6 +73,7 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Token was created with success\"] = !['', undefined].includes(jsonData.data.token);",
 							"",
 							"pm.environment.set(\"TOKEN\", jsonData.data.token);"
 						],
@@ -124,7 +126,7 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
-							"tests[\"Template exists\"] = jsonData.data._id === pm.variables.get(\"template01\");",
+							"tests[\"User exists\"] = jsonData.data._id === pm.variables.get(\"template01\");",
 							""
 						],
 						"type": "text/javascript"
@@ -185,10 +187,10 @@
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
-							"tests[\"Result is array\"] = Array.isArray(jsonData.data.list);",
-							"tests[\"Has pageIndex\"] = jsonData.data.pager.current === 1;",
-							"tests[\"Has limit\"] = jsonData.data.pager.limit === 10;",
-							"tests[\"Has total\"] = jsonData.data.pager.total >= 1;",
+							"tests[\"Result list is array\"] = Array.isArray(jsonData.data.list);",
+							"tests[\"Has pager current\"] = jsonData.data.pager.current === 1;",
+							"tests[\"Has pager limit\"] = jsonData.data.pager.limit === 10;",
+							"tests[\"Has pager total\"] = jsonData.data.pager.total >= 1;",
 							""
 						],
 						"type": "text/javascript"
@@ -276,7 +278,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user5@teste.com\",\n\t\"password\": \"123456\",\n\t\"description\": \"User teste editado\",\n\t\"level\": \"1\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user5@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"2\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/users/{{template01}}",
@@ -373,7 +375,7 @@
 	],
 	"variable": [
 		{
-			"id": "7828e0e1-47b5-4126-83aa-70e7900c414b",
+			"id": "b643150d-bb5b-42bd-b9bd-58e42bdf061e",
 			"key": "success_message",
 			"value": "Operação realizada com sucesso",
 			"type": "string"

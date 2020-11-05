@@ -44,9 +44,9 @@ class Logger {
       format.timestamp({ format: 'YYYY-MM-DDTHH:mm:ss.SSSZZ' }),
       format.colorize(),
       format.printf(info => {
-        const { timestamp, level, className, item, message, metadata } = info;
-        const meta = Object.keys(metadata).length ? JSON.stringify(metadata) : '';
-        return `${timestamp} ${level}: [${className}]${item ? ` [${item}]` : ''} ${message} ${meta ? `| metadata: ${meta}` : ''}`;
+        const { timestamp, level, className, item, message, data } = info;
+        const meta = Object.keys(data).length ? JSON.stringify(data) : '';
+        return `${timestamp} ${level}: [${className}]${item ? ` [${item}]` : ''} ${message} ${meta ? `| data: ${meta}` : ''}`;
       })
     );
   }

@@ -35,28 +35,30 @@ class Base {
 
   logByType(type, logs) {
     let message = '';
-    let metadata = {};
+    let data = {};
     logs.map(log => {
       if (typeof log === 'object') {
         if (log.message) {
           message = log.message;
         }
-        metadata = { ...metadata, ...log };
-        delete metadata.message;
+        data = { ...data, ...log };
+        delete data.message;
       } else {
         message += ` ${log}`;
       }
     });
-    Logger[type]({ className: this.getClass(), message, metadata });
+    Logger[type]({ className: this.getClass(), message, data });
   }
 
   logRequest(req) {
     const logData = {
       message: 'API Request',
-      headers: `${JSON.stringify(req.headers)}`,
-      body: `${JSON.stringify(req.body)}`,
-      query: `${JSON.stringify(req.query)}`,
-      params: req.params
+      method: req.method,
+      route: req.path,
+      params: req.params,
+      query: req.query,
+      body: req.body,
+      headers: req.headers
     };
     this.log.debug(logData);
   }
