@@ -21,7 +21,7 @@ class Routes extends Base {
       const method = route.method || httpVerb;
 
       if (controller[method] && !controller.disabledMethods.includes(method)) {
-        if (this.httpValidateVerbs.includes(verb) && controller.Model) {
+        if (this.httpValidateVerbs.includes(verb) && controller.Model && !controller.disableValidator) {
           if (!controller.Validator[verb]) {
             controller.Validator[verb] = this.ValidatorUtils.getValidationSchema(controller.Model, verb);
           }

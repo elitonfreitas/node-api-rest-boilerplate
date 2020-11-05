@@ -116,6 +116,13 @@ class TestBase {
 
       afterAll(async () => {
         if (this.connection) {
+          if (this.Model) {
+            await this.Model.deleteMany({});
+          }
+
+          if (this.controller && this.controller.Model) {
+            await this.controller.Model.deleteMany({});
+          }
           await this.connection.close();
         }
       });

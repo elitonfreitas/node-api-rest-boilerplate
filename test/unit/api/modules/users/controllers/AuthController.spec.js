@@ -6,13 +6,14 @@ const UserModel = require('src/api/modules/users/models/User.model');
 class AuthControllerTest extends TestBase {
   constructor() {
     super('src/api/modules/users/controllers/AuthController', false, false, UserModel);
+    this.controller.Validator = {};
   }
 
   test() {
     it('should create user for test', async () => {
       await new this.controller.Model({
         name: 'User jest test',
-        email: 'user@test.com',
+        email: 'authuser@test.com',
         password: '123456',
         level: '1',
         active: true,
@@ -27,12 +28,12 @@ class AuthControllerTest extends TestBase {
             country: 'Brasil'
           }
         ]
-      });
+      }).save();
     });
 
     it('should auth user with success', async () => {
       this.req.body = {
-        email: 'user@test.com',
+        email: 'authuser@test.com',
         password: '123456'
       };
 
@@ -41,6 +42,7 @@ class AuthControllerTest extends TestBase {
     });
 
     it('should not auth user with empty login', async () => {
+      this.req.body = {};
       try {
         await this.controller.post(this.req);
       } catch (error) {
@@ -50,7 +52,7 @@ class AuthControllerTest extends TestBase {
 
     it('should not auth user with invalid password', async () => {
       this.req.body = {
-        email: 'user@test.com',
+        email: 'authuser@test.com',
         password: '1234567'
       };
       try {
@@ -58,10 +60,6 @@ class AuthControllerTest extends TestBase {
       } catch (error) {
         expect(error.message).toBe(this.Messages.INVALID_LOGIN);
       }
-    });
-
-    it('should remove user for test', async () => {
-      await this.controller.Model.remove({});
     });
   }
 }

@@ -10,6 +10,7 @@ class AuthController extends HttpController {
   constructor() {
     super();
     this.Model = User;
+    this.disableValidator = true;
     this.secret = process.env.JWT_SECRET || 'teste';
     this.tokenDuration = process.env.JWT_DURATION || '1h';
   }
