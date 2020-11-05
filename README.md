@@ -1,4 +1,5 @@
 # node-api-rest-boilerplate
+
 This project has initials configurations necessary to create a Rest API in NodeJs with several pre-configured features. In addition, it has an architecture that reduces the writed code in the creation of new routes and validations. See the features below.
 
 ### Unit Test Coverage
@@ -45,7 +46,7 @@ On root path of project:
 docker build -f ./dockers/Dockerfile -t node-rest-api:latest .
 
 # Run docker image in localhost network
-docker run -d --env-file ./path/to/config/local.env --network=host --name node-rest-api node-rest-api:latest
+docker run -d --env-file ./config/local.env --network=host --name node-rest-api node-rest-api:latest
 
 # Check image is run
 docker ps
