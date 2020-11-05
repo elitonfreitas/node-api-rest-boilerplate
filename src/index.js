@@ -26,7 +26,7 @@ class Api extends Base {
     const rootPath = process.env.ROOT_API_PATH || '/api';
 
     const corsOptions = {
-      origin: process.env.CORS_ORIGIN ? new RegExp(process.env.CORS_ORIGIN, 'ig') : false
+      origin: process.env.CORS_ORIGIN ? new RegExp(process.env.CORS_ORIGIN, 'ig') : '*'
     };
 
     app.use(cors(corsOptions));
