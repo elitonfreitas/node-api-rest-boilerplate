@@ -22,71 +22,58 @@ const AddressSchema = new Schema({
   country: { type: String }
 });
 
-const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    index: true,
-    errorMessage: Messages.FIELD_REQUIRED
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    isEmail: {
-      errorMessage: Messages.FIELD_EMAIL
+const UserSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      index: true,
+      errorMessage: Messages.FIELD_REQUIRED
     },
-    errorMessage: Messages.FIELD_REQUIRED
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      isEmail: {
+        errorMessage: Messages.FIELD_EMAIL
+      },
+      errorMessage: Messages.FIELD_REQUIRED
+    },
+    password: {
+      type: String,
+      select: false,
+      required: true,
+      errorMessage: Messages.FIELD_REQUIRED
+    },
+    active: {
+      type: Boolean,
+      default: true,
+      required: true,
+      errorMessage: Messages.FIELD_REQUIRED
+    },
+    addresses: [AddressSchema],
+    level: {
+      type: Number,
+      default: 0
+    }
   },
-  password: {
-    type: String,
-    select: false,
-    required: true,
-    errorMessage: Messages.FIELD_REQUIRED
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    required: true,
-    errorMessage: Messages.FIELD_REQUIRED
-  },
-  addresses: [AddressSchema],
-  level: {
-    type: Number,
-    default: 0
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+  {
+    timestamps: true
   }
-});
+);
 
 function getHash(password) {
   const salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(password, salt);
 }
 
-UserSchema.pre('save', function(next) {
-  if (this._doc.password) {
-    this._doc.password = getHash(this._doc.password);
-  }
-  next();
+UserSchema.path('password').set(function(v) {
+  return getHash(v);
 });
 
 UserSchema.post('save', function(doc, next) {
   if (doc._doc.password) {
     delete doc._doc.password;
-  }
-  next();
-});
-
-UserSchema.pre('findOneAndUpdate', { document: true }, function(next) {
-  if (this._update.$set.password) {
-    this._update.$set.password = getHash(this._update.$set.password);
   }
   next();
 });

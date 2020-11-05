@@ -55,7 +55,6 @@ class BaseController extends HttpController {
   async put(req) {
     if (req.params.id) {
       const setUpdate = this.DataUtils.normalize(req.body, this.Validator.put);
-      setUpdate.updatedAt = this.moment().toISOString(true);
       const result = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
 
       if (result) {
