@@ -29,7 +29,8 @@ class TestBase {
       }
     }
 
-    this.req = {
+    this.defaultReq = {
+      ip: '127.0.0.1',
       query: {},
       body: {},
       params: { id: 1 },
@@ -62,65 +63,7 @@ class TestBase {
     this.res.status = this.status;
     this.res.json = this.json;
     this.status.returns(this.res);
-    this.res.req = this.req;
-    this.methods = {
-      select: function() {
-        return this;
-      },
-      lean: function() {
-        return this;
-      },
-      where: function() {
-        return this;
-      },
-      nin: function() {
-        return this;
-      },
-      in: function() {
-        return this;
-      },
-      or: function() {
-        return this;
-      },
-      and: function() {
-        return this;
-      },
-      populate: function() {
-        return this;
-      },
-      distinct: function() {
-        return this;
-      },
-      skip: function() {
-        return this;
-      },
-      limit: function() {
-        return this;
-      },
-      sort: function() {
-        return this;
-      },
-      aggregate: function() {
-        return this.Promise.resolve();
-      },
-      count: function() {
-        return {
-          exec: function() {
-            return this.Promise.resolve(1);
-          }
-        };
-      },
-      countDocuments: function() {
-        return {
-          exec: function() {
-            return this.Promise.resolve(1);
-          }
-        };
-      },
-      exec: function() {
-        return this.Promise.resolve();
-      }
-    };
+    this.res.req = this.defaultReq;
   }
 
   restore(method) {
@@ -147,15 +90,21 @@ class TestBase {
 
       beforeAll(async () => {
         try {
-          this.connection = await mongoose.connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false
-          });
+          this.req = this.defaultReq;
+
+          if (this.Model || (this.controller && this.controller.Model)) {
+            this.connection = await mongoose.connect(process.env.MONGO_URL, {
+              useNewUrlParser: true,
+              useCreateIndex: true,
+              useUnifiedTopology: true,
+              useFindAndModify: false
+            });
+          }
+
           if (this.Model) {
             await this.Model.deleteMany({});
           }
+
           if (this.controller && this.controller.Model) {
             await this.controller.Model.deleteMany({});
           }
@@ -166,14 +115,9 @@ class TestBase {
       });
 
       afterAll(async () => {
-        this.req = {
-          query: {},
-          body: {},
-          params: { id: 1 },
-          headers: { locale: 'en' },
-          header: param => this.req.headers[param]
-        };
-        await this.connection.close();
+        if (this.connection) {
+          await this.connection.close();
+        }
       });
 
       this.test();

@@ -9,13 +9,14 @@ const User = require('../models/User.model');
 class AuthController extends HttpController {
   constructor() {
     super();
+    this.Model = User;
     this.secret = process.env.JWT_SECRET || 'teste';
     this.tokenDuration = process.env.JWT_DURATION || '1h';
   }
 
   async post(req) {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }, '+password name _id').lean();
+    const user = await this.Model.findOne({ email }, '+password name _id').lean();
     if (!user) {
       throw new Error(this.Messages.INVALID_LOGIN);
     }

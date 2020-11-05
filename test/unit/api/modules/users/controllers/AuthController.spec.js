@@ -5,12 +5,30 @@ const UserModel = require('src/api/modules/users/models/User.model');
 
 class AuthControllerTest extends TestBase {
   constructor() {
-    super('src/api/modules/users/controllers/AuthController', false, false);
-    this.controller.User = UserModel;
+    super('src/api/modules/users/controllers/AuthController', false, false, UserModel);
   }
 
   test() {
-    const mongoQuery = this.methods;
+    it('should create user for test', async () => {
+      await new this.controller.Model({
+        name: 'User jest test',
+        email: 'user@test.com',
+        password: '123456',
+        level: '1',
+        active: true,
+        addresses: [
+          {
+            address: 'Rua AB',
+            number: '111',
+            postCode: '50234-234',
+            neighborhood: 'teste',
+            city: 'Recife',
+            state: 'PE',
+            country: 'Brasil'
+          }
+        ]
+      });
+    });
 
     it('should auth user with success', async () => {
       this.req.body = {
@@ -18,20 +36,11 @@ class AuthControllerTest extends TestBase {
         password: '123456'
       };
 
-      mongoQuery.lean = () =>
-        Promise.resolve({ _id: 1, name: 'Test', password: '$2a$10$TIs5iz0OlMHPfyOe5BtS5ezr7UVABYygB5/eG3wsZB0.fj/b.yXIK' });
-
-      this.stub(this.controller.User, 'findOne').returns(mongoQuery);
-      this.restore(this.controller.User.findOne);
-
       const response = await this.controller.post(this.req);
       expect(response).toHaveProperty('token');
     });
 
     it('should not auth user with empty login', async () => {
-      mongoQuery.lean = () => Promise.resolve(null);
-      this.stub(this.controller.User, 'findOne').returns(mongoQuery);
-
       try {
         await this.controller.post(this.req);
       } catch (error) {
@@ -44,16 +53,15 @@ class AuthControllerTest extends TestBase {
         email: 'user@test.com',
         password: '1234567'
       };
-      mongoQuery.lean = () =>
-        Promise.resolve({ _id: 1, name: 'Test', password: '$2a$10$TIs5iz0OlMHPfyOe5BtS5ezr7UVABYygB5/eG3wsZB0.fj/b.yXIK' });
-
-      this.stub(this.controller.User, 'findOne').returns(mongoQuery);
-
       try {
         await this.controller.post(this.req);
       } catch (error) {
         expect(error.message).toBe(this.Messages.INVALID_LOGIN);
       }
+    });
+
+    it('should remove user for test', async () => {
+      await this.controller.Model.remove({});
     });
   }
 }
