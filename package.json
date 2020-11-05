@@ -4,7 +4,7 @@
   "description": "Initial settings for creating a NodeJs application with Rest API",
   "main": "src/index.js",
   "scripts": {
-    "test": "NODE_PATH=. jest --passWithNoTests && npm run test:badge",
+    "test": "cross-env NODE_PATH=. jest --passWithNoTests && npm run test:badge",
     "test:badge": "npx jest-badge-generator",
     "dev": "nodemon --inspect -r dotenv/config src/index.js dotenv_config_path=./config/local.env",
     "start": "node src/index"
@@ -27,6 +27,7 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "i18n": "^0.8.5",

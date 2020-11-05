@@ -13,6 +13,7 @@ const JwtMiddleware = require('./commons/middlewares/JwtMiddleware');
 
 class Api extends Base {
   async start() {
+    const cors = require('cors');
     const app = express();
 
     try {
@@ -24,6 +25,11 @@ class Api extends Base {
     const httpController = new HttpController();
     const rootPath = process.env.ROOT_API_PATH || '/api';
 
+    const corsOptions = {
+      origin: process.env.CORS_ORIGIN ? new RegExp(process.env.CORS_ORIGIN, 'ig') : false
+    };
+
+    app.use(cors(corsOptions));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json({ limit: '15mb' }));
 
@@ -38,12 +44,8 @@ class Api extends Base {
       });
     });
 
-    app.use(rootPath, (req, res, next) => {
-      routes.logRequest(req);
-      next();
-    });
-
     app.use((req, res, next) => {
+      httpController.logRequest(req);
       httpController.responseError(res, next, new Error('Route not found'), {}, 404);
     });
 

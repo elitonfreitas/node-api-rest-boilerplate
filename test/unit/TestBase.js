@@ -59,6 +59,7 @@ class TestBase {
     this.json = sinon.spy();
     this.res = {};
     this.res.set = () => {};
+    this.res.setHeader = () => {};
     this.res.download = (path, cb) => cb(null);
     this.res.status = this.status;
     this.res.json = this.json;

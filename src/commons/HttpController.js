@@ -23,6 +23,7 @@ class HttpController extends Controller {
     const result = { message: this.translateError(message, locale), data };
 
     status = isNaN(status) ? 400 : status;
+    res.setHeader('X-Powered-By', process.env.APP_NAME || '');
     res.status(status);
     res.json(result);
     this.log.debug('API Response', { statusCode: status, body: result });
@@ -32,14 +33,13 @@ class HttpController extends Controller {
     this.response(res, next, data, message, status);
   }
 
-  options(req, res) {
+  async options(req, res) {
     const date = new Date();
     const header = {
       Allow: '',
       'Cache-Control': 'max-age=604800',
       Date: date.toString(),
-      Expires: date.toString(),
-      'x-powered-by': 'Spring Server'
+      Expires: date.toString()
     };
     res.set(header);
     return {};
