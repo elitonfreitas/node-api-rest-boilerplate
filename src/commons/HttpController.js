@@ -23,7 +23,6 @@ class HttpController extends Controller {
     const result = { message: this.translateError(message, locale), data };
 
     status = isNaN(status) ? 400 : status;
-    res.setHeader('X-Powered-By', process.env.APP_NAME || '');
     res.status(status);
     res.json(result);
     this.log.debug('API Response', { statusCode: status, body: result });

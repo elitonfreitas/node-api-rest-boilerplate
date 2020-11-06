@@ -4,6 +4,8 @@ const http = require('http');
 const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
 
 const Base = require('./commons/Base');
 const routes = require('./commons/Routes');
@@ -13,7 +15,6 @@ const JwtMiddleware = require('./commons/middlewares/JwtMiddleware');
 
 class Api extends Base {
   async start() {
-    const cors = require('cors');
     const app = express();
 
     try {
@@ -26,9 +27,10 @@ class Api extends Base {
     const rootPath = process.env.ROOT_API_PATH || '/api';
 
     const corsOptions = {
-      origin: process.env.CORS_ORIGIN ? new RegExp(process.env.CORS_ORIGIN, 'ig') : '*'
+      origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*'
     };
 
+    app.use(helmet());
     app.use(cors(corsOptions));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json({ limit: '15mb' }));
