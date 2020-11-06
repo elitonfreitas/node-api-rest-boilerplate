@@ -42,14 +42,10 @@ class BaseController extends HttpController {
   }
 
   async post(req) {
-    try {
-      const body = this.DataUtils.normalize(req.body, this.Validator.post);
-      const model = new this.Model(body);
-      const savedModel = await model.save();
-      return savedModel;
-    } catch (error) {
-      throw new Error(this.Messages.ERROR_ON_SAVE);
-    }
+    const body = this.DataUtils.normalize(req.body, this.Validator.post);
+    const model = new this.Model(body);
+    const savedModel = await model.save();
+    return savedModel;
   }
 
   async put(req) {

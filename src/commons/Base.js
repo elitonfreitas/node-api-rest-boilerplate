@@ -50,9 +50,11 @@ class Base {
     Logger[type]({ className: this.getClass(), message, data });
   }
 
-  logRequest(req) {
+  logRequest(req, res) {
     const logData = {
       message: 'API Request',
+      id: res.id,
+      ip: req.ip,
       method: req.method,
       route: req.path,
       params: req.params,

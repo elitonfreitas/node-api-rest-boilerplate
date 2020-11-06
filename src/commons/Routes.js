@@ -31,7 +31,7 @@ class Routes extends Base {
           const locale = req.headers.locale || 'en';
 
           try {
-            this.logRequest(req);
+            this.logRequest(req, res);
             const validations = validationResult(req);
 
             if (!validations.errors.length) {

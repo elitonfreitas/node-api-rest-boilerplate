@@ -6,6 +6,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
+const { v4: uuidv4 } = require('uuid');
 
 const Base = require('./commons/Base');
 const routes = require('./commons/Routes');
@@ -30,6 +31,12 @@ class Api extends Base {
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
     };
 
+    app.use((req, res, next) => {
+      res.startTime = new Date();
+      res.id = uuidv4();
+      next();
+    });
+
     app.use(helmet());
     app.use(cors(corsOptions));
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,7 +54,7 @@ class Api extends Base {
     });
 
     app.use((req, res, next) => {
-      httpController.logRequest(req);
+      httpController.logRequest(req, res);
       httpController.responseError(res, next, new Error('Route not found'), {}, 404);
     });
 

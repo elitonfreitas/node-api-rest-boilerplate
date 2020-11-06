@@ -49,7 +49,7 @@ class UserControllerTest extends TestBase {
       try {
         await this.controller.post(this.req);
       } catch (error) {
-        expect(error.message).toBe(this.Messages.ERROR_ON_SAVE);
+        expect(error.message).toContain('validation failed');
       }
     });
 
