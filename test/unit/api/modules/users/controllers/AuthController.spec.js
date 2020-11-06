@@ -25,16 +25,16 @@ class AuthControllerTest extends TestBase {
             neighborhood: 'teste',
             city: 'Recife',
             state: 'PE',
-            country: 'Brasil'
-          }
-        ]
+            country: 'Brasil',
+          },
+        ],
       }).save();
     });
 
     it('should auth user with success', async () => {
       this.req.body = {
         email: 'authuser@test.com',
-        password: '123456'
+        password: '123456',
       };
 
       const response = await this.controller.post(this.req);
@@ -53,7 +53,7 @@ class AuthControllerTest extends TestBase {
     it('should not auth user with invalid password', async () => {
       this.req.body = {
         email: 'authuser@test.com',
-        password: '1234567'
+        password: '1234567',
       };
       try {
         await this.controller.post(this.req);

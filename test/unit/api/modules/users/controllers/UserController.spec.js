@@ -8,7 +8,7 @@ class UserControllerTest extends TestBase {
   constructor() {
     const validator = {
       post: ValidatorUtils.getValidationSchema(UserModel, 'post'),
-      put: ValidatorUtils.getValidationSchema(UserModel, 'put')
+      put: ValidatorUtils.getValidationSchema(UserModel, 'put'),
     };
     super('src/api/modules/users/controllers/UserController', false, false, UserModel);
     this.controller.Validator = validator;
@@ -31,9 +31,9 @@ class UserControllerTest extends TestBase {
           neighborhood: 'teste',
           city: 'Recife',
           state: 'PE',
-          country: 'Brasil'
-        }
-      ]
+          country: 'Brasil',
+        },
+      ],
     };
     const updateUser = Object.assign({}, userData, { level: 2 });
 

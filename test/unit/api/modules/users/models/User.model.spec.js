@@ -17,9 +17,9 @@ class UserModelTest extends TestBase {
           number: '222',
           city: 'Recife',
           state: 'PE',
-          country: 'Brasil'
-        }
-      ]
+          country: 'Brasil',
+        },
+      ],
     };
   }
 

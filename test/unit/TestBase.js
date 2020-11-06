@@ -1,7 +1,6 @@
 'use strict';
 
 const dotenv = require('dotenv');
-const { header } = require('express-validator');
 dotenv.config({ path: './config/local.env' });
 const mongoose = require('mongoose');
 const sinon = require('sinon');

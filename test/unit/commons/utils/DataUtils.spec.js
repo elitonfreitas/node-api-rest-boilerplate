@@ -36,32 +36,32 @@ class DataUtilsTest extends TestBase {
     const formats = [
       {
         format: 'YYYY-MM-DD[T]HH:mm:ss.SSSZZ',
-        date: '2020-02-26T12:58:25.085Z'
+        date: '2020-02-26T12:58:25.085Z',
       },
       {
         format: 'YYYY-MM-DD',
-        date: '2020-02-26'
+        date: '2020-02-26',
       },
       {
         format: 'YYYY-MM-DD[T]HH:mm:ss',
-        date: '2020-02-26T12:58:25'
+        date: '2020-02-26T12:58:25',
       },
       {
         format: 'DD/MM/YYYY HH:mm:ss',
-        date: '26/12/2020 12:58:25'
+        date: '26/12/2020 12:58:25',
       },
       {
         format: 'DD/MM/YYYY HH:mm',
-        date: '26/12/2020 12:58'
+        date: '26/12/2020 12:58',
       },
       {
         format: 'YYYY-MM-DD[T]HH:mm',
-        date: '2020-02-26T12:58'
+        date: '2020-02-26T12:58',
       },
       {
         format: 'DD/MM/YYYY',
-        date: '26/12/2020'
-      }
+        date: '26/12/2020',
+      },
     ];
 
     for (const format of formats) {

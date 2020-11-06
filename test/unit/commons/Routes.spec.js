@@ -23,8 +23,8 @@ class RoutesTest extends TestBase {
         controller: {
           get: (req, res, next) => {},
           responseError: () => {},
-          disabledMethods: []
-        }
+          disabledMethods: [],
+        },
       };
       expect(this.controller.generate(app, route)).toHaveProperty('get');
     });
@@ -36,8 +36,8 @@ class RoutesTest extends TestBase {
           Model: UserModel,
           post: (req, res, next) => {},
           responseError: () => {},
-          disabledMethods: []
-        }
+          disabledMethods: [],
+        },
       };
       expect(this.controller.generate(app, route)).toHaveProperty('post');
     });
@@ -49,14 +49,14 @@ class RoutesTest extends TestBase {
           Validator: {
             post: {
               name1: {
-                notEmpty: true
-              }
-            }
+                notEmpty: true,
+              },
+            },
           },
           post: (req, res, next) => {},
           responseError: () => {},
-          disabledMethods: []
-        }
+          disabledMethods: [],
+        },
       };
       expect(this.controller.generate(app, route)).toHaveProperty('post');
     });
@@ -79,8 +79,8 @@ class RoutesTest extends TestBase {
     it('should get validator error messages', () => {
       const message = [
         {
-          msg: 'Field "{{param}}" is required'
-        }
+          msg: 'Field "{{param}}" is required',
+        },
       ];
       expect(this.controller.getValidatorErrors(message)).toEqual('O campo "" é obrigatório');
     });
