@@ -35,20 +35,20 @@ class TestBase {
       body: {},
       params: { id: 1 },
       headers: { locale: 'en' },
-      header: param => this.req.headers[param]
+      header: param => this.req.headers[param],
     };
 
     this.expectedResponse = {
       message: 'Operation successfully performed',
-      data: { _id: 1 }
+      data: { _id: 1 },
     };
     this.expectedResponsePager = {
       message: 'Operation successfully performed',
-      data: { list: [{ _id: 1 }], pager: { current: 1, limit: 10, total: 1 } }
+      data: { list: [{ _id: 1 }], pager: { current: 1, limit: 10, total: 1 } },
     };
     this.expectedErrorResponse = {
       message: 'No results found',
-      data: {}
+      data: {},
     };
 
     this.initialize();
@@ -89,7 +89,7 @@ class TestBase {
         afterEach(() => this.restore());
       }
 
-      beforeAll(async () => {
+      beforeAll(async done => {
         try {
           this.req = this.defaultReq;
 
@@ -98,7 +98,7 @@ class TestBase {
               useNewUrlParser: true,
               useCreateIndex: true,
               useUnifiedTopology: true,
-              useFindAndModify: false
+              useFindAndModify: false,
             });
           }
 
@@ -113,10 +113,11 @@ class TestBase {
           console.error(error);
           process.exit(1);
         }
+        done();
       });
 
-      afterAll(async () => {
-        if (this.connection) {
+      afterAll(async done => {
+        if (this.connection && this.connection.close) {
           if (this.Model) {
             await this.Model.deleteMany({});
           }
@@ -125,7 +126,9 @@ class TestBase {
             await this.controller.Model.deleteMany({});
           }
           await this.connection.close();
+          this.connection = null;
         }
+        done();
       });
 
       this.test();

@@ -9,5 +9,6 @@ module.exports = {
   testMatch: ['<rootDir>/**/*.spec.js'],
   testPathIgnorePatterns: ['/node_modules/'],
   verbose: true,
-  preset: '@shelf/jest-mongodb'
+  preset: '@shelf/jest-mongodb',
+  testTimeout: 30000,
 };
