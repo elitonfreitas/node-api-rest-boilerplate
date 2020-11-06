@@ -8,7 +8,7 @@ module.exports = {
     info: 3,
     debug: 4,
     verbose: 5,
-    silly: 6
+    silly: 6,
   },
   colors: {
     error: 'red',
@@ -17,6 +17,6 @@ module.exports = {
     data: 'grey',
     info: 'green',
     verbose: 'cyan',
-    silly: 'magenta'
-  }
+    silly: 'magenta',
+  },
 };

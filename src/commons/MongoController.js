@@ -85,7 +85,7 @@ class MongoController extends Controller {
       bufferMaxEntries: 0,
       connectTimeoutMS: 10000,
       socketTimeoutMS: 45000,
-      family: 4
+      family: 4,
     });
   }
 

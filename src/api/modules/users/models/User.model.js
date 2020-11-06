@@ -12,14 +12,14 @@ const AddressSchema = new Schema({
     required: true,
     errorMessage: Messages.FIELD_REQUIRED,
     upRequired: true,
-    upErrorMessage: Messages.FIELD_REQUIRED
+    upErrorMessage: Messages.FIELD_REQUIRED,
   },
   number: { type: String },
   postCode: { type: String },
   neighborhood: { type: String },
   city: { type: String },
   state: { type: String },
-  country: { type: String }
+  country: { type: String },
 });
 
 const UserSchema = new Schema(
@@ -28,37 +28,37 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       index: true,
-      errorMessage: Messages.FIELD_REQUIRED
+      errorMessage: Messages.FIELD_REQUIRED,
     },
     email: {
       type: String,
       required: true,
       unique: true,
       isEmail: {
-        errorMessage: Messages.FIELD_EMAIL
+        errorMessage: Messages.FIELD_EMAIL,
       },
-      errorMessage: Messages.FIELD_REQUIRED
+      errorMessage: Messages.FIELD_REQUIRED,
     },
     password: {
       type: String,
       select: false,
       required: true,
-      errorMessage: Messages.FIELD_REQUIRED
+      errorMessage: Messages.FIELD_REQUIRED,
     },
     active: {
       type: Boolean,
       default: true,
       required: true,
-      errorMessage: Messages.FIELD_REQUIRED
+      errorMessage: Messages.FIELD_REQUIRED,
     },
     addresses: [AddressSchema],
     level: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
@@ -67,11 +67,11 @@ function getHash(password) {
   return bcrypt.hashSync(password, salt);
 }
 
-UserSchema.path('password').set(function(v) {
+UserSchema.path('password').set(function (v) {
   return getHash(v);
 });
 
-UserSchema.post('save', function(doc, next) {
+UserSchema.post('save', function (doc, next) {
   delete doc._doc.password;
   next();
 });

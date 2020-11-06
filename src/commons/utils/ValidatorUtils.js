@@ -8,30 +8,30 @@ class ValidatorUtils {
       post: {
         required: 'notEmpty',
         errorMessage: 'errorMessage',
-        type: 'type'
+        type: 'type',
       },
       put: {
         upRequired: 'notEmpty',
         upErrorMessage: 'errorMessage',
-        type: 'type'
-      }
+        type: 'type',
+      },
     };
     this.ValidatorTypes = {
       Number: {
         isNumeric: {
-          errorMessage: Messages.FIELD_NUMERIC
-        }
+          errorMessage: Messages.FIELD_NUMERIC,
+        },
       },
       Array: {
         isArray: {
-          errorMessage: Messages.FIELD_ARRAY_OBJECT
-        }
+          errorMessage: Messages.FIELD_ARRAY_OBJECT,
+        },
       },
       Boolean: {
         isBoolean: {
-          errorMessage: Messages.FIELD_BOOLEAN
-        }
-      }
+          errorMessage: Messages.FIELD_BOOLEAN,
+        },
+      },
     };
   }
 

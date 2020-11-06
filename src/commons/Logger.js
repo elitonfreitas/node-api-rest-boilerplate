@@ -59,14 +59,14 @@ class Logger {
         const rotatedFileTransport = new transports.File({
           filename: this.logPath + this.logFileName,
           format: this.formatCombined(),
-          level: this.logLevel
+          level: this.logLevel,
         });
         this.transportsList.push(rotatedFileTransport);
       }
       this.transportsList.push(
         new transports.Console({
           format: this.formatCombined(),
-          level: this.logLevel
+          level: this.logLevel,
         })
       );
 
@@ -74,14 +74,14 @@ class Logger {
         levels: levels,
         format: this.formatCombined(),
         transports: this.transportsList,
-        level: this.logLevel
+        level: this.logLevel,
       });
     } else {
       return {
         info: () => {},
         debug: () => {},
         error: () => {},
-        warn: () => {}
+        warn: () => {},
       };
     }
   }

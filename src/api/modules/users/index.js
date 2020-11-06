@@ -6,14 +6,14 @@ const AuthController = require('./controllers/AuthController');
 module.exports = [
   {
     path: '/users/:id',
-    controller: UserController
+    controller: UserController,
   },
   {
     path: '/users',
-    controller: UserController
+    controller: UserController,
   },
   {
     path: '/auth',
-    controller: AuthController
-  }
+    controller: AuthController,
+  },
 ];

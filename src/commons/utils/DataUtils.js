@@ -15,7 +15,7 @@ class DataUtils {
       'DD/MM/YYYY HH:mm:ss',
       'DD/MM/YYYY HH:mm',
       'YYYY-MM-DD[T]HH:mm',
-      'DD/MM/YYYY'
+      'DD/MM/YYYY',
     ];
 
     for (const pattern of patterns) {
@@ -53,7 +53,7 @@ class DataUtils {
     for (const key of fields) {
       result.push({
         key: key,
-        type: object[key].type ? object[key].type.name.toLowerCase() : undefined
+        type: object[key].type ? object[key].type.name.toLowerCase() : undefined,
       });
     }
     return result;

@@ -38,7 +38,7 @@ class HttpController extends Controller {
       Allow: '',
       'Cache-Control': 'max-age=604800',
       Date: date.toString(),
-      Expires: date.toString()
+      Expires: date.toString(),
     };
     res.set(header);
     return {};

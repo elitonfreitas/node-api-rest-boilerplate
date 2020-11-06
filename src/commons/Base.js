@@ -13,7 +13,7 @@ class Base {
       locales: ['pt-br'],
       directory: process.cwd() + '/locales',
       defaultLocale: 'en',
-      updateFiles: false
+      updateFiles: false,
     });
     this.t = i18n;
 
@@ -21,7 +21,7 @@ class Base {
       info: (...logs) => this.logByType('info', logs),
       debug: (...logs) => this.logByType('debug', logs),
       error: (...logs) => this.logByType('error', logs),
-      warn: (...logs) => this.logByType('warn', logs)
+      warn: (...logs) => this.logByType('warn', logs),
     };
   }
 
@@ -58,7 +58,7 @@ class Base {
       params: req.params,
       query: req.query,
       body: req.body,
-      headers: req.headers
+      headers: req.headers,
     };
     this.log.debug(logData);
   }
