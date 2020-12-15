@@ -71,7 +71,9 @@ For automate testing, we use Postman to make requests to our APIs.
 ## JWT Auth
 
 To create JWT certificates use that commands:
+
 openssl genpkey -algorithm RSA -out rsa_private.pem -pkeyopt rsa_keygen_bits:2048
+
 openssl rsa -in rsa_private.pem -pubout -out rsa_public.pem
 
 After creates the certificates, put the files content on .env file in JWT_PRIVATE_KEY and JWT_PUBLIC_KEY variables.
