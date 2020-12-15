@@ -12,6 +12,7 @@ class UserControllerTest extends TestBase {
     };
     super('src/api/modules/users/controllers/UserController', false, false, UserModel);
     this.controller.Validator = validator;
+    this.passtest = '123456';
   }
 
   test() {
@@ -20,7 +21,7 @@ class UserControllerTest extends TestBase {
     const userData = {
       name: 'User jest test',
       email: 'user@test.com',
-      password: '123456',
+      password: this.passtest,
       level: '1',
       active: true,
       addresses: [
