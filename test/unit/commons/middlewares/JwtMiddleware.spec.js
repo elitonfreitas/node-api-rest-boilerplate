@@ -41,7 +41,10 @@ class JwtMiddlewareTest extends TestBase {
       this.req.originalUrl = 'http://localhost:3030/api/users';
       this.req.method = 'PUT';
       const tokenData = { user: { _id: '123', name: 'Test' } };
-      const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: process.env.JWT_DURATION });
+      const token = jwt.sign(tokenData, process.env.JWT_PRIVATE_KEY, {
+        expiresIn: process.env.JWT_DURATION,
+        algorithm: process.env.JWT_ALGORITHM,
+      });
       this.req.headers.authorization = `Bearer ${token}`;
       this.req.ip = '1234';
 
@@ -59,7 +62,10 @@ class JwtMiddlewareTest extends TestBase {
       this.req.ip = '123';
       const jti = md5(this.req.ip + this.req.header('user-agent'));
       const tokenData = { user: { _id: '123', name: 'Test' }, jti };
-      const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: process.env.JWT_DURATION });
+      const token = jwt.sign(tokenData, process.env.JWT_PRIVATE_KEY, {
+        expiresIn: process.env.JWT_DURATION,
+        algorithm: process.env.JWT_ALGORITHM,
+      });
       this.req.headers.authorization = `Bearer ${token}`;
 
       this.controller._checkRequestToken(this.req, this.res, () => {

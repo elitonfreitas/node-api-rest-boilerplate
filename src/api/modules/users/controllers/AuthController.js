@@ -11,8 +11,9 @@ class AuthController extends HttpController {
     super();
     this.Model = User;
     this.disableValidator = true;
-    this.secret = process.env.JWT_SECRET || 'teste';
-    this.tokenDuration = process.env.JWT_DURATION || '1h';
+    this.secret = process.env.JWT_PRIVATE_KEY;
+    this.tokenDuration = process.env.JWT_DURATION || '15m';
+    this.algorithm = process.env.JWT_ALGORITHM || 'RS256';
   }
 
   async post(req) {
@@ -32,7 +33,7 @@ class AuthController extends HttpController {
       delete user.password;
       delete user._id;
 
-      const token = jwt.sign({ user, iss, sub, jti }, this.secret, { expiresIn: this.tokenDuration });
+      const token = jwt.sign({ user, iss, sub, jti }, this.secret, { expiresIn: this.tokenDuration, algorithm: this.algorithm });
       return { token };
     } else {
       throw new Error(this.Messages.INVALID_LOGIN);

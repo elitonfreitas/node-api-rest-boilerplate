@@ -18,7 +18,7 @@ class JwtMiddleware extends HttpController {
   _checkRequestToken(req, res, next) {
     try {
       const token = this._getTokenFromHeader(req);
-      const tokenData = jwt.verify(token, process.env.JWT_SECRET);
+      const tokenData = jwt.verify(token, process.env.JWT_PUBLIC_KEY);
       const jti = md5(req.ip + req.header('user-agent'));
 
       if (tokenData.jti !== jti) {
