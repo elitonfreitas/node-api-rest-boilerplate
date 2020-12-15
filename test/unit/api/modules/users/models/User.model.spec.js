@@ -5,10 +5,11 @@ const TestBase = require('test/unit/TestBase');
 class UserModelTest extends TestBase {
   constructor() {
     super('src/api/modules/users/models/User.model', true);
+    this.passtest = '123456';
     this.userData = {
       name: 'User test',
       email: 'user@teste.com',
-      password: '123456',
+      password: this.passtest,
       level: '1',
       active: true,
       addresses: [
@@ -38,7 +39,7 @@ class UserModelTest extends TestBase {
     });
 
     it('should update user successfully with password', async () => {
-      const savedUser = await this.Model.findOneAndUpdate({ name: 'User test' }, { $set: { password: '123456' } }, { new: true });
+      const savedUser = await this.Model.findOneAndUpdate({ name: 'User test' }, { $set: { password: this.passtest } }, { new: true });
 
       expect(savedUser._id).toBeDefined();
       expect(savedUser.name).toBe(this.userData.name);
