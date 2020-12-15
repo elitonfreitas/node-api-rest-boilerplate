@@ -7,6 +7,7 @@ class AuthControllerTest extends TestBase {
   constructor() {
     super('src/api/modules/users/controllers/AuthController', false, false, UserModel);
     this.controller.Validator = {};
+    this.passtest = '123456';
   }
 
   test() {
@@ -14,7 +15,7 @@ class AuthControllerTest extends TestBase {
       await new this.controller.Model({
         name: 'User jest test',
         email: 'authuser@test.com',
-        password: '123456',
+        password: this.passtest,
         level: '1',
         active: true,
         addresses: [
@@ -34,7 +35,7 @@ class AuthControllerTest extends TestBase {
     it('should auth user with success', async () => {
       this.req.body = {
         email: 'authuser@test.com',
-        password: '123456',
+        password: this.passtest,
       };
 
       const response = await this.controller.post(this.req);
@@ -53,7 +54,7 @@ class AuthControllerTest extends TestBase {
     it('should not auth user with invalid password', async () => {
       this.req.body = {
         email: 'authuser@test.com',
-        password: '1234567',
+        password: this.passtest + '7',
       };
       try {
         await this.controller.post(this.req);
