@@ -1,6 +1,5 @@
 'use strict';
 
-const http = require('http');
 const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -59,14 +58,11 @@ class App extends Base {
 
   initServer(app) {
     const rootPath = process.env.ROOT_API_PATH || '/api';
-    const server = http.createServer(app);
     const port = process.env.PORT || 3000;
 
-    server.listen(port, () => {
+    return app.listen(port, () => {
       this.log.info(`Server ready on path: ${port}${rootPath}`);
     });
-
-    return server;
   }
 
   async start() {
@@ -75,7 +71,7 @@ class App extends Base {
     this.initMiddlewares(app);
     this.initRoutes(app);
     this.defaultRoute(app);
-    this.initServer(app);
+    return this.initServer(app);
   }
 }
 
