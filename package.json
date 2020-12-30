@@ -17,7 +17,8 @@
   "lint-staged": {
     "src/**/*.js": [
       "eslint",
-      "cross-env CI=true npm test --bail --findRelatedTests"
+      "cross-env CI=true npm test --bail --findRelatedTests",
+      "git add ."
     ]
   },
   "author": "Eliton Freitas <elitonfreitas@gmail.com>",
