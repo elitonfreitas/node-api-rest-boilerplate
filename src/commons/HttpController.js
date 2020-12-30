@@ -25,7 +25,12 @@ class HttpController extends Controller {
     status = isNaN(status) ? 400 : status;
     res.status(status);
     res.json(result);
-    this.log.debug('API Response', { id: res.id, statusCode: status, responseTime: new Date() - res.startTime, response: result });
+    this.log.debug('API Response', {
+      id: res.id,
+      statusCode: status,
+      responseTime: new Date() - res.startTime,
+      response: result,
+    });
   }
 
   responseError(res, next, message, data, status = 400) {
