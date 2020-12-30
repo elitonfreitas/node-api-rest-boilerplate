@@ -5,7 +5,7 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
-    mocha: true
+    mocha: true,
   },
   extends: ['eslint:recommended', 'prettier'],
   globals: {
@@ -19,16 +19,16 @@ module.exports = {
     afterEach: true,
     beforeAll: true,
     afterAll: true,
-    expect: true
+    expect: true,
   },
   parserOptions: {
-    ecmaVersion: 2018
+    ecmaVersion: 2018,
   },
   plugins: ['prettier'],
   rules: {
     'no-prototype-builtins': 'off',
     'prettier/prettier': 'error',
     'spaced-comment': 'error',
-    'prefer-const': 'error'
-  }
+    'prefer-const': 'error',
+  },
 };
