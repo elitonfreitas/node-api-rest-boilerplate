@@ -19,7 +19,7 @@ class HttpController extends Controller {
   response(res, next, response = {}, message = '', status = 200) {
     const data = typeof response === 'object' ? response : { value: response };
     message = message instanceof Error || message.message ? message.message : message;
-    const locale = res.req.headers.locale || 'en';
+    const locale = res.req && res.req.headers ? res.req.headers.locale : 'en';
     const result = { message: this.translateError(message, locale), data };
 
     status = isNaN(status) ? 400 : status;
