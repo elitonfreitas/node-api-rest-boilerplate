@@ -18,10 +18,12 @@ describe('User integration', () => {
     app.close();
   });
 
+  const userPass = '123456';
+
   const validUser = {
     name: 'User test',
     email: 'user@teste.com',
-    password: '123456',
+    password: userPass,
     level: '1',
     teste: 123,
     active: true,
