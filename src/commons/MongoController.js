@@ -20,6 +20,10 @@ class MongoController extends Controller {
   _getConnectionUrl() {
     let authentication = '';
 
+    if (this.dbHost.includes('//')) {
+      return this.dbHost;
+    }
+
     if (this.dbAuth == '1') {
       authentication = this.dbUser + ':' + this.dbPass + '@';
     }
@@ -81,11 +85,6 @@ class MongoController extends Controller {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      poolSize: 10,
-      bufferMaxEntries: 0,
-      connectTimeoutMS: 10000,
-      socketTimeoutMS: 45000,
-      family: 4,
     });
   }
 
