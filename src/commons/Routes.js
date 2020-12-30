@@ -60,7 +60,7 @@ class Routes extends Base {
     return message;
   }
 
-  normalizeMongoErrors(error, locale = 'pt-br') {
+  normalizeMongoErrors(error, locale = 'en') {
     if (error.message.includes('E11000 duplicate')) {
       const name = this.getErrorFieldName(error.message);
       error.message = this.t.__({ phrase: this.Messages.DUPLICATED, locale }, { name });
@@ -68,7 +68,7 @@ class Routes extends Base {
     return error.message;
   }
 
-  getValidatorErrors(errors, locale = 'pt-br') {
+  getValidatorErrors(errors, locale = 'en') {
     errors = Array.isArray(errors) ? errors : undefined;
     const messages = [];
 

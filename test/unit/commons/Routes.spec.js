@@ -73,7 +73,7 @@ class RoutesTest extends TestBase {
 
     it('should get field name from error message', () => {
       const message = new Error('E11000 duplicate test erro message index: name_1 text');
-      expect(this.controller.normalizeMongoErrors(message)).toEqual('O valor do campo "name" já existe');
+      expect(this.controller.normalizeMongoErrors(message)).toEqual('The "name" field value already exists');
     });
 
     it('should get validator error messages', () => {
@@ -82,7 +82,7 @@ class RoutesTest extends TestBase {
           msg: 'Field "{{param}}" is required',
         },
       ];
-      expect(this.controller.getValidatorErrors(message)).toEqual('O campo "" é obrigatório');
+      expect(this.controller.getValidatorErrors(message)).toEqual('Field "" is required');
     });
   }
 }
