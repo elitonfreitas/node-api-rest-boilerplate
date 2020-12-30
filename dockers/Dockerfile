@@ -1,8 +1,11 @@
-FROM node:10-alpine
+FROM node:12-alpine
 RUN apk upgrade && apk update && apk add --no-cache --virtual curl bash
-COPY ./src /app/
 WORKDIR /app
+
+COPY ./src ./src
+COPY ./package.json ./package.json
+
 RUN mkdir logs
-RUN npm install --global yarn && yarn --production && yarn audit fix && yarn cache clean
+RUN yarn install --prod --no-lockfile && yarn cache clean
 ENTRYPOINT [ "yarn" ]
 CMD [ "run", "start" ]
