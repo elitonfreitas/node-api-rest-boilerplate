@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const i18n = require('i18n');
 const Logger = require('./Logger');
 const ValidatorUtils = require('./utils/ValidatorUtils');
@@ -10,8 +11,8 @@ class Base {
     this.ValidatorUtils = ValidatorUtils;
     this.Messages = Messages;
     i18n.configure({
-      locales: ['pt-br'],
-      directory: process.cwd() + '/locales',
+      locales: process.env.I18N_LOCALES ? process.env.I18N_LOCALES.split(',') : ['pt-br'],
+      directory: path.join(__dirname, '../', '/locales'),
       defaultLocale: 'en',
       updateFiles: false,
     });

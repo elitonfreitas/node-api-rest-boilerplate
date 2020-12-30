@@ -4,7 +4,7 @@
   "description": "Initial settings for creating a NodeJs application with Rest API",
   "main": "src/index.js",
   "scripts": {
-    "test": "cross-env NODE_PATH=. jest --passWithNoTests --detectOpenHandles --forceExit && npm run test:badge",
+    "test": "cross-env NODE_PATH=. jest --runInBand --passWithNoTests --detectOpenHandles --forceExit && npm run test:badge",
     "test:badge": "npx jest-badge-generator",
     "dev": "nodemon --inspect -r dotenv/config src/index.js dotenv_config_path=./config/local.env",
     "start": "node src/index"

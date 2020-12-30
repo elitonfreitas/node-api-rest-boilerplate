@@ -16,5 +16,5 @@
   "User or password invalid": "Usuário ou senha inválidos",
   "Invalid token": "Token inválido",
   "Invalid token origin": "Origem inválida do token",
-  "Field \"email\" must be an email": "O campo \"email\" deve ter um e-mail válido"
+  "Field \"{{param}}\" must be a valid email": "O campo \"{{param}}\" deve ter um e-mail válido"
 }

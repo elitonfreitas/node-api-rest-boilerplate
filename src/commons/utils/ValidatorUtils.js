@@ -9,11 +9,13 @@ class ValidatorUtils {
         required: 'notEmpty',
         errorMessage: 'errorMessage',
         type: 'type',
+        optional: 'optional',
       },
       put: {
         upRequired: 'notEmpty',
         upErrorMessage: 'errorMessage',
         type: 'type',
+        optional: 'optional',
       },
     };
     this.ValidatorTypes = {
