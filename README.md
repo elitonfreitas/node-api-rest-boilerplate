@@ -60,9 +60,9 @@ For manager logs we use winston. Is possible integration with LogStash and other
 
 Improve code quality and patterns using eslint and prettier.
 
-## Jest (unit test)
+## Jest (unit and integration test)
 
-Improve unit tests using jest pre setup and structure.
+Improve unit and integration tests using jest pre setup and structure with supertest.
 
 ## Postman (automate test)
 
