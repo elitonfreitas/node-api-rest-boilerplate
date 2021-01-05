@@ -7,13 +7,13 @@ class MongoController extends Controller {
   constructor() {
     super();
     this.mongoose = mongoose;
-    this.dbHost = process.env.DB_HOST || 'localhost';
-    this.dbPort = process.env.DB_PORT || '27017';
-    this.dbName = process.env.DB_NAME || 'restapi-local';
-    this.dbAuth = process.env.DB_AUTH || 0;
-    this.dbAuthSrc = process.env.DB_AUTH_SRC || 'admin';
-    this.dbUser = process.env.DB_USER || 'root';
-    this.dbPass = process.env.DB_PASS || '';
+    this.dbHost = process.env.DB_HOST;
+    this.dbPort = process.env.DB_PORT;
+    this.dbName = process.env.DB_NAME;
+    this.dbAuth = process.env.DB_AUTH;
+    this.dbAuthSrc = process.env.DB_AUTH_SRC;
+    this.dbUser = process.env.DB_USER;
+    this.dbPass = process.env.DB_PASS;
     this.dbReplicaOption = process.env.DB_REPLICA ? `replicaSet=${process.env.DB_REPLICA}&` : '';
   }
 

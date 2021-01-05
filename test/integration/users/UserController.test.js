@@ -7,6 +7,7 @@ const App = require('src/App');
 
 describe('User integration', () => {
   process.env.DB_HOST = process.env.MONGO_URL;
+  process.env.CORS_ORIGIN = '*';
   const rootPath = '/api';
   let app = {};
 

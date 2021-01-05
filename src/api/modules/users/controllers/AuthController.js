@@ -12,8 +12,8 @@ class AuthController extends HttpController {
     this.Model = User;
     this.disableValidator = true;
     this.secret = process.env.JWT_PRIVATE_KEY;
-    this.tokenDuration = process.env.JWT_DURATION || '15m';
-    this.algorithm = process.env.JWT_ALGORITHM || 'RS256';
+    this.tokenDuration = process.env.JWT_DURATION;
+    this.algorithm = process.env.JWT_ALGORITHM;
   }
 
   async post(req) {

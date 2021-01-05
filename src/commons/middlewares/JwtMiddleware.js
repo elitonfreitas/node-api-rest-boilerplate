@@ -9,7 +9,7 @@ class JwtMiddleware extends HttpController {
     super();
     this.process = this.process.bind(this);
     this.nextIfHasToken = this.nextIfHasToken.bind(this);
-    this.rootApi = process.env.ROOT_API_PATH || '/api';
+    this.rootApi = process.env.ROOT_API_PATH;
     this.noAuthRoutes = process.env.NO_AUTH_ROUTES ? process.env.NO_AUTH_ROUTES.split(';') : [];
     this.noTokenApis = [];
     this._getNoAuthRoutes();

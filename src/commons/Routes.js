@@ -6,7 +6,7 @@ const Base = require('./Base');
 class Routes extends Base {
   constructor() {
     super();
-    this.rootPath = process.env.ROOT_API_PATH || '/api';
+    this.rootPath = process.env.ROOT_API_PATH;
     this.httpVerbs = process.env.USE_HTTP_VERBS ? process.env.USE_HTTP_VERBS.split(',') : ['options', 'get', 'post', 'put', 'delete']; // if need, includes: 'patch', 'head', 'ws', 'wss'
     this.httpValidateVerbs = process.env.VALIDATE_HTTP_VERBS ? process.env.VALIDATE_HTTP_VERBS.split(',') : ['post', 'put'];
   }

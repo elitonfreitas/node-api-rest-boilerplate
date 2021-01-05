@@ -32,7 +32,7 @@ class App extends Base {
     app.use(helmet());
     app.use(cors(corsOptions));
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json({ limit: '15mb' }));
+    app.use(bodyParser.json({ limit: process.env.REQUEST_LIMIT }));
 
     if (process.env.USE_JWT_AUTH === 'true') {
       app.use(JwtMiddleware.initialize());
@@ -57,8 +57,8 @@ class App extends Base {
   }
 
   initServer(app) {
-    const rootPath = process.env.ROOT_API_PATH || '/api';
-    const port = process.env.PORT || 3000;
+    const rootPath = process.env.ROOT_API_PATH;
+    const port = process.env.PORT;
 
     return app.listen(port, () => {
       this.log.info(`Server ready on path: ${port}${rootPath}`);
