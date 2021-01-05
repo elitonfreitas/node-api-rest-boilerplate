@@ -48,7 +48,7 @@ docker build -f ./dockers/Dockerfile -t node-rest-api:latest .
 # Run docker image in localhost network
 docker run -d --env-file ./config/local.env --network=host --name node-rest-api node-rest-api:latest
 
-# Check image is run
+# Check image is running
 docker ps
 ```
 
