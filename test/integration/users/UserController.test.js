@@ -47,7 +47,6 @@ describe('User integration', () => {
   test('should create a new User', async () => {
     const response = await request(app).post(userPath).send(validUser);
     userId = response.body.data._id;
-
     expect(response.statusCode).toBe(200);
   });
 
@@ -56,6 +55,15 @@ describe('User integration', () => {
     delete invalidUser.name;
     const response = await request(app).post(userPath).send(invalidUser);
     expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(`${Messages.FIELD_REQUIRED}`.replace('{{param}}', 'name'));
+  });
+
+  test('should dont create a new User without email', async () => {
+    const invalidUser = Object.assign({}, validUser);
+    delete invalidUser.email;
+    const response = await request(app).post(userPath).send(invalidUser);
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(`${Messages.FIELD_REQUIRED}. ${Messages.FIELD_EMAIL}`.replace(/\{\{param\}\}/g, 'email'));
   });
 
   test('should authenticate with new User', async () => {
@@ -118,7 +126,6 @@ describe('User integration', () => {
 
   test('should get all Users', async () => {
     const response = await request(app).get(userPath).set('Authorization', token);
-
     expect(response.statusCode).toBe(200);
     expect(response.body.data.list).toHaveLength(1);
   });
