@@ -7,7 +7,7 @@
     "test": "cross-env LOG_ENABLE=false NODE_PATH=. jest --runInBand --passWithNoTests --detectOpenHandles --forceExit && npm run test:badge",
     "test:badge": "npx jest-badge-generator",
     "dev": "nodemon --inspect -r dotenv/config src/index.js dotenv_config_path=./config/local.env",
-    "start": "node src/index"
+    "start": "NODE_PATH=. node src/index"
   },
   "husky": {
     "hooks": {

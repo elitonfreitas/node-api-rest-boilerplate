@@ -1,6 +1,6 @@
 'use strict';
 
-const BaseController = require('../../../../commons/BaseController');
+const BaseController = require('src/commons/BaseController');
 const User = require('../models/User.model');
 
 class UserController extends BaseController {

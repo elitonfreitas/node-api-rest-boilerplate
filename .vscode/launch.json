@@ -11,7 +11,10 @@
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
         "!**/node_modules/**"
-      ]
+      ],
+      "env": {
+        "NODE_PATH": "."
+      },
     },
     {
       "type": "node",

@@ -1,7 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcryptjs');
-const Messages = require('../../../../commons/constants/Messages');
+const Messages = require('src/commons/constants/Messages');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

@@ -3,7 +3,7 @@
 const bcrypt = require('bcryptjs');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
-const HttpController = require('../../../../commons/HttpController');
+const HttpController = require('src/commons/HttpController');
 const User = require('../models/User.model');
 
 class AuthController extends HttpController {

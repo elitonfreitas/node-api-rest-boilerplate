@@ -1,6 +1,6 @@
 'use strict';
 
-const Messages = require('../../../../commons/constants/Messages');
+const Messages = require('src/commons/constants/Messages');
 
 module.exports = {
   post: {
