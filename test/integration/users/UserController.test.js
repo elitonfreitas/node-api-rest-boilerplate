@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/local.env' });
 const request = require('supertest');
 const App = require('src/App');
+const Messages = require('src/commons/constants/Messages');
 
 describe('User integration', () => {
   process.env.DB_HOST = process.env.MONGO_URL;
@@ -39,6 +40,7 @@ describe('User integration', () => {
     ],
   };
   let userId = '';
+  const invalidId = '5ccb4fc7930c1736b1da5044';
   let token = 'Bearer ';
   const userPath = `${rootPath}/users/`;
 
@@ -47,6 +49,13 @@ describe('User integration', () => {
     userId = response.body.data._id;
 
     expect(response.statusCode).toBe(200);
+  });
+
+  test('should dont create a new User without name', async () => {
+    const invalidUser = Object.assign({}, validUser);
+    delete invalidUser.name;
+    const response = await request(app).post(userPath).send(invalidUser);
+    expect(response.statusCode).toBe(400);
   });
 
   test('should authenticate with new User', async () => {
@@ -71,6 +80,24 @@ describe('User integration', () => {
     expect(response.body.data.name).toBe(validUser.name);
   });
 
+  test('should dont update User without id', async () => {
+    validUser.name = 'User test edited';
+    const response = await request(app).put(userPath).send(validUser).set('Authorization', token);
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(Messages.INVALID_PARAMS);
+  });
+
+  test('should dont update User with invalid id', async () => {
+    validUser.name = 'User test edited';
+    const response = await request(app)
+      .put(userPath + invalidId)
+      .send(validUser)
+      .set('Authorization', token);
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(Messages.UPDATE_NOT_OCURRED);
+  });
+
   test('should get User by id', async () => {
     const response = await request(app)
       .get(userPath + userId)
@@ -80,6 +107,15 @@ describe('User integration', () => {
     expect(response.body.data._id).toBe(userId);
   });
 
+  test('should get User by id with no result', async () => {
+    const response = await request(app)
+      .get(userPath + invalidId)
+      .set('Authorization', token);
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(Messages.NO_RESULT);
+  });
+
   test('should get all Users', async () => {
     const response = await request(app).get(userPath).set('Authorization', token);
 
@@ -87,11 +123,32 @@ describe('User integration', () => {
     expect(response.body.data.list).toHaveLength(1);
   });
 
-  test('should delete new User', async () => {
+  test('should dont delete User without id', async () => {
+    const response = await request(app).delete(userPath).set('Authorization', token);
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(Messages.INVALID_PARAMS);
+  });
+
+  test('should dont delete User with invalid id', async () => {
+    const response = await request(app)
+      .delete(userPath + invalidId)
+      .set('Authorization', token);
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(Messages.DATA_NOT_FOUND);
+  });
+
+  test('should delete User', async () => {
     const response = await request(app)
       .delete(userPath + userId)
       .set('Authorization', token);
 
     expect(response.statusCode).toBe(200);
+  });
+
+  test('should get all Users with no results', async () => {
+    const response = await request(app).get(userPath).set('Authorization', token);
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toBe(Messages.NO_RESULT);
   });
 });

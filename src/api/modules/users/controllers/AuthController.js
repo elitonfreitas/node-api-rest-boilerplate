@@ -4,12 +4,12 @@ const bcrypt = require('bcryptjs');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const HttpController = require('src/commons/HttpController');
-const User = require('../models/User.model');
+const UserModel = require('../models/User.model');
 
 class AuthController extends HttpController {
   constructor() {
     super();
-    this.Model = User;
+    this.Model = UserModel;
     this.disableValidator = true;
     this.secret = process.env.JWT_PRIVATE_KEY;
     this.tokenDuration = process.env.JWT_DURATION;

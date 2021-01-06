@@ -1,11 +1,11 @@
 'use strict';
 
 const BaseController = require('src/commons/BaseController');
-const User = require('../models/User.model');
+const UserModel = require('../models/User.model');
 
 class UserController extends BaseController {
   constructor() {
-    super(User);
+    super(UserModel);
   }
 }
 
