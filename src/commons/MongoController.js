@@ -20,7 +20,7 @@ class MongoController extends Controller {
   _getConnectionUrl() {
     let authentication = '';
 
-    if (this.dbHost.includes('//')) {
+    if (this.dbHost && this.dbHost.includes('//')) {
       return this.dbHost;
     }
 
