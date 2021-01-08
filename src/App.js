@@ -12,6 +12,7 @@ const routes = require('./commons/Routes');
 const HttpController = require('./commons/HttpController');
 const MongoController = require('./commons/MongoController');
 const JwtMiddleware = require('./commons/middlewares/JwtMiddleware');
+const HttpStatusCode = require('./commons/constants/HttpStatusCode');
 
 class App extends Base {
   connectMongo() {
@@ -52,7 +53,7 @@ class App extends Base {
     const httpController = new HttpController();
     app.use((req, res, next) => {
       httpController.logRequest(req, res);
-      httpController.responseError(res, next, new Error('Route not found'), {}, 404);
+      httpController.responseError(res, next, new Error('Route not found'), {}, HttpStatusCode.NOT_FOUND);
     });
   }
 

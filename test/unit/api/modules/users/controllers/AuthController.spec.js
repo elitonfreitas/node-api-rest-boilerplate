@@ -39,7 +39,7 @@ class AuthControllerTest extends TestBase {
       };
 
       const response = await this.controller.post(this.req);
-      expect(response).toHaveProperty('token');
+      expect(response.data).toHaveProperty('token');
     });
 
     it('should not auth user with empty login', async () => {

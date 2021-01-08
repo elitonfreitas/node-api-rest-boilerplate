@@ -5,11 +5,13 @@ const i18n = require('i18n');
 const Logger = require('./Logger');
 const ValidatorUtils = require('./utils/ValidatorUtils');
 const Messages = require('./constants/Messages');
+const HttpStatusCode = require('./constants/HttpStatusCode');
 
 class Base {
   constructor() {
     this.ValidatorUtils = ValidatorUtils;
     this.Messages = Messages;
+    this.HttpStatusCode = HttpStatusCode;
     i18n.configure({
       locales: process.env.I18N_LOCALES ? process.env.I18N_LOCALES.split(',') : ['pt-br'],
       directory: path.join(__dirname, '../', '/locales'),

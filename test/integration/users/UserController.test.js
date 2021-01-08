@@ -5,6 +5,7 @@ dotenv.config({ path: './config/local.env' });
 const request = require('supertest');
 const App = require('src/App');
 const Messages = require('src/commons/constants/Messages');
+const HttpStatusCode = require('src/commons/constants/HttpStatusCode');
 
 describe('User integration', () => {
   process.env.DB_HOST = process.env.MONGO_URL;
@@ -47,14 +48,14 @@ describe('User integration', () => {
   test('should create a new User', async () => {
     const response = await request(app).post(userPath).send(validUser);
     userId = response.body.data._id;
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatusCode.CREATED);
   });
 
   test('should dont create a new User without name', async () => {
     const invalidUser = Object.assign({}, validUser);
     delete invalidUser.name;
     const response = await request(app).post(userPath).send(invalidUser);
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.PRECONDITION_FAILED);
     expect(response.body.message).toBe(`${Messages.FIELD_REQUIRED}`.replace('{{param}}', 'name'));
   });
 
@@ -62,7 +63,7 @@ describe('User integration', () => {
     const invalidUser = Object.assign({}, validUser);
     delete invalidUser.email;
     const response = await request(app).post(userPath).send(invalidUser);
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.PRECONDITION_FAILED);
     expect(response.body.message).toBe(`${Messages.FIELD_REQUIRED}. ${Messages.FIELD_EMAIL}`.replace(/\{\{param\}\}/g, 'email'));
   });
 
@@ -73,7 +74,7 @@ describe('User integration', () => {
     });
     token += response.body.data.token;
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatusCode.ACCEPTED);
     expect(response.body.data.token).toBeDefined();
   });
 
@@ -84,14 +85,14 @@ describe('User integration', () => {
       .send(validUser)
       .set('Authorization', token);
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatusCode.ACCEPTED);
     expect(response.body.data.name).toBe(validUser.name);
   });
 
   test('should dont update User without id', async () => {
     validUser.name = 'User test edited';
     const response = await request(app).put(userPath).send(validUser).set('Authorization', token);
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
     expect(response.body.message).toBe(Messages.INVALID_PARAMS);
   });
 
@@ -102,7 +103,7 @@ describe('User integration', () => {
       .send(validUser)
       .set('Authorization', token);
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.NOT_FOUND);
     expect(response.body.message).toBe(Messages.UPDATE_NOT_OCURRED);
   });
 
@@ -111,7 +112,7 @@ describe('User integration', () => {
       .get(userPath + userId)
       .set('Authorization', token);
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.data._id).toBe(userId);
   });
 
@@ -120,19 +121,19 @@ describe('User integration', () => {
       .get(userPath + invalidId)
       .set('Authorization', token);
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.message).toBe(Messages.NO_RESULT);
   });
 
   test('should get all Users', async () => {
     const response = await request(app).get(userPath).set('Authorization', token);
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.data.list).toHaveLength(1);
   });
 
   test('should dont delete User without id', async () => {
     const response = await request(app).delete(userPath).set('Authorization', token);
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
     expect(response.body.message).toBe(Messages.INVALID_PARAMS);
   });
 
@@ -141,7 +142,7 @@ describe('User integration', () => {
       .delete(userPath + invalidId)
       .set('Authorization', token);
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.NOT_FOUND);
     expect(response.body.message).toBe(Messages.DATA_NOT_FOUND);
   });
 
@@ -150,12 +151,12 @@ describe('User integration', () => {
       .delete(userPath + userId)
       .set('Authorization', token);
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatusCode.ACCEPTED);
   });
 
   test('should get all Users with no results', async () => {
     const response = await request(app).get(userPath).set('Authorization', token);
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.message).toBe(Messages.NO_RESULT);
   });
 });

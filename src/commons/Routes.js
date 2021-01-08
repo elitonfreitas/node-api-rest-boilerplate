@@ -36,12 +36,23 @@ class Routes extends Base {
 
             if (!validations.errors.length) {
               const response = await controller[method](req, res, next);
-              controller.response(res, next, response, this.Messages.SUCCESS);
+              const data = response.data ? response.data : response;
+              const statusCode = response.statusCode || this.HttpStatusCode.OK;
+              const message = response.message || this.Messages.SUCCESS;
+
+              controller.response(res, next, data, message, statusCode);
             } else {
-              controller.responseError(res, next, this.getValidatorErrors(validations.errors, locale));
+              controller.responseError(
+                res,
+                next,
+                this.getValidatorErrors(validations.errors, locale),
+                {},
+                this.HttpStatusCode.PRECONDITION_FAILED
+              );
             }
           } catch (error) {
-            controller.responseError(res, next, this.normalizeMongoErrors(error, locale));
+            const { statusCode, data } = error;
+            controller.responseError(res, next, this.normalizeMongoErrors(error, locale), data, statusCode);
           }
         });
       }

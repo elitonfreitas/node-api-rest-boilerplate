@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/local.env' });
 const mongoose = require('mongoose');
 const sinon = require('sinon');
+const HttpStatusCode = require('src/commons/constants/HttpStatusCode');
 const Messages = require('src/commons/constants/Messages');
 
 class TestBase {
@@ -11,6 +12,7 @@ class TestBase {
     this.restoreMethods = [];
     this.stub = sinon.stub;
     this.Messages = Messages;
+    this.HttpStatusCode = HttpStatusCode;
     this.isModel = isModel;
     this.connection = null;
     this.mongoose = mongoose;

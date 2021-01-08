@@ -1,6 +1,7 @@
 'use strict';
 
 const HttpController = require('./HttpController');
+const HttpError = require('./HttpError');
 
 class BaseController extends HttpController {
   constructor(Model, Validator) {
@@ -21,11 +22,10 @@ class BaseController extends HttpController {
   async get(req) {
     if (req.params.id) {
       const result = await this.Model.findOne({ _id: req.params.id }, { __v: 0 }).lean();
-      if (result) {
-        return result;
-      } else {
-        throw new Error(this.Messages.NO_RESULT);
-      }
+      return {
+        data: result || {},
+        message: result ? this.Messages.SUCCESS : this.Messages.NO_RESULT,
+      };
     } else {
       const baseQuery = this.Model.find({}, { __v: 0 });
       const { queryPager, pager } = this._normalizePager(req, baseQuery);
@@ -33,11 +33,10 @@ class BaseController extends HttpController {
       const [list, total] = await Promise.all(promises);
       pager.total = total || 0;
 
-      if (list.length) {
-        return { list, pager };
-      } else {
-        throw new Error(this.Messages.NO_RESULT);
-      }
+      return {
+        data: { list, pager },
+        message: list.length ? this.Messages.SUCCESS : this.Messages.NO_RESULT,
+      };
     }
   }
 
@@ -45,7 +44,10 @@ class BaseController extends HttpController {
     const body = this.DataUtils.normalize(req.body, this.Validator.post);
     const model = new this.Model(body);
     const savedModel = await model.save();
-    return savedModel;
+    return {
+      data: savedModel,
+      statusCode: this.HttpStatusCode.CREATED,
+    };
   }
 
   async put(req) {
@@ -54,12 +56,15 @@ class BaseController extends HttpController {
       const result = await this.Model.findOneAndUpdate({ _id: req.params.id }, { $set: setUpdate }, { new: true });
 
       if (result) {
-        return result;
+        return {
+          data: result,
+          statusCode: this.HttpStatusCode.ACCEPTED,
+        };
       } else {
-        throw new Error(this.Messages.UPDATE_NOT_OCURRED);
+        throw new HttpError(this.Messages.UPDATE_NOT_OCURRED, this.HttpStatusCode.NOT_FOUND);
       }
     } else {
-      throw new Error(this.Messages.INVALID_PARAMS);
+      throw new HttpError(this.Messages.INVALID_PARAMS);
     }
   }
 
@@ -68,12 +73,12 @@ class BaseController extends HttpController {
       const result = await this.Model.findOneAndRemove({ _id: req.params.id });
 
       if (result && result.id) {
-        return {};
+        return { data: {}, statusCode: this.HttpStatusCode.ACCEPTED };
       } else {
-        throw new Error(this.Messages.DATA_NOT_FOUND);
+        throw new HttpError(this.Messages.DATA_NOT_FOUND, this.HttpStatusCode.NOT_FOUND);
       }
     } else {
-      throw new Error(this.Messages.INVALID_PARAMS);
+      throw new HttpError(this.Messages.INVALID_PARAMS);
     }
   }
 }

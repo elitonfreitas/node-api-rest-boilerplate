@@ -5,6 +5,7 @@ const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const HttpController = require('src/commons/HttpController');
 const UserModel = require('../models/User.model');
+const HttpError = require('src/commons/HttpError');
 
 class AuthController extends HttpController {
   constructor() {
@@ -34,9 +35,9 @@ class AuthController extends HttpController {
       delete user._id;
 
       const token = jwt.sign({ user, iss, sub, jti }, this.secret, { expiresIn: this.tokenDuration, algorithm: this.algorithm });
-      return { token };
+      return { data: { token }, statusCode: this.HttpStatusCode.ACCEPTED };
     } else {
-      throw new Error(this.Messages.INVALID_LOGIN);
+      throw new HttpError(this.Messages.INVALID_LOGIN, this.HttpStatusCode.UNAUTHORIZED);
     }
   }
 }

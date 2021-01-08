@@ -41,8 +41,8 @@ class UserControllerTest extends TestBase {
     it('should create one user with success', async () => {
       this.req.body = userData;
       const response = await this.controller.post(this.req);
-      userId = response._id;
-      expect(response.name).toStrictEqual(userData.name);
+      userId = response.data._id;
+      expect(response.data.name).toStrictEqual(userData.name);
     });
 
     it('should create one user with error', async () => {
@@ -57,30 +57,27 @@ class UserControllerTest extends TestBase {
     it('should get one user with success', async () => {
       this.req.params.id = userId;
       const response = await this.controller.get(this.req);
-      expect(response.name).toStrictEqual(userData.name);
+      expect(response.data.name).toStrictEqual(userData.name);
     });
 
     it('should get one user without results', async () => {
       this.req.params.id = fakeId;
-      try {
-        await this.controller.get(this.req);
-      } catch (error) {
-        expect(error.message).toStrictEqual(this.Messages.NO_RESULT);
-      }
+      const response = await this.controller.get(this.req);
+      expect(response.message).toStrictEqual(this.Messages.NO_RESULT);
     });
 
     it('should get all users with success', async () => {
       this.req.params = {};
       const resposnse = await this.controller.get(this.req);
-      expect(resposnse.list).toHaveLength(1);
-      expect(resposnse.pager).toEqual({ current: 1, limit: 10, total: 1 });
+      expect(resposnse.data.list).toHaveLength(1);
+      expect(resposnse.data.pager).toEqual({ current: 1, limit: 10, total: 1 });
     });
 
     it('should put one user with success', async () => {
       this.req.params.id = userId;
       this.req.body = updateUser;
       const response = await this.controller.put(this.req);
-      expect(response.level).toStrictEqual(updateUser.level);
+      expect(response.data.level).toStrictEqual(updateUser.level);
     });
 
     it('should put one user but not update', async () => {
@@ -104,7 +101,7 @@ class UserControllerTest extends TestBase {
     it('should delete one user with success', async () => {
       this.req.params.id = userId;
       const response = await this.controller.delete(this.req);
-      expect(response).toStrictEqual({});
+      expect(response.data).toStrictEqual({});
     });
 
     it('should delete one user but not found', async () => {
@@ -127,11 +124,8 @@ class UserControllerTest extends TestBase {
 
     it('should get all users without results', async () => {
       this.req.params = {};
-      try {
-        await this.controller.get(this.req);
-      } catch (error) {
-        expect(error.message).toStrictEqual(this.Messages.NO_RESULT);
-      }
+      const response = await this.controller.get(this.req);
+      expect(response.message).toStrictEqual(this.Messages.NO_RESULT);
     });
   }
 }

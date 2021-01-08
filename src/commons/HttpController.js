@@ -3,6 +3,8 @@
 const timezone = process.env.TZ || 'America/Sao_Paulo';
 const moment = require('moment-timezone');
 moment.tz.setDefault(timezone);
+
+const HttpStatusCode = require('./constants/HttpStatusCode');
 const Controller = require('./Controller');
 
 class HttpController extends Controller {
@@ -16,15 +18,16 @@ class HttpController extends Controller {
     return this.t.__({ phrase: msg, locale });
   }
 
-  response(res, next, response = {}, message = '', status = 200) {
+  response(res, next, response = {}, message = '', status = HttpStatusCode.OK) {
     const data = typeof response === 'object' ? response : { value: response };
     message = message instanceof Error || message.message ? message.message : message;
     const locale = res.req && res.req.headers ? res.req.headers.locale : 'en';
     const result = { message: this.translateError(message, locale), data };
 
-    status = isNaN(status) ? 400 : status;
+    status = isNaN(status) ? HttpStatusCode.BAD_REQUEST : status;
     res.status(status);
     res.json(result);
+
     this.log.debug('API Response', {
       id: res.id,
       statusCode: status,
@@ -33,7 +36,7 @@ class HttpController extends Controller {
     });
   }
 
-  responseError(res, next, message, data, status = 400) {
+  responseError(res, next, message, data, status = HttpStatusCode.BAD_REQUEST) {
     this.response(res, next, data, message, status);
   }
 
