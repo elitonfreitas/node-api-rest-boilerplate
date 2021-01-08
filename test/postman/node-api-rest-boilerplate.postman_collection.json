@@ -45,7 +45,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"1\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"1\",\n\t\"teste\": 123,\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/users",
@@ -69,7 +69,7 @@
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
-							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 202;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
@@ -246,7 +246,7 @@
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
-							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 202;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
@@ -278,7 +278,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user5@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"2\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"2\",\n\t\"active\": true,\n\t\"test\": 123,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/users/{{template01}}",
@@ -303,7 +303,7 @@
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
-							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 202;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
 							"tests[\"Message deleted with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
@@ -375,7 +375,7 @@
 	],
 	"variable": [
 		{
-			"id": "b643150d-bb5b-42bd-b9bd-58e42bdf061e",
+			"id": "47740335-968d-48b4-9d74-49c82d634c6c",
 			"key": "success_message",
 			"value": "Operação realizada com sucesso",
 			"type": "string"
