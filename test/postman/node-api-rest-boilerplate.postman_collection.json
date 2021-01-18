@@ -6,12 +6,70 @@
 	},
 	"item": [
 		{
+			"name": "{{URL}}/healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Status OK\"] = jsonData.data.status === 'OK';"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "locale",
+						"type": "text",
+						"value": "pt-br"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TOKEN}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/healthcheck",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "{{URL}}/users",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "48fdb6ed-690a-4ac4-ac9b-05ff3dc66eab",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
@@ -48,9 +106,9 @@
 					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"1\",\n\t\"teste\": 123,\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
-					"raw": "{{URL}}/users",
+					"raw": "{{URL}}{{API_ROOT}}/users",
 					"host": [
-						"{{URL}}"
+						"{{URL}}{{API_ROOT}}"
 					],
 					"path": [
 						"users"
@@ -65,7 +123,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "48fdb6ed-690a-4ac4-ac9b-05ff3dc66eab",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
@@ -101,9 +158,9 @@
 					"raw": "{\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\"\n}"
 				},
 				"url": {
-					"raw": "{{URL}}/auth",
+					"raw": "{{URL}}{{API_ROOT}}/auth",
 					"host": [
-						"{{URL}}"
+						"{{URL}}{{API_ROOT}}"
 					],
 					"path": [
 						"auth"
@@ -118,7 +175,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f9373db3-8d9d-4fef-a7c3-699703eae2a7",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
@@ -161,9 +217,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/users/{{template01}}",
+					"raw": "{{URL}}{{API_ROOT}}/users/{{template01}}",
 					"host": [
-						"{{URL}}"
+						"{{URL}}{{API_ROOT}}"
 					],
 					"path": [
 						"users",
@@ -179,7 +235,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f9373db3-8d9d-4fef-a7c3-699703eae2a7",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
@@ -225,9 +280,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/users",
+					"raw": "{{URL}}{{API_ROOT}}/users",
 					"host": [
-						"{{URL}}"
+						"{{URL}}{{API_ROOT}}"
 					],
 					"path": [
 						"users"
@@ -242,7 +297,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "72f60001-57be-4857-b06d-3849f74695c3",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
@@ -281,9 +335,9 @@
 					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"2\",\n\t\"active\": true,\n\t\"test\": 123,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
-					"raw": "{{URL}}/users/{{template01}}",
+					"raw": "{{URL}}{{API_ROOT}}/users/{{template01}}",
 					"host": [
-						"{{URL}}"
+						"{{URL}}{{API_ROOT}}"
 					],
 					"path": [
 						"users",
@@ -299,7 +353,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "289aea2d-519f-45c4-8e1f-7be26c9bcda1",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"",
@@ -338,9 +391,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/users/{{template01}}",
+					"raw": "{{URL}}{{API_ROOT}}/users/{{template01}}",
 					"host": [
-						"{{URL}}"
+						"{{URL}}{{API_ROOT}}"
 					],
 					"path": [
 						"users",
@@ -355,7 +408,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3cf1e785-ca6f-4a46-9d75-4ade474d335e",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -365,7 +417,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "4c80b01b-b2dd-4710-ada7-5d5d8dc775fc",
 				"type": "text/javascript",
 				"exec": [
 					"pm.globals.set('randomNumber', Math.floor(Math.random() * 50000));"
@@ -375,10 +426,12 @@
 	],
 	"variable": [
 		{
-			"id": "47740335-968d-48b4-9d74-49c82d634c6c",
 			"key": "success_message",
-			"value": "Operação realizada com sucesso",
-			"type": "string"
+			"value": "Operação realizada com sucesso"
+		},
+		{
+			"key": "API_ROOT",
+			"value": "/api"
 		}
 	]
 }

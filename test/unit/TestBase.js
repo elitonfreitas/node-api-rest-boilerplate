@@ -37,6 +37,7 @@ class TestBase {
       params: { id: 1 },
       headers: { locale: 'en' },
       header: param => this.req.headers[param],
+      baseUrl: '/',
     };
 
     this.expectedResponse = {

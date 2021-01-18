@@ -28,12 +28,16 @@ class HttpController extends Controller {
     res.status(status);
     res.json(result);
 
-    this.log.debug('API Response', {
-      id: res.id,
-      statusCode: status,
-      responseTime: new Date() - res.startTime,
-      response: result,
-    });
+    const baseUrl = res.req ? res.req.baseUrl : '/';
+
+    if (![process.env.HEALTH_CHECK_ENDPOINT, '/healthcheck'].includes(baseUrl)) {
+      this.log.debug('API Response', {
+        id: res.id,
+        statusCode: status,
+        responseTime: new Date() - res.startTime,
+        response: result,
+      });
+    }
   }
 
   responseError(res, next, message, data, status = HttpStatusCode.BAD_REQUEST) {

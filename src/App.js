@@ -51,6 +51,17 @@ class App extends Base {
 
   defaultRoute(app) {
     const httpController = new HttpController();
+    const healthCheckEndpoint = process.env.HEALTH_CHECK_ENDPOINT || '/healthcheck';
+    app.use(healthCheckEndpoint, (req, res, next) => {
+      httpController.response(
+        res,
+        next,
+        { uptimeMilliseconds: new Date() - this.serviveStartTime, status: 'OK' },
+        this.Messages.SUCCESS,
+        HttpStatusCode.OK
+      );
+    });
+
     app.use((req, res, next) => {
       httpController.logRequest(req, res);
       httpController.responseError(res, next, new Error('Route not found'), {}, HttpStatusCode.NOT_FOUND);
@@ -67,6 +78,7 @@ class App extends Base {
   }
 
   async start() {
+    this.serviveStartTime = new Date();
     const app = express();
     await this.connectMongo();
     this.initMiddlewares(app);
