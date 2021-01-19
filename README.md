@@ -90,8 +90,8 @@ In src/seed/profiles.js your must include new resouces on three defaults profile
   "_id": 1,
   "name": "Admin",
   "acl": {
-    users: ["get", "post", "put", "delete"], // Enable specific operations for users endpoint (api/users)
-    produtcs: ["*"] // Enable all operations (get, post, put, delete, patch, etc.) for produtcs endpoint (api/produtcs)
+    "users": ["get", "post", "put", "delete"],   // Enable specific operations for users endpoint (api/users)
+    "produtcs": ["*"]                            // Enable all operations (get, post, put, delete, patch, etc.) for produtcs endpoint (api/produtcs)
   } 
 }
 ```
