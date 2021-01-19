@@ -1,0 +1,22 @@
+{
+  "apps": [
+    {
+      "script": "./src/index.js",
+      "env": {
+        "NODE_PATH": "."
+      },
+      "name": "node-api-rest",
+      "cwd": "./",
+      "instance_var": "NODE-API-REST",
+      "max_memory_restart": "4096M",
+      "max_restarts": 5,
+      "node_args": "--max-old-space-size=4096",
+      "exec_mode": "fork",
+      "watch": false,
+      "merge_logs": false,
+      "log_date_format": null,
+      "out_file": "/app/logs/node-api-rest.log",
+      "error_file": "/app/logs/node-api-rest-error.log"
+    }
+  ]
+}
