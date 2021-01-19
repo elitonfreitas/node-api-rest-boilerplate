@@ -77,3 +77,21 @@ openssl genpkey -algorithm RSA -out rsa_private.pem -pkeyopt rsa_keygen_bits:204
 openssl rsa -in rsa_private.pem -pubout -out rsa_public.pem
 
 After creates the certificates, put the files content on .env file in JWT_PRIVATE_KEY and JWT_PUBLIC_KEY variables.
+
+## ACL - Access Control List
+
+To use ACL you must set the Enviroment variable USE_ACL=true. With this variable we enable ACL for all resoures in our API.
+
+In src/seed/profiles.js your must include new resouces on three defaults profiles: Admin, User, Guest. That profiles will be created on App starts. You can customize existing profiles names or create new ones.
+
+### Profile ACL format sample:
+```
+{
+  "_id": 1,
+  "name": "Admin",
+  "acl": {
+    users: ["get", "post", "put", "delete"], // Enable specific operations for users endpoint (api/users)
+    produtcs: ["*"] // Enable all operations (get, post, put, delete, patch, etc.) for produtcs endpoint (api/produtcs)
+  } 
+}
+```

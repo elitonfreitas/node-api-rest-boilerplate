@@ -14,6 +14,7 @@ module.exports = {
   INVALID_LOGIN: 'User or password invalid',
   INVALID_TOKEN: 'Invalid token',
   INVALID_TOKEN_ORIGIN: 'Invalid token origin',
+  INVALID_ACL: 'Resource access unauthorized',
   ERROR_ON_SAVE: 'Error on try to save data',
   ERROR_ON_UPDATE: 'Error on try to update data',
   UPDATE_NOT_OCURRED: 'Update not effective',

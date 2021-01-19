@@ -37,8 +37,14 @@ class ValidatorUtils {
     };
   }
 
-  setValidatorType(type) {
-    return this.ValidatorTypes[type] || {};
+  setValidatorType(type, opt) {
+    const newType = this.ValidatorTypes[type] || {};
+
+    if (opt && Object.keys(newType).length) {
+      newType.optional = opt;
+    }
+
+    return newType;
   }
 
   formatValidationSchema(attr, verb) {
@@ -47,7 +53,8 @@ class ValidatorUtils {
       if (attr.hasOwnProperty(key)) {
         if (this.AttributeMap[verb][key] || key.indexOf('is') === 0) {
           if (key === 'type') {
-            Object.assign(resultItem, this.setValidatorType(attr[key].name));
+            Object.assign(resultItem, this.setValidatorType(attr[key].name, attr.optional));
+
             if (!resultItem['custom']) {
               resultItem['custom'] = {};
             }

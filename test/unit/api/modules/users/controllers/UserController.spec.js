@@ -36,7 +36,7 @@ class UserControllerTest extends TestBase {
         },
       ],
     };
-    const updateUser = Object.assign({}, userData, { level: 2 });
+    const updateUser = Object.assign({}, userData, { profile: 2 });
 
     it('should create one user with success', async () => {
       this.req.body = userData;
@@ -77,7 +77,7 @@ class UserControllerTest extends TestBase {
       this.req.params.id = userId;
       this.req.body = updateUser;
       const response = await this.controller.put(this.req);
-      expect(response.data.level).toStrictEqual(updateUser.level);
+      expect(response.data.profile).toStrictEqual(updateUser.profile);
     });
 
     it('should put one user but not update', async () => {

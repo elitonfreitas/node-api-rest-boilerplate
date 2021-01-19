@@ -19,7 +19,17 @@ class App extends Base {
     return new MongoController().connect();
   }
 
-  initMiddlewares(app) {
+  async createProfiles() {
+    const ProfileModel = require('src/api/modules/users/models/Profile.model');
+    const profiles = require('src/seed/profiles');
+    const profilesExists = await ProfileModel.find({});
+    if (!profilesExists.length) {
+      await ProfileModel.insertMany(profiles);
+      this.log.info(`Creating ${profiles.length} default user profiles`);
+    }
+  }
+
+  async initMiddlewares(app) {
     const corsOptions = {
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
     };
@@ -37,6 +47,10 @@ class App extends Base {
 
     if (process.env.USE_JWT_AUTH === 'true') {
       app.use(JwtMiddleware.initialize());
+
+      if (JSON.parse(process.env.USE_ACL || 'false')) {
+        await this.createProfiles();
+      }
     }
   }
 
@@ -81,7 +95,7 @@ class App extends Base {
     this.serviveStartTime = new Date();
     const app = express();
     await this.connectMongo();
-    this.initMiddlewares(app);
+    await this.initMiddlewares(app);
     this.initRoutes(app);
     this.defaultRoute(app);
     return this.initServer(app);

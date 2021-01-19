@@ -3,6 +3,7 @@
 const bcrypt = require('bcryptjs');
 const Messages = require('src/commons/constants/Messages');
 const mongoose = require('mongoose');
+require('./Profile.model');
 const Schema = mongoose.Schema;
 
 const AddressSchema = new Schema({
@@ -52,9 +53,16 @@ const UserSchema = new Schema(
       errorMessage: Messages.FIELD_REQUIRED,
     },
     addresses: [AddressSchema],
-    level: {
+    profile: {
       type: Number,
-      default: 0,
+      ref: 'Profile',
+      default: process.env.ACL_DEFAULT_PROFILE,
+      optional: true,
+    },
+    acl: {
+      type: Object,
+      default: undefined,
+      optional: true,
     },
   },
   {

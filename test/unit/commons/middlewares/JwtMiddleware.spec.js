@@ -33,7 +33,7 @@ class JwtMiddlewareTest extends TestBase {
       this.expectedErrorResponse.message = this.Messages.INVALID_TOKEN;
 
       this.controller._checkRequestToken(this.req, this.res, () => {});
-      expect(this.status.calledWith(400)).toBe(true);
+      expect(this.status.calledWith(this.HttpStatusCode.UNAUTHORIZED)).toBe(true);
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 
@@ -51,7 +51,7 @@ class JwtMiddlewareTest extends TestBase {
       this.expectedErrorResponse.message = this.Messages.INVALID_TOKEN_ORIGIN;
 
       this.controller._checkRequestToken(this.req, this.res, () => {});
-      expect(this.status.calledWith(400)).toBe(true);
+      expect(this.status.calledWith(this.HttpStatusCode.NOT_ACCEPTABLE)).toBe(true);
       expect(this.json.calledWith(this.expectedErrorResponse)).toBe(true);
     });
 

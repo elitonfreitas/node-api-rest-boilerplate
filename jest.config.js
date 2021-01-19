@@ -3,7 +3,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.js', '!**/index.js', '!**/*Validator.js', '!**/*Logger.js'],
   coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/', 'test'],
+  coveragePathIgnorePatterns: ['/node_modules/', 'test', 'src/seed/*'],
   coverageReporters: ['json', 'text', 'text-summary', 'lcov', 'json-summary'],
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/unit/**/*.spec.js', '<rootDir>/test/integration/**/*.test.js'],
