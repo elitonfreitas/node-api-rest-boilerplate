@@ -103,7 +103,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"1\",\n\t\"teste\": 123,\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}{{API_ROOT}}/users",
@@ -332,7 +332,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"level\": \"2\",\n\t\"active\": true,\n\t\"test\": 123,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"active\": true,\n\t\"test\": 123,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}{{API_ROOT}}/users/{{template01}}",
