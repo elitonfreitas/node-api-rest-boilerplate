@@ -68,16 +68,26 @@ class JwtMiddleware extends HttpController {
   }
 
   _checkACLToken(req, res, next) {
+    const aclPermissions = {
+      GET: ['r', 'w', 'm'],
+      HEAD: ['r', 'w', 'm'],
+      OPTIONS: ['r', 'w', 'm'],
+      POST: ['w', 'm'],
+      PUT: ['w', 'm'],
+      PATCH: ['w', 'm'],
+      DELETE: ['m'],
+    };
     const { originalUrl, method, token } = req;
     const { acl } = token;
-    const resource = originalUrl.split('/')[2];
-    const aclPart = acl[resource];
+    const rootPath = process.env.ROOT_API_PATH;
+    const resource = originalUrl.replace(rootPath, '').split('/')[1];
+    const resourcePermission = acl[resource];
     let hasAuth = true;
 
-    if (!aclPart) {
+    if (!resourcePermission) {
       hasAuth = false;
     } else {
-      hasAuth = aclPart.includes(method.toLowerCase()) || aclPart.includes('*');
+      hasAuth = aclPermissions[method].includes(resourcePermission);
     }
 
     if (!hasAuth) {
