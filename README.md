@@ -87,7 +87,7 @@ In src/seed/profiles.js your must include new resouces on three defaults profile
 ### Profile ACL format sample and ACL permission description:
 "r": Access to read the resource (GET, OPTIONS, HEAD)\
 "w": Access to read and write the resource (GET, OPTIONS, HEAD, POST, PUT, PATCH)\
-"m": Access to manager (read, write and delete) the resource (GET, OPTIONS, HEAD, POST, PUT, PATCH, DELETE)\
+"m": Access to manager (read, write and delete) the resource (GET, OPTIONS, HEAD, POST, PUT, PATCH, DELETE)
 
 ```
 {
