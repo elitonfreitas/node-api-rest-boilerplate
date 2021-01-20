@@ -21,7 +21,7 @@ class BaseController extends HttpController {
 
   async get(req) {
     if (req.params.id) {
-      const result = await this.Model.findOne({ _id: req.params.id }, { __v: 0 }).lean();
+      const result = await this.Model.findOne({ _id: req.params.id }, { __v: 0 });
       return {
         data: result || {},
         message: result ? this.Messages.SUCCESS : this.Messages.NO_RESULT,
@@ -29,7 +29,7 @@ class BaseController extends HttpController {
     } else {
       const baseQuery = this.Model.find({}, { __v: 0 });
       const { queryPager, pager } = this._normalizePager(req, baseQuery);
-      const promises = [queryPager.lean(), this.Model.countDocuments()];
+      const promises = [queryPager, this.Model.countDocuments()];
       const [list, total] = await Promise.all(promises);
       pager.total = total || 0;
 

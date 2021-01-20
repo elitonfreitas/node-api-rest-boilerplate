@@ -23,7 +23,7 @@ class AuthController extends HttpController {
     const query = this.Model.findOne({ email, active: true }, '+password name _id profile acl');
 
     if (useACL) {
-      query.populate('profile');
+      query.populate('profile', 'name acl');
     }
 
     const user = await query.lean();

@@ -12,21 +12,14 @@ const routes = require('./commons/Routes');
 const HttpController = require('./commons/HttpController');
 const MongoController = require('./commons/MongoController');
 const JwtMiddleware = require('./commons/middlewares/JwtMiddleware');
+const AclMiddleware = require('./commons/middlewares/AclMiddleware');
 const HttpStatusCode = require('./commons/constants/HttpStatusCode');
+const Seed = require('src/seed/index');
 
 class App extends Base {
-  connectMongo() {
-    return new MongoController().connect();
-  }
-
-  async createProfiles() {
-    const ProfileModel = require('src/api/modules/users/models/Profile.model');
-    const profiles = require('src/seed/profiles');
-    const profilesExists = await ProfileModel.find({});
-    if (!profilesExists.length) {
-      await ProfileModel.insertMany(profiles);
-      this.log.info(`Creating ${profiles.length} default user profiles`);
-    }
+  async connectMongo() {
+    await new MongoController().connect();
+    await Seed.run();
   }
 
   async initMiddlewares(app) {
@@ -47,10 +40,7 @@ class App extends Base {
 
     if (process.env.USE_JWT_AUTH === 'true') {
       app.use(JwtMiddleware.initialize());
-
-      if (JSON.parse(process.env.USE_ACL || 'false')) {
-        await this.createProfiles();
-      }
+      app.use(AclMiddleware.initialize());
     }
   }
 

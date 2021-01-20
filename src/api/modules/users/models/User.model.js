@@ -70,6 +70,20 @@ const UserSchema = new Schema(
   }
 );
 
+if (JSON.parse(process.env.USE_ACL || 'false')) {
+  UserSchema.pre('find', function () {
+    if (!this._mongooseOptions.populate) {
+      this.populate('profile', 'name');
+    }
+  });
+
+  UserSchema.pre('findOne', function () {
+    if (!this._mongooseOptions.populate) {
+      this.populate('profile', 'name');
+    }
+  });
+}
+
 function getHash(password) {
   const salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(password, salt);

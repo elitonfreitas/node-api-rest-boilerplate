@@ -10,7 +10,7 @@ const HttpStatusCode = require('src/commons/constants/HttpStatusCode');
 describe('User integration', () => {
   process.env.DB_HOST = process.env.MONGO_URL;
   process.env.CORS_ORIGIN = '*';
-  const rootPath = '/api';
+  const rootPath = process.env.ROOT_API_PATH;
   let app = {};
 
   beforeAll(async () => {
@@ -28,7 +28,6 @@ describe('User integration', () => {
     email: 'user@teste.com',
     password: userPass,
     profile: 1,
-    teste: 123,
     active: true,
     addresses: [
       {

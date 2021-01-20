@@ -62,37 +62,9 @@ class JwtMiddleware extends HttpController {
       }
 
       req.token = tokenData;
+      next();
     } catch (error) {
       this.responseError(res, next, this.Messages.INVALID_TOKEN, {}, this.HttpStatusCode.UNAUTHORIZED);
-    }
-  }
-
-  _checkACLToken(req, res, next) {
-    const aclPermissions = {
-      GET: ['r', 'w', 'm'],
-      HEAD: ['r', 'w', 'm'],
-      OPTIONS: ['r', 'w', 'm'],
-      POST: ['w', 'm'],
-      PUT: ['w', 'm'],
-      PATCH: ['w', 'm'],
-      DELETE: ['m'],
-    };
-    const { originalUrl, method, token } = req;
-    const { acl } = token;
-    const rootPath = process.env.ROOT_API_PATH;
-    const resource = originalUrl.replace(rootPath, '').split('/')[1];
-    const resourcePermission = acl[resource];
-    let hasAuth = true;
-
-    if (!resourcePermission) {
-      hasAuth = false;
-    } else {
-      hasAuth = aclPermissions[method].includes(resourcePermission);
-    }
-
-    if (!hasAuth) {
-      delete req.token;
-      return this.responseError(res, next, this.Messages.INVALID_ACL, {}, this.HttpStatusCode.UNAUTHORIZED);
     }
   }
 
@@ -101,14 +73,6 @@ class JwtMiddleware extends HttpController {
       next();
     } else {
       this._checkRequestToken(req, res, next);
-
-      if (req.token && JSON.parse(process.env.USE_ACL || 'false')) {
-        this._checkACLToken(req, res, next);
-      }
-
-      if (req.token) {
-        next();
-      }
     }
   }
 
