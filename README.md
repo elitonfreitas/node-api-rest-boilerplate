@@ -84,14 +84,19 @@ To use ACL you must set the Enviroment variable USE_ACL=true. With this variable
 
 In src/seed/profiles.js your must include new resouces on three defaults profiles: Admin, User, Guest. That profiles will be created on App starts. You can customize existing profiles names or create new ones.
 
-### Profile ACL format sample:
+### Profile ACL format sample and ACL permission description:
+"r": Access to read the resource (GET, OPTIONS, HEAD)\
+"w": Access to read and write the resource (GET, OPTIONS, HEAD, POST, PUT, PATCH)\
+"m": Access to manager (read, write and delete) the resource (GET, OPTIONS, HEAD, POST, PUT, PATCH, DELETE)\
+
 ```
 {
   "_id": 1,
   "name": "Admin",
   "acl": {
-    "users": ["get", "post", "put", "delete"],   // Enable specific operations for users endpoint (api/users)
-    "produtcs": ["*"]                            // Enable all operations (get, post, put, delete, patch, etc.) for produtcs endpoint (api/produtcs)
+    "users": "r",     // Enable read operations for users endpoint (api/users)
+    "produtcs": "w",  // Enable read and write operations for produtcs endpoint (api/produtcs)
+    "reports": "m"    // Enable read, write and delete operations for reports endpoint (api/reports)
   } 
 }
 ```
