@@ -124,10 +124,16 @@ describe('User integration', () => {
     expect(response.body.message).toBe(Messages.NO_RESULT);
   });
 
-  test('should get all Users', async () => {
-    const response = await request(app).get(userPath).set('Authorization', token);
+  test('should get all Users with pager', async () => {
+    const response = await request(app).get(`${userPath}?limit=10`).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.data.list).toHaveLength(1);
+  });
+
+  test('should get all Users without pager', async () => {
+    const response = await request(app).get(userPath).set('Authorization', token);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
+    expect(response.body.data).toHaveLength(1);
   });
 
   test('should dont delete User without id', async () => {
@@ -153,7 +159,13 @@ describe('User integration', () => {
     expect(response.statusCode).toBe(HttpStatusCode.ACCEPTED);
   });
 
-  test('should get all Users with no results', async () => {
+  test('should get all Users with no results with pager', async () => {
+    const response = await request(app).get(`${userPath}?limit=10`).set('Authorization', token);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
+    expect(response.body.message).toBe(Messages.NO_RESULT);
+  });
+
+  test('should get all Users with no results without pager', async () => {
     const response = await request(app).get(userPath).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.message).toBe(Messages.NO_RESULT);

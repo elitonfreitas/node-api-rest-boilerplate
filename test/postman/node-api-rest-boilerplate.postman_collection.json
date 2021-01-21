@@ -230,7 +230,7 @@
 			"response": []
 		},
 		{
-			"name": "{{URL}}/users/all",
+			"name": "{{URL}}/users/all with pager",
 			"event": [
 				{
 					"listen": "test",
@@ -273,6 +273,71 @@
 						"key": "Authorization",
 						"value": "Bearer {{TOKEN}}",
 						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}{{API_ROOT}}/users?limit=10",
+					"host": [
+						"{{URL}}{{API_ROOT}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/users/all without pager",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Response body is not empty\"] = jsonData !== '';",
+							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Result list is array\"] = Array.isArray(jsonData.data);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "locale",
+						"type": "text",
+						"value": "pt-br"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TOKEN}}"
 					}
 				],
 				"body": {

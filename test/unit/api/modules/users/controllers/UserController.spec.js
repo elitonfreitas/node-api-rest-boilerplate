@@ -68,6 +68,7 @@ class UserControllerTest extends TestBase {
 
     it('should get all users with success', async () => {
       this.req.params = {};
+      this.req.query = { limit: 10 };
       const resposnse = await this.controller.get(this.req);
       expect(resposnse.data.list).toHaveLength(1);
       expect(resposnse.data.pager).toEqual({ current: 1, limit: 10, total: 1 });
