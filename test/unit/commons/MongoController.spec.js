@@ -5,6 +5,7 @@ const TestBase = require('test/unit/TestBase');
 class MongoControllerTest extends TestBase {
   constructor() {
     super('src/commons/MongoController', false, true);
+    this.dbName = process.env.DB_NAME;
   }
 
   test() {
@@ -12,21 +13,21 @@ class MongoControllerTest extends TestBase {
       this.controller.dbAuth = '0';
       this.controller.dbReplicaOption = null;
 
-      expect(this.controller._getConnectionUrl()).toEqual('mongodb://127.0.0.1:27017/noderestapi?authSource=admin');
+      expect(this.controller._getConnectionUrl()).toEqual(`mongodb://127.0.0.1:27017/${this.dbName}?authSource=admin`);
     });
 
     it('should get connection url with auth without replica set', () => {
       this.controller.dbAuth = '1';
       this.controller.dbReplicaOption = null;
 
-      expect(this.controller._getConnectionUrl()).toEqual('mongodb://root:test@127.0.0.1:27017/noderestapi?authSource=admin');
+      expect(this.controller._getConnectionUrl()).toEqual(`mongodb://root:test@127.0.0.1:27017/${this.dbName}?authSource=admin`);
     });
 
     it('should get connection url with replica set', () => {
       this.controller.dbAuth = '1';
       this.controller.dbReplicaOption = `replicaSet=rs&`;
 
-      expect(this.controller._getConnectionUrl()).toEqual('mongodb://root:test@127.0.0.1/noderestapi?replicaSet=rs&authSource=admin');
+      expect(this.controller._getConnectionUrl()).toEqual(`mongodb://root:test@127.0.0.1/${this.dbName}?replicaSet=rs&authSource=admin`);
     });
 
     it('should connect with Mongo', async () => {
