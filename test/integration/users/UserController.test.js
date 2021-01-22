@@ -27,7 +27,7 @@ describe('User integration', () => {
     name: 'User test',
     email: 'user@teste.com',
     password: userPass,
-    profile: 1,
+    profiles: [1],
     active: true,
     addresses: [
       {

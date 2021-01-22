@@ -53,12 +53,14 @@ const UserSchema = new Schema(
       errorMessage: Messages.FIELD_REQUIRED,
     },
     addresses: [AddressSchema],
-    profile: {
-      type: Number,
-      ref: 'Profile',
-      default: process.env.ACL_DEFAULT_PROFILE,
-      optional: true,
-    },
+    profiles: [
+      {
+        type: Number,
+        ref: 'Profile',
+        default: process.env.ACL_DEFAULT_PROFILE,
+        optional: true,
+      },
+    ],
     acl: {
       type: Object,
       default: undefined,
@@ -73,13 +75,13 @@ const UserSchema = new Schema(
 if (JSON.parse(process.env.USE_ACL || 'false')) {
   UserSchema.pre('find', function () {
     if (!this._mongooseOptions.populate) {
-      this.populate('profile', 'name');
+      this.populate('profiles', 'name');
     }
   });
 
   UserSchema.pre('findOne', function () {
     if (!this._mongooseOptions.populate) {
-      this.populate('profile', 'name');
+      this.populate('profiles', 'name');
     }
   });
 }

@@ -10,7 +10,7 @@ class UserModelTest extends TestBase {
       name: 'User test',
       email: 'user@teste.com',
       password: this.passtest,
-      profile: 1,
+      profiles: [1],
       active: true,
       addresses: [
         {
@@ -34,7 +34,7 @@ class UserModelTest extends TestBase {
       expect(savedUser.email).toBe(this.userData.email);
       expect(savedUser.password).toBeUndefined();
       expect(savedUser.active).toBe(this.userData.active);
-      expect(savedUser.profile).toBe(Number(this.userData.profile));
+      expect(savedUser.profiles).toHaveLength(1);
       expect(savedUser.addresses).toHaveLength(1);
     });
 
@@ -46,7 +46,7 @@ class UserModelTest extends TestBase {
       expect(savedUser.email).toBe(this.userData.email);
       expect(savedUser.password).toBeUndefined();
       expect(savedUser.active).toBe(this.userData.active);
-      expect(savedUser.profile).toBe(Number(this.userData.profile));
+      expect(savedUser.profiles).toHaveLength(1);
       expect(savedUser.addresses).toHaveLength(1);
     });
 
@@ -58,7 +58,7 @@ class UserModelTest extends TestBase {
       expect(savedUser.email).toBe(this.userData.email);
       expect(savedUser.password).toBeUndefined();
       expect(savedUser.active).toBe(!this.userData.active);
-      expect(savedUser.profile).toBe(Number(this.userData.profile));
+      expect(savedUser.profiles).toHaveLength(1);
       expect(savedUser.addresses).toHaveLength(1);
     });
 

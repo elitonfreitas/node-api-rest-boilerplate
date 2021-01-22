@@ -19,17 +19,46 @@ class ValidatorUtils {
       },
     };
     this.ValidatorTypes = {
-      Number: {
-        isNumeric: {
-          errorMessage: Messages.FIELD_NUMERIC,
-        },
-      },
       Array: {
         isArray: {
           errorMessage: Messages.FIELD_ARRAY_OBJECT,
         },
       },
+      ObjectId: {
+        isMongoId: {
+          errorMessage: Messages.FIELD_OBJECT_ID,
+        },
+      },
+      ArrayObjectId: {
+        isArray: {
+          errorMessage: Messages.FIELD_ARRAY_OBJECT_ID,
+        },
+        isMongoId: {
+          errorMessage: Messages.FIELD_OBJECT_ID,
+        },
+      },
+      Number: {
+        isNumeric: {
+          errorMessage: Messages.FIELD_NUMERIC,
+        },
+      },
+      ArrayNumber: {
+        isArray: {
+          errorMessage: Messages.FIELD_ARRAY_NUMERIC,
+        },
+        isNumeric: {
+          errorMessage: Messages.FIELD_NUMERIC,
+        },
+      },
       Boolean: {
+        isBoolean: {
+          errorMessage: Messages.FIELD_BOOLEAN,
+        },
+      },
+      ArrayBoolean: {
+        isArray: {
+          errorMessage: Messages.FIELD_ARRAY_BOOLEAN,
+        },
         isBoolean: {
           errorMessage: Messages.FIELD_BOOLEAN,
         },
@@ -47,18 +76,19 @@ class ValidatorUtils {
     return newType;
   }
 
-  formatValidationSchema(attr, verb) {
+  formatValidationSchema(attr, verb, isArray) {
     const resultItem = {};
     for (const key in attr) {
       if (attr.hasOwnProperty(key)) {
         if (this.AttributeMap[verb][key] || key.indexOf('is') === 0) {
           if (key === 'type') {
-            Object.assign(resultItem, this.setValidatorType(attr[key].name, attr.optional));
+            const name = attr[key].name;
+            Object.assign(resultItem, this.setValidatorType(isArray ? `Array${name}` : name, attr.optional));
 
             if (!resultItem['custom']) {
               resultItem['custom'] = {};
             }
-            resultItem['custom']['options'] = () => ({ type: attr[key].name });
+            resultItem['custom']['options'] = () => ({ type: name });
           } else {
             if (key.indexOf('is') === 0) {
               resultItem[key] = attr[key];
@@ -82,10 +112,15 @@ class ValidatorUtils {
           const subObject = attrs[key][0];
           if (isArray && subObject) {
             const object = subObject.obj;
-            for (const subKey in object) {
-              if (object.hasOwnProperty(subKey) && object[subKey]) {
-                result[`${key}.*.${subKey}`] = this.formatValidationSchema(object[subKey], verb);
+
+            if (object) {
+              for (const subKey in object) {
+                if (object.hasOwnProperty(subKey) && object[subKey]) {
+                  result[`${key}.*.${subKey}`] = this.formatValidationSchema(object[subKey], verb);
+                }
               }
+            } else {
+              result[`${key}`] = this.formatValidationSchema(subObject, verb, isArray);
             }
           } else {
             result[key] = this.formatValidationSchema(attrs[key], verb);

@@ -22,7 +22,7 @@ class UserControllerTest extends TestBase {
       name: 'User jest test',
       email: 'user@test.com',
       password: this.passtest,
-      level: '1',
+      profiles: [1],
       active: true,
       addresses: [
         {
@@ -36,7 +36,7 @@ class UserControllerTest extends TestBase {
         },
       ],
     };
-    const updateUser = Object.assign({}, userData, { profile: 2 });
+    const updateUser = Object.assign({}, userData, { profiles: [2] });
 
     it('should create one user with success', async () => {
       this.req.body = userData;
@@ -78,7 +78,7 @@ class UserControllerTest extends TestBase {
       this.req.params.id = userId;
       this.req.body = updateUser;
       const response = await this.controller.put(this.req);
-      expect(response.data.profile).toStrictEqual(updateUser.profile);
+      expect(response.data.profiles).toHaveLength(1);
     });
 
     it('should put one user but not update', async () => {
