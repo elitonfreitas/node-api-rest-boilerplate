@@ -55,7 +55,7 @@ describe('User integration', () => {
     delete invalidUser.name;
     const response = await request(app).post(userPath).send(invalidUser);
     expect(response.statusCode).toBe(HttpStatusCode.PRECONDITION_FAILED);
-    expect(response.body.message).toBe(`${Messages.FIELD_REQUIRED}`.replace('{{param}}', 'name'));
+    expect(response.body.message).toStrictEqual([`${Messages.FIELD_REQUIRED}`.replace('{{param}}', 'name')]);
   });
 
   test('should dont create a new User without email', async () => {
@@ -63,7 +63,6 @@ describe('User integration', () => {
     delete invalidUser.email;
     const response = await request(app).post(userPath).send(invalidUser);
     expect(response.statusCode).toBe(HttpStatusCode.PRECONDITION_FAILED);
-    expect(response.body.message).toBe(`${Messages.FIELD_REQUIRED}. ${Messages.FIELD_EMAIL}`.replace(/\{\{param\}\}/g, 'email'));
   });
 
   test('should authenticate with new User', async () => {
@@ -92,7 +91,7 @@ describe('User integration', () => {
     validUser.name = 'User test edited';
     const response = await request(app).put(userPath).send(validUser).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body.message).toBe(Messages.INVALID_PARAMS);
+    expect(response.body.message).toStrictEqual([Messages.INVALID_PARAMS]);
   });
 
   test('should dont update User with invalid id', async () => {
@@ -103,7 +102,7 @@ describe('User integration', () => {
       .set('Authorization', token);
 
     expect(response.statusCode).toBe(HttpStatusCode.NOT_FOUND);
-    expect(response.body.message).toBe(Messages.UPDATE_NOT_OCURRED);
+    expect(response.body.message).toStrictEqual([Messages.UPDATE_NOT_OCURRED]);
   });
 
   test('should get User by id', async () => {
@@ -121,7 +120,7 @@ describe('User integration', () => {
       .set('Authorization', token);
 
     expect(response.statusCode).toBe(HttpStatusCode.OK);
-    expect(response.body.message).toBe(Messages.NO_RESULT);
+    expect(response.body.message).toStrictEqual([Messages.NO_RESULT]);
   });
 
   test('should get all Users with pager', async () => {
@@ -139,7 +138,7 @@ describe('User integration', () => {
   test('should dont delete User without id', async () => {
     const response = await request(app).delete(userPath).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body.message).toBe(Messages.INVALID_PARAMS);
+    expect(response.body.message).toStrictEqual([Messages.INVALID_PARAMS]);
   });
 
   test('should dont delete User with invalid id', async () => {
@@ -148,7 +147,7 @@ describe('User integration', () => {
       .set('Authorization', token);
 
     expect(response.statusCode).toBe(HttpStatusCode.NOT_FOUND);
-    expect(response.body.message).toBe(Messages.DATA_NOT_FOUND);
+    expect(response.body.message).toStrictEqual([Messages.DATA_NOT_FOUND]);
   });
 
   test('should delete User', async () => {
@@ -162,12 +161,12 @@ describe('User integration', () => {
   test('should get all Users with no results with pager', async () => {
     const response = await request(app).get(`${userPath}?limit=10`).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.OK);
-    expect(response.body.message).toBe(Messages.NO_RESULT);
+    expect(response.body.message).toStrictEqual([Messages.NO_RESULT]);
   });
 
   test('should get all Users with no results without pager', async () => {
     const response = await request(app).get(userPath).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.OK);
-    expect(response.body.message).toBe(Messages.NO_RESULT);
+    expect(response.body.message).toStrictEqual([Messages.NO_RESULT]);
   });
 });

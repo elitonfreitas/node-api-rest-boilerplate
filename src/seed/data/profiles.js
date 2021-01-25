@@ -7,15 +7,18 @@
 
 const aclGuest = {
   users: 'r',
+  profiles: 'r',
 };
 const aclUser = {
   ...aclGuest,
   users: 'w',
+  profiles: 'r',
 };
 const aclAdmin = {
   ...aclGuest,
   ...aclUser,
   users: 'm',
+  profiles: 'm',
 };
 
 module.exports = [

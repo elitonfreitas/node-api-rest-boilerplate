@@ -30,7 +30,7 @@ class JwtMiddlewareTest extends TestBase {
       this.req.originalUrl = 'http://localhost:3030/api/users';
       this.req.method = 'PUT';
 
-      this.expectedErrorResponse.message = this.Messages.INVALID_TOKEN;
+      this.expectedErrorResponse.message = [this.Messages.INVALID_TOKEN];
 
       this.controller._checkRequestToken(this.req, this.res, () => {});
       expect(this.status.calledWith(this.HttpStatusCode.UNAUTHORIZED)).toBe(true);
@@ -48,7 +48,7 @@ class JwtMiddlewareTest extends TestBase {
       this.req.headers.authorization = `Bearer ${token}`;
       this.req.ip = '1234';
 
-      this.expectedErrorResponse.message = this.Messages.INVALID_TOKEN_ORIGIN;
+      this.expectedErrorResponse.message = [this.Messages.INVALID_TOKEN_ORIGIN];
 
       this.controller._checkRequestToken(this.req, this.res, () => {});
       expect(this.status.calledWith(this.HttpStatusCode.NOT_ACCEPTABLE)).toBe(true);

@@ -15,7 +15,12 @@ class HttpController extends Controller {
   }
 
   translateError(msg, locale = 'en') {
-    return this.t.__({ phrase: msg, locale });
+    const messages = Array.isArray(msg) ? msg : [msg];
+    const results = [];
+    for (const message of messages) {
+      results.push(this.t.__({ phrase: message, locale }));
+    }
+    return results;
   }
 
   response(res, next, response = {}, message = '', status = HttpStatusCode.OK) {

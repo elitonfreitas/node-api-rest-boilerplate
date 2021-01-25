@@ -82,7 +82,7 @@ class RoutesTest extends TestBase {
           msg: 'Field "{{param}}" is required',
         },
       ];
-      expect(this.controller.getValidatorErrors(message)).toEqual('Field "" is required');
+      expect(this.controller.getValidatorErrors(message)).toEqual(['Field "" is required']);
     });
   }
 }

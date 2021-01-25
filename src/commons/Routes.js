@@ -90,7 +90,7 @@ class Routes extends Base {
       });
     }
 
-    return messages.join('. ');
+    return messages;
   }
 }
 
