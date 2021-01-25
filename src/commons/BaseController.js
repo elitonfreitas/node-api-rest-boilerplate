@@ -20,8 +20,10 @@ class BaseController extends HttpController {
   }
 
   async get(req) {
+    const { select } = req.query || { __v: 0 };
+
     if (req.params.id) {
-      const result = await this.Model.findOne({ _id: req.params.id }, { __v: 0 });
+      const result = await this.Model.findOne({ _id: req.params.id }, select);
       return {
         data: result || {},
         message: result ? this.Messages.SUCCESS : this.Messages.NO_RESULT,
@@ -30,7 +32,7 @@ class BaseController extends HttpController {
       const usePager = req.query.limit || req.body.limit || req.query.current || req.body.current || 0;
 
       if (usePager) {
-        const baseQuery = this.Model.find({}, { __v: 0 });
+        const baseQuery = this.Model.find({}, select);
         const { queryPager, pager } = this._normalizePager(req, baseQuery);
         const promises = [queryPager, this.Model.countDocuments()];
         const [list, total] = await Promise.all(promises);
@@ -41,7 +43,7 @@ class BaseController extends HttpController {
           message: list.length ? this.Messages.SUCCESS : this.Messages.NO_RESULT,
         };
       } else {
-        const data = await this.Model.find({}, { __v: 0 });
+        const data = await this.Model.find({}, select);
 
         return {
           data,
