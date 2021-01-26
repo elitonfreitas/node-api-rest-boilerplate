@@ -10,6 +10,12 @@ class Seed extends Base {
         startOverwrite: true,
         envCondition: JSON.parse(process.env.USE_ACL || 'false'),
       },
+      {
+        model: 'src/api/modules/users/models/User.model',
+        data: 'src/seed/data/users.json',
+        startOverwrite: false,
+        envCondition: process.env.CI !== 'true',
+      },
     ];
   }
 
