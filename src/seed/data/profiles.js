@@ -8,17 +8,20 @@
 const aclGuest = {
   users: 'r',
   profiles: 'r',
+  resources: 'r',
 };
 const aclUser = {
   ...aclGuest,
   users: 'w',
   profiles: 'r',
+  resources: 'r',
 };
 const aclAdmin = {
   ...aclGuest,
   ...aclUser,
   users: 'm',
   profiles: 'm',
+  resources: 'm',
 };
 
 module.exports = [

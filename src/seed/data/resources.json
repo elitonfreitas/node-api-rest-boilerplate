@@ -1,0 +1,17 @@
+[
+  {
+    "name": "User manager",
+    "aclResource": "users",
+    "defaultPermission": "w"
+  },
+  {
+    "name": "Profile manager",
+    "aclResource": "profiles",
+    "defaultPermission": "r"
+  },
+  {
+    "name": "Resource access manager",
+    "aclResource": "resources",
+    "defaultPermission": "r"
+  }
+]

@@ -3,6 +3,7 @@
 const UserController = require('./controllers/UserController');
 const AuthController = require('./controllers/AuthController');
 const ProfileController = require('./controllers/ProfileController');
+const ResourceController = require('./controllers/ResourceController');
 
 module.exports = [
   {
@@ -20,5 +21,9 @@ module.exports = [
   {
     path: '/profiles',
     controller: ProfileController,
+  },
+  {
+    path: '/resources',
+    controller: ResourceController,
   },
 ];

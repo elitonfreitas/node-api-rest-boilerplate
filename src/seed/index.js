@@ -5,6 +5,12 @@ class Seed extends Base {
     super();
     this.seedMap = [
       {
+        model: 'src/api/modules/users/models/Resource.model',
+        data: 'src/seed/data/resources',
+        startOverwrite: true,
+        envCondition: JSON.parse(process.env.USE_ACL || 'false'),
+      },
+      {
         model: 'src/api/modules/users/models/Profile.model',
         data: 'src/seed/data/profiles',
         startOverwrite: true,
