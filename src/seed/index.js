@@ -20,7 +20,7 @@ class Seed extends Base {
         model: 'src/api/modules/users/models/User.model',
         data: 'src/seed/data/users.json',
         startOverwrite: false,
-        envCondition: process.env.CI !== 'true',
+        envCondition: !process.env.CI && process.env.NODE_ENV !== 'test',
       },
     ];
   }
