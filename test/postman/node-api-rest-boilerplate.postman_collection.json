@@ -17,7 +17,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"Status OK\"] = jsonData.data.status === 'OK';"
 						],
 						"type": "text/javascript"
@@ -76,7 +76,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"User was created with success\"] = !['', undefined].includes(jsonData.data._id);",
 							"",
 							"pm.globals.set(\"template01\", jsonData.data._id);",
@@ -103,7 +103,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"active\": true,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"active\": true,\n    \"profiles\": [1],\n\t\"addresses\": [{\n\t\t\"address\": \"Rua A\",\n\t\t\"number\": \"222\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}{{API_ROOT}}/users",
@@ -129,7 +129,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 202;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"Token was created with success\"] = !['', undefined].includes(jsonData.data.token);",
 							"",
 							"pm.environment.set(\"TOKEN\", jsonData.data.token);"
@@ -151,6 +151,12 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -181,7 +187,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"User exists\"] = jsonData.data._id === pm.variables.get(\"template01\");",
 							""
 						],
@@ -241,7 +247,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"Result list is array\"] = Array.isArray(jsonData.data.list);",
 							"tests[\"Has pager current\"] = jsonData.data.pager.current === 1;",
 							"tests[\"Has pager limit\"] = jsonData.data.pager.limit === 10;",
@@ -309,7 +315,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 201;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"Result list is array\"] = Array.isArray(jsonData.data);",
 							""
 						],
@@ -368,7 +374,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 202;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message create with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message create with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							"tests[\"Has result\"] = jsonData.data._id === pm.variables.get(\"template01\");"
 						],
 						"type": "text/javascript"
@@ -397,7 +403,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"active\": true,\n\t\"test\": 123,\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
+					"raw": "{\n\t\"name\": \"User {{randomNumber}}\",\n\t\"email\": \"user@teste.com\",\n\t\"password\": \"123456\",\n\t\"active\": true,\n\t\"profiles\": [1],\n\t\"addresses\": [{\n\t\t\"address\": \"Rua AB\",\n\t\t\"number\": \"111\",\n\t\t\"postCode\": \"50234-234\",\n\t\t\"neighborhood\": \"teste\",\n\t\t\"city\": \"Recife\",\n\t\t\"state\": \"PE\",\n\t\t\"country\": \"Brasil\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "{{URL}}{{API_ROOT}}/users/{{template01}}",
@@ -424,7 +430,7 @@
 							"tests[\"Successful GET request\"] = responseCode.code === 200 || responseCode.code === 202;",
 							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
 							"tests[\"Response body is not empty\"] = jsonData !== '';",
-							"tests[\"Message deleted with success\"] = jsonData.message === pm.variables.get(\"success_message\");",
+							"tests[\"Message deleted with success\"] = jsonData.message[0] === pm.variables.get(\"success_message\");",
 							""
 						],
 						"type": "text/javascript"
