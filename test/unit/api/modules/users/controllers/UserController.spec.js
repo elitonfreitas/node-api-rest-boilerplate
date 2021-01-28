@@ -102,7 +102,7 @@ class UserControllerTest extends TestBase {
     it('should delete one user with success', async () => {
       this.req.params.id = userId;
       const response = await this.controller.delete(this.req);
-      expect(response.data).toStrictEqual({});
+      expect(response.data).toStrictEqual({ deletedCount: 1 });
     });
 
     it('should delete one user but not found', async () => {

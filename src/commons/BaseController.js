@@ -82,11 +82,13 @@ class BaseController extends HttpController {
   }
 
   async delete(req) {
-    if (req.params.id) {
-      const result = await this.Model.findOneAndRemove({ _id: req.params.id });
+    const items = req.params.id ? [req.params.id] : req.body;
 
-      if (result && result.id) {
-        return { data: {}, statusCode: this.HttpStatusCode.ACCEPTED };
+    if (items && items.length) {
+      const result = await this.Model.deleteMany({ _id: { $in: items } });
+
+      if (result && result.deletedCount) {
+        return { data: { deletedCount: result.deletedCount }, statusCode: this.HttpStatusCode.ACCEPTED };
       } else {
         throw new HttpError(this.Messages.DATA_NOT_FOUND, this.HttpStatusCode.NOT_FOUND);
       }
