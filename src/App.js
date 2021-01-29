@@ -19,7 +19,9 @@ const Seed = require('src/seed/index');
 class App extends Base {
   async connectMongo() {
     await new MongoController().connect();
-    await Seed.run();
+    if (JSON.parse(process.env.USE_SEED || 'false')) {
+      await Seed.run();
+    }
   }
 
   async initMiddlewares(app) {

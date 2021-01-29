@@ -13,7 +13,7 @@ class Seed extends Base {
       {
         model: 'src/api/modules/users/models/Profile.model',
         data: 'src/seed/data/profiles',
-        startOverwrite: true,
+        startOverwrite: false,
         envCondition: JSON.parse(process.env.USE_ACL || 'false'),
       },
       {
