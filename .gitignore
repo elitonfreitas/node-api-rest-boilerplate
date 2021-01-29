@@ -7,6 +7,7 @@ logs
 node_modules
 package-lock.json
 yarn.lock
-coverage
+coverage/*
 globalConfig.json
 cert
+!coverage/lcov.info

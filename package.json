@@ -59,7 +59,6 @@
     "jest": "^26.6.3",
     "jest-badge-generator": "^1.1.5",
     "jest-express": "^1.11.0",
-    "jest-sonar-reporter": "^2.0.0",
     "lint-staged": "^10.5.3",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1",

@@ -11,5 +11,4 @@ module.exports = {
   verbose: true,
   preset: '@shelf/jest-mongodb',
   testTimeout: 30000,
-  testResultsProcessor: 'jest-sonar-reporter',
 };
