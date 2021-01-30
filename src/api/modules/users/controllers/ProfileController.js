@@ -21,7 +21,7 @@ class UserController extends BaseController {
         }
         const _id = profile._id;
         delete profile._id;
-        promises.push(this.Model.findOneAndUpdate({ _id }, { $set: profile }, { new: true }));
+        promises.push(this.Model.findOneAndUpdate({ _id }, { $set: profile }, { new: true, upsert: true }));
       }
 
       const result = await Promise.all(promises);
