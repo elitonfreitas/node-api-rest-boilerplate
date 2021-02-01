@@ -10,15 +10,6 @@ class BaseController extends HttpController {
     this.Validator = Validator;
   }
 
-  _normalizePager(req, mongoQuery) {
-    const current = Number(req.query.current || req.body.current || 1);
-    const limit = Number(req.query.limit || req.body.limit || 10);
-    const pageNumber = current > 0 ? (current - 1) * limit : 0;
-    const queryPager = mongoQuery.skip(pageNumber * limit).limit(limit);
-    const pager = { current, limit };
-    return { queryPager, pager };
-  }
-
   async get(req) {
     const { select } = req.query || { __v: 0 };
 
@@ -32,9 +23,12 @@ class BaseController extends HttpController {
       const usePager = req.query.limit || req.body.limit || req.query.current || req.body.current || 0;
 
       if (usePager) {
-        const baseQuery = this.Model.find({}, select);
-        const { queryPager, pager } = this._normalizePager(req, baseQuery);
-        const promises = [queryPager, this.Model.countDocuments()];
+        const filters = this.normalizeFilter(req);
+        const baseQuery = this.Model.find(filters, select);
+        const { pagerQuery, pager } = this.normalizePager(req, baseQuery);
+        const finalQuery = this.normalizeSortBy(req, pagerQuery);
+        const promises = [finalQuery, this.Model.countDocuments(filters)];
+
         const [list, total] = await Promise.all(promises);
         pager.total = total || 0;
 
