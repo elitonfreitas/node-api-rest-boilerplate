@@ -35,7 +35,6 @@ class UserModelTest extends TestBase {
       expect(savedUser.password).toBeUndefined();
       expect(savedUser.active).toBe(this.userData.active);
       expect(savedUser.profiles).toHaveLength(1);
-      expect(savedUser.addresses).toHaveLength(1);
     });
 
     it('should update user successfully with password', async () => {
@@ -47,7 +46,6 @@ class UserModelTest extends TestBase {
       expect(savedUser.password).toBeUndefined();
       expect(savedUser.active).toBe(this.userData.active);
       expect(savedUser.profiles).toHaveLength(1);
-      expect(savedUser.addresses).toHaveLength(1);
     });
 
     it('should update user successfully without password', async () => {
@@ -59,7 +57,6 @@ class UserModelTest extends TestBase {
       expect(savedUser.password).toBeUndefined();
       expect(savedUser.active).toBe(!this.userData.active);
       expect(savedUser.profiles).toHaveLength(1);
-      expect(savedUser.addresses).toHaveLength(1);
     });
 
     it('create user without required field should failed', async () => {

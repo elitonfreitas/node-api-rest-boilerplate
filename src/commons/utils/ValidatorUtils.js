@@ -15,7 +15,7 @@ class ValidatorUtils {
         upRequired: 'notEmpty',
         upErrorMessage: 'errorMessage',
         type: 'type',
-        optional: 'optional',
+        upOptional: 'optional',
       },
     };
     this.ValidatorTypes = {

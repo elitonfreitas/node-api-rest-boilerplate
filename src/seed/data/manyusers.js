@@ -7,7 +7,7 @@ for (let i = 0; i <= 100; i++) {
     name: `Admin ${i}`,
     email: `admin${i}@test.com`,
     password: '123456',
-    addresses: [],
+    options: {},
   });
 }
 

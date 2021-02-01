@@ -20,7 +20,7 @@ class AuthController extends HttpController {
   async post(req) {
     const { email, password } = req.body;
     const useACL = JSON.parse(process.env.USE_ACL || 'false');
-    const query = this.Model.findOne({ email, active: true }, '+password name _id profiles acl');
+    const query = this.Model.findOne({ email, active: true }, '+password name _id profiles acl options');
 
     if (useACL) {
       query.populate({ path: 'profiles', select: '-_id name acl', options: { sort: { _id: -1 } } });
@@ -52,7 +52,6 @@ class AuthController extends HttpController {
 
       delete user.password;
       delete user.profiles;
-      delete user._id;
       delete user.acl;
 
       user.profiles = profileName.length ? profileName : undefined;

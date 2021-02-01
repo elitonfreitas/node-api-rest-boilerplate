@@ -6,23 +6,6 @@ const mongoose = require('mongoose');
 require('./Profile.model');
 const Schema = mongoose.Schema;
 
-const AddressSchema = new Schema({
-  _id: false,
-  address: {
-    type: String,
-    required: true,
-    errorMessage: Messages.FIELD_REQUIRED,
-    upRequired: true,
-    upErrorMessage: Messages.FIELD_REQUIRED,
-  },
-  number: { type: String },
-  postCode: { type: String },
-  neighborhood: { type: String },
-  city: { type: String },
-  state: { type: String },
-  country: { type: String },
-});
-
 const UserSchema = new Schema(
   {
     name: {
@@ -38,6 +21,7 @@ const UserSchema = new Schema(
       isEmail: {
         errorMessage: Messages.FIELD_EMAIL,
       },
+      upOptional: true,
       errorMessage: Messages.FIELD_REQUIRED,
     },
     password: {
@@ -49,10 +33,10 @@ const UserSchema = new Schema(
     active: {
       type: Boolean,
       default: true,
-      required: true,
+      optional: true,
       errorMessage: Messages.FIELD_REQUIRED,
     },
-    addresses: [AddressSchema],
+    options: { type: Object, default: {} },
     profiles: [
       {
         type: Number,
