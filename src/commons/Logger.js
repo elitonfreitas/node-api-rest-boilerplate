@@ -37,11 +37,25 @@ class Logger {
 
   formatCombined() {
     if (this.logOutput === 'json') {
-      return format.combine(format.timestamp({ format: 'YYYY-MM-DDTHH:mm:ss.SSSZZ' }), format.json());
+      if (process.env.LOG_TIMESTAMP === 'true') {
+        return format.combine(format.timestamp({ format: 'YYYY-MM-DDTHH:mm:ss.SSSZZ' }), format.json());
+      }
+      return format.combine(format.json());
+    }
+
+    if (process.env.LOG_TIMESTAMP === 'true') {
+      return format.combine(
+        format.timestamp({ format: 'YYYY-MM-DDTHH:mm:ss.SSSZZ' }),
+        format.colorize(),
+        format.printf(info => {
+          const { timestamp, level, className, item, message, data } = info;
+          const meta = Object.keys(data).length ? JSON.stringify(data) : '';
+          return `${timestamp} ${level}: [${className}]${item ? ` [${item}]` : ''} ${message} ${meta ? `| data: ${meta}` : ''}`;
+        })
+      );
     }
 
     return format.combine(
-      format.timestamp({ format: 'YYYY-MM-DDTHH:mm:ss.SSSZZ' }),
       format.colorize(),
       format.printf(info => {
         const { timestamp, level, className, item, message, data } = info;

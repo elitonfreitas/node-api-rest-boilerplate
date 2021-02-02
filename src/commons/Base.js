@@ -62,10 +62,10 @@ class Base {
       route: req.path,
       params: req.params,
       query: req.query,
-      body: req.body,
-      headers: req.headers,
+      body: process.env.LOG_LEVEL === 'debug' ? req.body : undefined,
+      headers: process.env.LOG_LEVEL === 'debug' ? req.headers : undefined,
     };
-    this.log.debug(logData);
+    this.log.info(logData);
   }
 }
 

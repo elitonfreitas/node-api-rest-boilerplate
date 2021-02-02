@@ -1,5 +1,6 @@
 'use strict';
 
+const compression = require('compression');
 const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -28,6 +29,10 @@ class App extends Base {
     const corsOptions = {
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
     };
+
+    if (process.env.USE_COMPRESSION === 'true') {
+      app.use(compression());
+    }
 
     app.use((req, res, next) => {
       res.startTime = new Date();

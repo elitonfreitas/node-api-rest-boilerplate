@@ -36,11 +36,11 @@ class HttpController extends Controller {
     const baseUrl = res.req ? res.req.baseUrl : '/';
 
     if (![process.env.HEALTH_CHECK_ENDPOINT, '/healthcheck'].includes(baseUrl)) {
-      this.log.debug('API Response', {
+      this.log.info('API Response', {
         id: res.id,
         statusCode: status,
         responseTime: new Date() - res.startTime,
-        response: result,
+        response: process.env.LOG_LEVEL === 'debug' ? result : undefined,
       });
     }
   }
