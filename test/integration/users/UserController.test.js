@@ -6,6 +6,7 @@ const request = require('supertest');
 const App = require('src/App');
 const Messages = require('src/commons/constants/Messages');
 const HttpStatusCode = require('src/commons/constants/HttpStatusCode');
+const UserModel = require('src/api/modules/users/models/User.model');
 
 describe('User integration', () => {
   process.env.DB_HOST = process.env.MONGO_URL;
@@ -15,9 +16,11 @@ describe('User integration', () => {
 
   beforeAll(async () => {
     app = await new App().start();
+    await UserModel.deleteMany({});
   });
 
-  afterAll(() => {
+  afterAll(async () => {
+    await UserModel.deleteMany({});
     app.close();
   });
 
@@ -125,6 +128,26 @@ describe('User integration', () => {
 
   test('should get all Users with pager', async () => {
     const response = await request(app).get(`${userPath}?limit=10`).set('Authorization', token);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
+    expect(response.body.data.list).toHaveLength(1);
+  });
+
+  test('should get all Users with pager, sort and filter', async () => {
+    const response = await request(app)
+      .get(`${userPath}?limit=10&sortBy=name|-1&filter=name:r;user;i|active:b;true|email:${validUser.email}`)
+      .set('Authorization', token);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
+    expect(response.body.data.list).toHaveLength(1);
+  });
+
+  test('should get all Users with empty filter', async () => {
+    const response = await request(app).get(`${userPath}?current=1&filter=`).set('Authorization', token);
+    expect(response.statusCode).toBe(HttpStatusCode.OK);
+    expect(response.body.data.list).toHaveLength(1);
+  });
+
+  test('should get all Users with invalid filter', async () => {
+    const response = await request(app).get(`${userPath}?current=1&filter=name;user`).set('Authorization', token);
     expect(response.statusCode).toBe(HttpStatusCode.OK);
     expect(response.body.data.list).toHaveLength(1);
   });

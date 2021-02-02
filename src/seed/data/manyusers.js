@@ -1,4 +1,5 @@
 const users = [];
+const passUser = '123456';
 
 for (let i = 0; i <= 100; i++) {
   users.push({
@@ -6,7 +7,7 @@ for (let i = 0; i <= 100; i++) {
     profiles: [1],
     name: `Admin ${i}`,
     email: `admin${i}@test.com`,
-    password: '123456',
+    password: passUser,
     options: {},
   });
 }

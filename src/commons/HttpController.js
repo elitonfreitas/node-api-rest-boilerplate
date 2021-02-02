@@ -82,17 +82,15 @@ class HttpController extends Controller {
     const filterInfo = (req.query.filter || req.body.filter || '').split('|');
     const filters = {};
 
-    if (filterInfo.length < 1 && !filterInfo[0]) return filters;
+    if (filterInfo.length <= 1 && !filterInfo[0]) return filters;
 
-    if (filterInfo && filterInfo.length) {
-      for (const filter of filterInfo) {
-        const filterPart = filter.split(':');
+    for (const filter of filterInfo) {
+      const filterPart = filter.split(':');
 
-        if (filterPart.length > 1) {
-          const value = this._getFilterByType(filterPart[1]);
-          if (value !== undefined) {
-            filters[filterPart[0]] = value;
-          }
+      if (filterPart.length > 1) {
+        const value = this._getFilterByType(filterPart[1]);
+        if (value !== undefined) {
+          filters[filterPart[0]] = value;
         }
       }
     }

@@ -21,19 +21,15 @@ class UserController extends BaseController {
         }
         const _id = profile._id;
         delete profile._id;
-        promises.push(this.Model.findOneAndUpdate({ _id }, { $set: profile }, { new: true, upsert: true }));
+        promises.push(this.Model.findOneAndUpdate({ _id }, { $set: profile }, { new: true, upsert: true }).lean());
       }
 
       const result = await Promise.all(promises);
 
-      if (result.length) {
-        return {
-          data: result,
-          statusCode: this.HttpStatusCode.ACCEPTED,
-        };
-      } else {
-        throw new HttpError(this.Messages.UPDATE_NOT_OCURRED, this.HttpStatusCode.NOT_FOUND);
-      }
+      return {
+        data: result,
+        statusCode: this.HttpStatusCode.ACCEPTED,
+      };
     } else {
       throw new HttpError(this.Messages.INVALID_PARAMS);
     }
