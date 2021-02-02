@@ -29,7 +29,7 @@ class ProfileIntegrationTest extends BaseIntegrationTest {
       expect(response.statusCode).toBe(this.HttpStatusCode.CREATED);
     });
 
-    test('should authenticate with new User', async () => {
+    test('should authenticate with user', async () => {
       const response = await this.request(this.app).post(`${this.rootPath}/auth`).send({
         email: validUser.email,
         password: validUser.password,
