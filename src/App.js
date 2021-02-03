@@ -75,7 +75,7 @@ class App extends Base {
 
     app.use((req, res, next) => {
       httpController.logRequest(req, res);
-      httpController.responseError(res, next, new Error('Route not found'), {}, HttpStatusCode.NOT_FOUND);
+      httpController.responseError(res, next, new Error(this.Messages.ROUTE_NOT_FOUND), {}, HttpStatusCode.NOT_FOUND);
     });
   }
 

@@ -25,4 +25,5 @@ module.exports = {
   ERROR_ON_DELETE: 'Error on try to delete data',
   DATA_NOT_FOUND: 'Data not found',
   DUPLICATED: 'The "{{name}}" field value already exists',
+  ROUTE_NOT_FOUND: 'Route not found',
 };
