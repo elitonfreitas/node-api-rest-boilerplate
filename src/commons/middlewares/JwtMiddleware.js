@@ -55,7 +55,7 @@ class JwtMiddleware extends HttpController {
     try {
       const token = this._getTokenFromHeader(req);
       const tokenData = jwt.verify(token, process.env.JWT_PUBLIC_KEY);
-      const jti = md5(req.ip + req.header('user-agent'));
+      const jti = md5(req.ip + req.header('origin'));
 
       if (tokenData.jti !== jti) {
         return this.responseError(res, next, this.Messages.INVALID_TOKEN_ORIGIN, {}, this.HttpStatusCode.NOT_ACCEPTABLE);

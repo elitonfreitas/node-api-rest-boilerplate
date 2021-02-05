@@ -37,7 +37,7 @@ class AuthController extends HttpController {
     if (valid) {
       const iss = `${req.protocol}://${req.hostname}`;
       const sub = user._id;
-      const jti = md5(req.ip + req.header('user-agent'));
+      const jti = md5(req.ip + req.header('origin'));
       const { profiles } = user;
       let acl;
       const profileName = [];
